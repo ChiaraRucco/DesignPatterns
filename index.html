@@ -1,29 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>website_dp</title>
-  </head>
-  <body>
-    <header>
-      <h1>Data Engineering Design Patterns</h1>
-      <p>Exploring scalable, maintainable, and interoperable data pipelines</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Engineering Design Patterns</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>A Practitioner's Guide to Data Engineering Design Patterns</h1>
       <nav>
-        <ul>
-          <li><a href="#" id="nav-introduction">Introduction</a></li>
-          <li><a href="#" id="nav-design-patterns">Core Design Patterns</a></li>
-          <li><a href="#" id="nav-llms">Role of Large Language Models</a></li>
-        </ul>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="patterns.html" class="nav-link">Patterns</a>
+        <a href="implementation-guide.html" class="nav-link">Implementation Guide</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="https://github.com" class="nav-link">GitHub</a>
+        <a href="search.html" class="nav-link">Search</a>
       </nav>
-    </header>
-    <main id="content">
-      <!-- Dynamic content will be loaded here -->
-    </main>
-    <footer>
-      <p>&copy; 2025 Data Engineering Design Patterns</p>
-    </footer>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    </div>
+  </header>
+  <main>
+    <section class="hero" style="background: linear-gradient(to right, #4facfe, #00f2fe); color: white; text-align: center; padding: 50px 20px;">
+      <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Curated Patterns, Guides, and Examples for Scalable, Modern Data Pipelines</h2>
+      <p style="font-size: 1.2rem;">Explore design patterns that address persistent challenges in data engineering.</p>
+    </section>
+    <section class="taxonomy" style="background-color: #f0f8ff; padding: 40px 20px;">
+      <h2 style="text-align: center;">Taxonomy of Design Patterns</h2>
+      <div class="card-container" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <div class="card" style="background: #e3f2fd; border-radius: 10px; padding: 20px; width: 300px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+          <i class="fas fa-database" style="font-size: 2rem; color: #2196f3;"></i>
+          <h3>Source Heterogeneity</h3>
+          <p>Design patterns to handle diverse data sources effectively.</p>
+          <button onclick="location.href='mind.html'" style="padding: 10px 20px; background-color: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer;">Learn More</button>
+        </div>
+        <div class="card" style="background: #f3e5f5; border-radius: 10px; padding: 20px; width: 300px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+          <i class="fas fa-sync-alt" style="font-size: 2rem; color: #9c27b0;"></i>
+          <h3>Transformation Timing</h3>
+          <p>Strategies for optimizing data transformation processes.</p>
+          <button onclick="location.href='design-patterns.html'" style="padding: 10px 20px; background-color: #9c27b0; color: white; border: none; border-radius: 5px; cursor: pointer;">Learn More</button>
+        </div>
+        <div class="card" style="background: #ede7f6; border-radius: 10px; padding: 20px; width: 300px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+          <i class="fas fa-cloud" style="font-size: 2rem; color: #673ab7;"></i>
+          <h3>Deployment Consistency</h3>
+          <p>Ensures deployment consistency across environments.</p>
+          <button onclick="location.href='eadf.html'" style="padding: 10px 20px; background-color: #673ab7; color: white; border: none; border-radius: 5px; cursor: pointer;">Learn More</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-patterns" style="background-color: #f9f9f9; padding: 40px 20px;">
+      <h2 style="text-align: center;">Featured Patterns</h2>
+      <div class="card-container" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <div class="card" style="background: #e3f2fd; border-radius: 10px; padding: 20px; width: 300px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+          <i class="fas fa-database" style="font-size: 2rem; color: #2196f3;"></i>
+          <h3>MIND</h3>
+          <p>Metadata-driven INgestion Design Pattern</p>
+          <p>Focus: Source Heterogeneity</p>
+          <button onclick="location.href='mind.html'" style="padding: 10px 20px; background-color: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer;">Learn More</button>
+        </div>
+        <div class="card" style="background: #f3e5f5; border-radius: 10px; padding: 20px; width: 300px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+          <i class="fas fa-sync-alt" style="font-size: 2rem; color: #9c27b0;"></i>
+          <h3>ETLT/ELTL++</h3>
+          <p>Core Ingestion Techniques: Full, Incremental & Hybrid</p>
+          <p>Focus: Transformation Timing</p>
+          <button onclick="location.href='etlt.html'" style="padding: 10px 20px; background-color: #9c27b0; color: white; border: none; border-radius: 5px; cursor: pointer;">Learn More</button>
+        </div>
+        <div class="card" style="background: #ede7f6; border-radius: 10px; padding: 20px; width: 300px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+          <i class="fas fa-cloud" style="font-size: 2rem; color: #673ab7;"></i>
+          <h3>EADF</h3>
+          <p>Environment-Aware Deployment Framework</p>
+          <p>Focus: Deployment Consistency</p>
+          <button onclick="location.href='eadf.html'" style="padding: 10px 20px; background-color: #673ab7; color: white; border: none; border-radius: 5px; cursor: pointer;">Learn More</button>
+        </div>
+      </div>
+    </section>
+    <section class="cta">
+      <h3>Ready to Contribute or Learn More?</h3>
+      <p>Join our community on GitHub or explore our comprehensive guides.</p>
+      <button class="cta-button">Contribute on GitHub</button>
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Data Engineering Design Patterns. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <style>
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</body>
 </html>

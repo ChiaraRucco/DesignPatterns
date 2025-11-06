@@ -24,101 +24,208 @@ a:hover {
 
 /* General Styles */
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f9;
+  background-color: #f9f9f9;
   color: #333;
-  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  overflow: hidden;
 }
 
 /* Header Styles */
-h1 {
-  color: #2c3e50;
-  text-align: center;
-  margin-top: 20px;
+header {
+  background: linear-gradient(90deg, #4e73df, #1cc88a);
+  color: #fff;
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Navigation Bar */
-nav {
+header h1 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+header nav {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
 }
 
-nav button {
-  background-color: #3498db;
-  color: white;
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+header nav a:hover {
+  color: #ffdd57;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: url('../public/vite.svg') no-repeat center center/cover;
+  color: #fff;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background: #1cc88a;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  transition: background 0.3s;
 }
 
-nav button:hover {
-  background-color: #2980b9;
+.cta-button:hover {
+  background: #17a673;
+}
+
+/* Challenges Section */
+.challenges {
+  padding: 2rem 1rem;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+}
+
+.challenges h3 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.challenges ul {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.challenges ul li {
+  background: #f1f1f1;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border-left: 5px solid #4e73df;
+  font-size: 1.1rem;
+}
+
+/* Opportunities Section */
+.opportunities {
+  padding: 2rem 1rem;
+  background: #e9f7ef;
+  text-align: center;
+}
+
+.opportunities h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.opportunities p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Call-to-Action Section */
+.cta {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #4e73df;
+  color: #fff;
+}
+
+.cta h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Content Section */
-#content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.content {
+  margin: 2rem 0;
 }
 
-#content h2 {
-  color: #34495e;
+.content h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-#content p {
-  margin: 10px 0;
-}
-
-/* Card Styles */
-.card {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.card button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
+.content article {
+  background: #fff;
+  margin: 1rem 0;
+  padding: 1rem;
   border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.card button:hover {
-  background-color: #c0392b;
+.content article h3 {
+  color: #333;
+  margin-bottom: 0.5rem;
 }
 
-/* Logo Styles */
-.logo {
-  width: 100px;
-  margin: 0 10px;
-  transition: transform 0.3s;
+/* Additional Info Section */
+.additional-info {
+  background: #e9ecef;
+  padding: 2rem;
+  border-radius: 5px;
 }
 
-.logo:hover {
-  transform: scale(1.1);
+.additional-info h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.additional-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.additional-info ul li {
+  background: #fff;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer Styles */
-.read-the-docs {
+footer {
+  background: #333;
+  color: #fff;
   text-align: center;
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #7f8c8d;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+footer p {
+  margin: 0;
 }
 
 button {

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETLT & ELTL - Hybrid Transformation Patterns</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>ETLT & ELTL: Hybrid Transformation Patterns</h1>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="patterns.html" class="nav-link">Patterns</a>
+        <a href="mind.html" class="nav-link">MIND Pattern</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center;">
+      <h2 style="font-size: 2.8rem; margin-bottom: 20px;">ETLT & ELTL Design Patterns</h2>
+      <p style="font-size: 1.3rem; max-width: 900px; margin: 0 auto;">
+        Hybrid transformation patterns that bridge the gap between traditional ETL and modern ELT approaches
+      </p>
+    </section>
+
+    <!-- Introduction -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <div style="background: #f5f7fa; padding: 30px; border-radius: 10px; border-left: 5px solid #667eea;">
+        <h2 style="color: #667eea; margin-bottom: 20px;">The Evolution Beyond ETL and ELT</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 15px;">
+          Traditional <strong>ETL</strong> (Extract-Transform-Load) and <strong>ELT</strong> (Extract-Load-Transform) architectures, while foundational to data engineering, are increasingly challenged by demands for scalability, governance, and real-time processing. Neither approach alone adequately addresses the conflicting requirements of modern data platforms:
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-left: 20px;">
+          <li>Ensuring data quality while preserving raw fidelity</li>
+          <li>Balancing compliance (lineage, auditability) with performance</li>
+          <li>Supporting reprocessing at scale while containing storage costs</li>
+          <li>Allowing multiple teams to share pipelines without duplication</li>
+        </ul>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-top: 15px;">
+          <strong>ETLT</strong> (Extract-Transform-Load-Transform) and <strong>ELTL</strong> (Extract-Load-Transform-Load) emerge as hybrid patterns that blend the strengths of both paradigms, providing structured solutions for modern data engineering challenges.
+        </p>
+      </div>
+    </section>
+
+    <!-- ETLT and ELTL Pattern Cards -->
+    <section style="padding: 40px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef);">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #333;">The Hybrid Patterns</h2>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
+
+        <!-- ETLT Pattern -->
+        <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 5px solid #2196f3;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <i class="fas fa-filter" style="font-size: 3.5rem; color: #2196f3;"></i>
+          </div>
+          <h3 style="color: #2196f3; font-size: 1.8rem; margin-bottom: 15px; text-align: center;">ETLT Pattern</h3>
+          <p style="font-size: 1rem; line-height: 1.7; color: #555; margin-bottom: 15px; font-style: italic; text-align: center;">
+            Extract → Transform (Quality) → Load → Transform (Business)
+          </p>
+
+          <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 20px;">
+            ETLT decouples data quality operations from business-specific transformations. Data is extracted, then <strong>Transform₁</strong> applies cleansing and validation before loading into storage. <strong>Transform₂</strong> then applies business rules and enrichments.
+          </p>
+
+          <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #1976d2; margin-bottom: 10px;"><i class="fas fa-lightbulb"></i> Key Characteristics</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem;">
+              <li>Early data quality enforcement</li>
+              <li>Prevents bad data from reaching storage</li>
+              <li>Separates quality from business logic</li>
+              <li>Easier debugging and fault isolation</li>
+            </ul>
+          </div>
+
+          <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #2e7d32; margin-bottom: 10px;"><i class="fas fa-check-circle"></i> Best For</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem;">
+              <li>Heterogeneous source systems with quality issues</li>
+              <li>Regulatory contexts requiring data contracts</li>
+              <li>Real-time scenarios needing validated data</li>
+              <li>Large-scale migration projects</li>
+            </ul>
+          </div>
+
+          <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #ef6c00; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> Trade-offs</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem;">
+              <li>Reduced raw data traceability</li>
+              <li>Cannot replay rejected records</li>
+              <li>Smaller raw storage footprint</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ELTL Pattern -->
+        <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 5px solid #9c27b0;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <i class="fas fa-archive" style="font-size: 3.5rem; color: #9c27b0;"></i>
+          </div>
+          <h3 style="color: #9c27b0; font-size: 1.8rem; margin-bottom: 15px; text-align: center;">ELTL Pattern</h3>
+          <p style="font-size: 1rem; line-height: 1.7; color: #555; margin-bottom: 15px; font-style: italic; text-align: center;">
+            Extract → Load (Raw) → Transform → Load (Curated)
+          </p>
+
+          <p style="font-size: 1.05rem; line-height: 1.7; color: #555; margin-bottom: 20px;">
+            ELTL emphasizes preservation of raw data alongside performance-optimized outputs. Raw data is loaded first into an immutable archive, then transformed and loaded again into curated structures for consumption.
+          </p>
+
+          <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #7b1fa2; margin-bottom: 10px;"><i class="fas fa-lightbulb"></i> Key Characteristics</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem;">
+              <li>Preserves complete raw data fidelity</li>
+              <li>Dual-loading architecture</li>
+              <li>Full audit trail and lineage</li>
+              <li>Enables flexible schema evolution</li>
+            </ul>
+          </div>
+
+          <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #2e7d32; margin-bottom: 10px;"><i class="fas fa-check-circle"></i> Best For</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem;">
+              <li>Compliance and regulatory requirements</li>
+              <li>IoT and streaming with evolving schemas</li>
+              <li>Multi-team platforms with shared data</li>
+              <li>Forensic analysis and time travel queries</li>
+            </ul>
+          </div>
+
+          <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #ef6c00; margin-bottom: 10px;"><i class="fas fa-exclamation-circle"></i> Trade-offs</h4>
+            <ul style="margin: 0; padding-left: 20px; color: #555; font-size: 0.95rem;">
+              <li>Higher storage costs (raw + curated)</li>
+              <li>More complex pipeline orchestration</li>
+              <li>Maximum auditability and flexibility</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #333;">When to Choose ETLT vs ELTL</h2>
+
+      <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <th style="padding: 20px; text-align: left; font-size: 1.1rem;">Aspect</th>
+            <th style="padding: 20px; text-align: left; font-size: 1.1rem;">ETLT (Validate First)</th>
+            <th style="padding: 20px; text-align: left; font-size: 1.1rem;">ELTL (Load First)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Data Quality Control</td>
+            <td style="padding: 15px;">Reject or quarantine bad records at ingestion, keeping only clean data</td>
+            <td style="padding: 15px;">Store everything, then clean or transform as needed later</td>
+          </tr>
+          <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Audit & Compliance</td>
+            <td style="padding: 15px;">Cannot replay rejected data, but downstream is always clean</td>
+            <td style="padding: 15px;">Full history of raw inputs—ideal for audits and time travel</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Flexibility</td>
+            <td style="padding: 15px;">Simplifies downstream logic by guaranteeing data quality early</td>
+            <td style="padding: 15px;">Allows different teams to apply custom transformations on same raw data</td>
+          </tr>
+          <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Storage Cost</td>
+            <td style="padding: 15px;">Smaller storage needs—bad data is filtered out</td>
+            <td style="padding: 15px;">Larger raw storage footprint but cheaper to keep raw data only once</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Team Collaboration</td>
+            <td style="padding: 15px;">Central team enforces contracts at the "gate"</td>
+            <td style="padding: 15px;">Multiple teams reuse a shared raw layer without re-ingesting</td>
+          </tr>
+          <tr style="background: #f5f7fa;">
+            <td style="padding: 15px; font-weight: bold;">Primary Use Cases</td>
+            <td style="padding: 15px;">High-quality data needed immediately (e.g., operational dashboards)</td>
+            <td style="padding: 15px;">Compliance, forensic analysis, exploratory research (e.g., finance, healthcare, IoT)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Enhanced Variants Section -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #333;">Enhanced Variants: ETLT++ and ELTL++</h2>
+
+      <div style="background: #f5f7fa; padding: 30px; border-radius: 10px; border-left: 5px solid #ff6b6b; margin-bottom: 30px;">
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333;">
+          The <strong>enhanced variants</strong> (ETLT++ and ELTL++) extend the base patterns with production-grade capabilities essential for enterprise data platforms. These variants incorporate formal data contracts, versioned storage, continuous quality monitoring, and automated governance features.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+
+        <!-- ETLT++ Card -->
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #ff6b6b;">
+          <h3 style="color: #ff6b6b; font-size: 1.6rem; margin-bottom: 15px; text-align: center;">
+            <i class="fas fa-plus-circle"></i> ETLT++
+          </h3>
+
+          <div style="background: #ffe0e0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #d32f2f; margin-bottom: 10px;"><i class="fas fa-file-contract"></i> Data Contracts</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Explicit schema definitions with versioning, type enforcement, and breaking change detection. Contracts are validated at Transform₁ before data enters storage.
+            </p>
+          </div>
+
+          <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #e65100; margin-bottom: 10px;"><i class="fas fa-history"></i> Quarantine Layer</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Failed records are isolated in a dedicated quarantine zone with metadata (failure reason, timestamp, source batch) for investigation and potential replay after fixes.
+            </p>
+          </div>
+
+          <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #2e7d32; margin-bottom: 10px;"><i class="fas fa-check-double"></i> Continuous Quality Monitoring</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Real-time quality metrics (null rates, schema drift, anomaly detection) are tracked and surfaced via dashboards, alerting on quality degradation.
+            </p>
+          </div>
+
+          <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #1565c0; margin-bottom: 10px;"><i class="fas fa-network-wired"></i> Lineage & Observability</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Automated lineage tracking from source to Transform₂, capturing transformation logic, data volumes, and SLA compliance for each pipeline run.
+            </p>
+          </div>
+        </div>
+
+        <!-- ELTL++ Card -->
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #7c4dff;">
+          <h3 style="color: #7c4dff; font-size: 1.6rem; margin-bottom: 15px; text-align: center;">
+            <i class="fas fa-plus-circle"></i> ELTL++
+          </h3>
+
+          <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #6a1b9a; margin-bottom: 10px;"><i class="fas fa-archive"></i> Versioned Raw Storage</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Raw data is stored with immutable versioning (using Delta Lake, Iceberg, or similar). Each version includes ingestion timestamp, source identifier, and schema snapshot.
+            </p>
+          </div>
+
+          <div style="background: #e0f2f1; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #00695c; margin-bottom: 10px;"><i class="fas fa-layer-group"></i> Multi-Zone Architecture</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Explicit zones: <strong>Bronze</strong> (raw), <strong>Silver</strong> (cleansed/validated), <strong>Gold</strong> (business-transformed). Each zone has access controls and retention policies.
+            </p>
+          </div>
+
+          <div style="background: #fff9c4; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h4 style="color: #f57f17; margin-bottom: 10px;"><i class="fas fa-clock"></i> Time Travel & Replay</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Full support for querying historical data states and reprocessing raw data with updated transformation logic without re-ingestion from sources.
+            </p>
+          </div>
+
+          <div style="background: #ede7f6; padding: 15px; border-radius: 8px;">
+            <h4 style="color: #4527a0; margin-bottom: 10px;"><i class="fas fa-users-cog"></i> Multi-Tenancy Support</h4>
+            <p style="font-size: 0.95rem; color: #555; margin: 0;">
+              Different teams can run independent transformations on shared raw data with isolated curated zones, enabling parallel experimentation and production workloads.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Feature Comparison Table -->
+      <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="text-align: center; color: #333; margin-bottom: 20px;">Enhanced Features Comparison</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: linear-gradient(135deg, #ff6b6b 0%, #7c4dff 100%); color: white;">
+              <th style="padding: 12px; text-align: left;">Feature</th>
+              <th style="padding: 12px; text-align: left;">ETLT++</th>
+              <th style="padding: 12px; text-align: left;">ELTL++</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Schema Evolution</td>
+              <td style="padding: 12px;">Contract-based with strict versioning</td>
+              <td style="padding: 12px;">Flexible with backward compatibility</td>
+            </tr>
+            <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Failed Record Handling</td>
+              <td style="padding: 12px;">Quarantine with manual/automated replay</td>
+              <td style="padding: 12px;">Always in raw; transform failures isolated</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Reprocessing</td>
+              <td style="padding: 12px;">Limited to quarantined records</td>
+              <td style="padding: 12px;">Full historical reprocessing via time travel</td>
+            </tr>
+            <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Governance</td>
+              <td style="padding: 12px;">Centralized quality gates</td>
+              <td style="padding: 12px;">Zone-based access controls</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; font-weight: bold;">Best For</td>
+              <td style="padding: 12px;">Real-time operational systems</td>
+              <td style="padding: 12px;">Compliance-heavy analytical platforms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Interactive Simulator -->
+    <section style="padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+      <div style="max-width: 1400px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px; color: white;">
+          <i class="fas fa-gamepad"></i> ETLT/ELTL Pipeline Simulator
+        </h2>
+        <p style="color: white; text-align: center; font-size: 1.2rem; margin-bottom: 30px;">
+          Experience how ETLT and ELTL patterns handle data quality, transformations, and storage differently!
+        </p>
+
+        <!-- Simulator Container -->
+        <div style="background: white; border-radius: 15px; padding: 30px;">
+
+          <!-- Pattern Selection -->
+          <div style="background: #f5f7fa; padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+            <h3 style="color: #667eea; margin-bottom: 15px;"><i class="fas fa-sliders-h"></i> Pipeline Configuration</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+              <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">Choose Pattern:</label>
+                <select id="patternType" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #667eea; font-size: 1rem;">
+                  <option value="etlt">ETLT (Validate First)</option>
+                  <option value="eltl">ELTL (Load First)</option>
+                  <option value="etlt++">ETLT++ (Enhanced)</option>
+                  <option value="eltl++">ELTL++ (Enhanced)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">Data Source:</label>
+                <select id="sourceType" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #667eea; font-size: 1rem;">
+                  <option value="crm">CRM System (Salesforce)</option>
+                  <option value="database">Transactional Database</option>
+                  <option value="iot">IoT Sensor Stream</option>
+                  <option value="api">External API</option>
+                  <option value="files">File Uploads (CSV/JSON)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 8px;">Data Quality:</label>
+                <select id="dataQuality" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #667eea; font-size: 1rem;">
+                  <option value="high">High Quality (95%+ valid)</option>
+                  <option value="medium">Medium Quality (80-95% valid)</option>
+                  <option value="low">Low Quality (50-80% valid)</option>
+                  <option value="poor">Poor Quality (&lt;50% valid)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Advanced Options -->
+            <div id="advancedOptions" style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ddd;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                  <label style="font-weight: bold; display: block; margin-bottom: 8px;">Record Volume:</label>
+                  <input type="number" id="recordVolume" value="10000" min="1000" step="1000" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #667eea;">
+                </div>
+
+                <div>
+                  <label style="font-weight: bold; display: block; margin-bottom: 8px;">Schema Changes:</label>
+                  <select id="schemaChange" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #667eea; font-size: 1rem;">
+                    <option value="none">No Changes</option>
+                    <option value="add_column">Added Column</option>
+                    <option value="remove_column">Removed Column</option>
+                    <option value="type_change">Type Change (Breaking)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label style="font-weight: bold; display: block; margin-bottom: 8px;">Business Rules:</label>
+                  <select id="businessRule" style="width: 100%; padding: 10px; border-radius: 5px; border: 2px solid #667eea; font-size: 1rem;">
+                    <option value="none">None</option>
+                    <option value="enrichment">Customer Enrichment</option>
+                    <option value="aggregation">Daily Aggregation</option>
+                    <option value="deduplication">Cross-Source Dedup</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <button id="runSimulation" style="margin-top: 20px; padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); width: 100%;">
+              <i class="fas fa-play-circle"></i> Run Pipeline Simulation
+            </button>
+          </div>
+
+          <!-- Pipeline Visualization -->
+          <div id="pipelineViz" style="min-height: 300px; background: #fafafa; border-radius: 10px; padding: 20px;">
+            <p style="text-align: center; color: #999; padding: 60px 20px; font-size: 1.1rem;">
+              Configure your pipeline above and click "Run Pipeline Simulation" to see it in action!
+            </p>
+          </div>
+
+          <!-- Statistics Dashboard -->
+          <div id="statsPanel" style="display: none; margin-top: 25px; padding: 20px; background: #f5f7fa; border-radius: 10px;">
+            <h4 style="color: #333; margin-bottom: 15px; text-align: center;">Pipeline Execution Summary</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+              <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <div style="font-size: 1.8rem; font-weight: bold; color: #2196f3;" id="totalRecords">0</div>
+                <div style="font-size: 0.9rem; color: #666;">Total Records</div>
+              </div>
+              <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <div style="font-size: 1.8rem; font-weight: bold; color: #4caf50;" id="validRecords">0</div>
+                <div style="font-size: 0.9rem; color: #666;">Valid Records</div>
+              </div>
+              <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <div style="font-size: 1.8rem; font-weight: bold; color: #ff9800;" id="rejectedRecords">0</div>
+                <div style="font-size: 0.9rem; color: #666;">Rejected/Quarantined</div>
+              </div>
+              <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <div style="font-size: 1.8rem; font-weight: bold; color: #9c27b0;" id="storageUsed">0 GB</div>
+                <div style="font-size: 0.9rem; color: #666;">Storage Used</div>
+              </div>
+              <div style="background: white; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <div style="font-size: 1.8rem; font-weight: bold; color: #00bcd4;" id="executionTime">0s</div>
+                <div style="font-size: 0.9rem; color: #666;">Execution Time</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section style="padding: 60px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">Key Takeaways</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-shield-alt"></i> Quality vs Fidelity</h3>
+            <p>ETLT stops bad data early for cleaner downstream processing. ELTL preserves everything for maximum auditability and reprocessing.</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-balance-scale"></i> Design Patterns</h3>
+            <p>Both are reusable design patterns, not one-off implementations, addressing recurring challenges in modern data engineering.</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-rocket"></i> Enhanced Variants</h3>
+            <p>ETLT++ and ELTL++ extend these patterns with explicit contracts, versioned storage, and continuous quality monitoring.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Data Engineering Design Patterns. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ETLT/ELTL Pipeline Simulator Logic
+    document.getElementById('runSimulation').addEventListener('click', function() {
+      const pattern = document.getElementById('patternType').value;
+      const source = document.getElementById('sourceType').value;
+      const quality = document.getElementById('dataQuality').value;
+      const volume = parseInt(document.getElementById('recordVolume').value);
+      const schemaChange = document.getElementById('schemaChange').value;
+      const businessRule = document.getElementById('businessRule').value;
+
+      const vizContainer = document.getElementById('pipelineViz');
+      const statsPanel = document.getElementById('statsPanel');
+
+      // Show loading
+      vizContainer.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #667eea;"></i><br><p style="margin-top: 15px; font-size: 1.1rem; color: #666;">Running pipeline simulation...</p></div>';
+      statsPanel.style.display = 'none';
+
+      // Calculate metrics based on quality
+      const qualityRates = {
+        'high': 0.97,
+        'medium': 0.87,
+        'low': 0.65,
+        'poor': 0.40
+      };
+      const validRate = qualityRates[quality];
+      const validRecords = Math.floor(volume * validRate);
+      const rejectedRecords = volume - validRecords;
+
+      // Storage calculations (ELTL stores more due to raw + curated)
+      const isELTL = pattern.includes('eltl');
+      const recordSize = 0.5; // KB per record
+      const storageMultiplier = isELTL ? 2.2 : 1.0; // ELTL stores raw + curated
+      const storageGB = ((volume * recordSize * storageMultiplier) / (1024 * 1024)).toFixed(2);
+
+      // Execution time (ETLT validates first, so slightly faster rejection)
+      const baseTime = 2 + (volume / 5000);
+      const executionTime = baseTime.toFixed(1);
+
+      // Simulate pipeline execution
+      setTimeout(() => {
+        let steps = [];
+
+        // Build pipeline steps based on pattern
+        if (pattern === 'etlt' || pattern === 'etlt++') {
+          steps = buildETLTSteps(pattern, source, validRecords, rejectedRecords, schemaChange, businessRule);
+        } else {
+          steps = buildELTLSteps(pattern, source, validRecords, rejectedRecords, volume, schemaChange, businessRule);
+        }
+
+        // Render pipeline visualization
+        let html = '<div style="position: relative;">';
+
+        // Pattern indicator
+        const patternNames = {
+          'etlt': 'ETLT Pattern',
+          'eltl': 'ELTL Pattern',
+          'etlt++': 'ETLT++ (Enhanced)',
+          'eltl++': 'ELTL++ (Enhanced)'
+        };
+        html += `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-size: 1.2rem; font-weight: bold;">
+          ${patternNames[pattern]}
+        </div>`;
+
+        // Steps
+        html += '<div style="display: flex; flex-direction: column; gap: 15px;">';
+        steps.forEach((step, index) => {
+          const delay = index * 0.1;
+          html += `
+            <div style="display: flex; align-items: center; gap: 15px; padding: 20px; background: ${step.background || '#f5f7fa'}; border-radius: 10px; border-left: 5px solid ${step.color}; animation: slideIn 0.4s ease ${delay}s both; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+              <div style="min-width: 50px; height: 50px; background: ${step.color}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+                <i class="fas fa-${step.icon}"></i>
+              </div>
+              <div style="flex: 1;">
+                <div style="font-weight: bold; color: ${step.color}; font-size: 1.1rem; margin-bottom: 5px;">${step.title}</div>
+                <div style="font-size: 0.95rem; color: #555; line-height: 1.5;">${step.description}</div>
+                ${step.metrics ? `<div style="font-size: 0.85rem; color: #888; margin-top: 5px;">${step.metrics}</div>` : ''}
+                ${step.dataExample ? step.dataExample : ''}
+              </div>
+              <i class="fas fa-${step.status === 'warning' ? 'exclamation-triangle' : 'check-circle'}" style="color: ${step.status === 'warning' ? '#ff9800' : '#4caf50'}; font-size: 1.5rem;"></i>
+            </div>
+          `;
+        });
+        html += '</div></div>';
+
+        vizContainer.innerHTML = html;
+
+        // Update statistics
+        document.getElementById('totalRecords').textContent = volume.toLocaleString();
+        document.getElementById('validRecords').textContent = validRecords.toLocaleString();
+        document.getElementById('rejectedRecords').textContent = rejectedRecords.toLocaleString();
+        document.getElementById('storageUsed').textContent = storageGB + ' GB';
+        document.getElementById('executionTime').textContent = executionTime + 's';
+        statsPanel.style.display = 'block';
+
+      }, 1800);
+    });
+
+    function buildETLTSteps(pattern, source, validRecords, rejectedRecords, schemaChange, businessRule) {
+      const steps = [
+        {
+          icon: 'download',
+          title: 'Extract',
+          description: `Connected to ${getSourceName(source)} and extracted raw data`,
+          color: '#2196f3',
+          metrics: `Source: ${source.toUpperCase()}`
+        }
+      ];
+
+      // Transform 1 (Quality)
+      const hasContract = pattern === 'etlt++';
+
+      // Generate sample rejected records
+      const rejectedDataExample = rejectedRecords > 0 ? `
+        <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #ffcdd2;">
+          <div style="font-weight: bold; color: #d32f2f; font-size: 0.85rem; margin-bottom: 5px;">
+            <i class="fas fa-table"></i> Sample Rejected Records ${hasContract ? '(Quarantined)' : '(Discarded)'}:
+          </div>
+          <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #ffebee;">
+                <th style="padding: 5px; border: 1px solid #ddd;">customer_id</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">email</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">age</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">created_at</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd;">NULL</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">alice@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">28</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-15</td>
+                <td style="padding: 5px; border: 1px solid #ddd; color: #d32f2f;">Missing primary key</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd;">C102</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">invalid-email</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">35</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-16</td>
+                <td style="padding: 5px; border: 1px solid #ddd; color: #d32f2f;">Invalid email format</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd;">C103</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">bob@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">-5</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-17</td>
+                <td style="padding: 5px; border: 1px solid #ddd; color: #d32f2f;">Invalid age value</td>
+              </tr>
+            </tbody>
+          </table>
+          ${hasContract ? '<div style="margin-top: 5px; font-size: 0.75rem; color: #666;"><i class="fas fa-info-circle"></i> Records stored in quarantine with metadata for potential replay</div>' : '<div style="margin-top: 5px; font-size: 0.75rem; color: #666;"><i class="fas fa-trash"></i> Records permanently discarded - not available for reprocessing</div>'}
+        </div>
+      ` : '';
+
+      steps.push({
+        icon: 'filter',
+        title: 'Transform₁ (Quality & Validation)',
+        description: hasContract
+          ? `Applied data contract validation with schema version 2.1. Rejected ${rejectedRecords.toLocaleString()} invalid records to quarantine layer.`
+          : `Validated data quality and rejected ${rejectedRecords.toLocaleString()} invalid records. Applied cleaning rules and type coercion.`,
+        color: '#ff6b6b',
+        metrics: `Valid: ${validRecords.toLocaleString()} | Rejected: ${rejectedRecords.toLocaleString()}`,
+        status: rejectedRecords > 0 ? 'warning' : 'success',
+        background: rejectedRecords > (validRecords * 0.3) ? '#fff3e0' : '#f5f7fa',
+        dataExample: rejectedDataExample
+      });
+
+      // Handle schema changes
+      if (schemaChange !== 'none' && hasContract) {
+        let schemaExampleHtml = '';
+
+        if (schemaChange === 'add_column') {
+          schemaExampleHtml = `
+            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #ffe0b2;">
+              <div style="font-weight: bold; color: #e65100; font-size: 0.85rem; margin-bottom: 5px;">
+                <i class="fas fa-code-branch"></i> Schema Evolution Example:
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center;">
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">Previous Schema v2.0:</div>
+                  <div style="background: #f5f5f5; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.7rem;">
+                    customer_id: INT<br>
+                    email: STRING<br>
+                    age: INT<br>
+                    created_at: TIMESTAMP
+                  </div>
+                </div>
+                <div style="color: #ff9800; font-size: 1.2rem;">→</div>
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">New Schema v2.1:</div>
+                  <div style="background: #fff3e0; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.7rem;">
+                    customer_id: INT<br>
+                    email: STRING<br>
+                    age: INT<br>
+                    created_at: TIMESTAMP<br>
+                    <strong style="color: #ff9800;">phone: STRING (NEW)</strong>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 5px; font-size: 0.75rem; color: #666;">
+                <i class="fas fa-check"></i> Backward compatible - existing records populated with NULL for new column
+              </div>
+            </div>
+          `;
+        } else if (schemaChange === 'type_change') {
+          schemaExampleHtml = `
+            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #ffcdd2;">
+              <div style="font-weight: bold; color: #d32f2f; font-size: 0.85rem; margin-bottom: 5px;">
+                <i class="fas fa-exclamation-triangle"></i> Breaking Schema Change:
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center;">
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">Previous Schema v2.0:</div>
+                  <div style="background: #f5f5f5; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.7rem;">
+                    customer_id: <strong>STRING</strong><br>
+                    amount: DECIMAL(10,2)
+                  </div>
+                </div>
+                <div style="color: #f44336; font-size: 1.2rem;">⚠</div>
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">New Schema v3.0:</div>
+                  <div style="background: #ffebee; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.7rem;">
+                    customer_id: <strong style="color: #d32f2f;">INT</strong><br>
+                    amount: DECIMAL(10,2)
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 5px; font-size: 0.75rem; color: #d32f2f;">
+                <i class="fas fa-ban"></i> Breaking change - requires manual migration and downstream updates
+              </div>
+            </div>
+          `;
+        } else if (schemaChange === 'remove_column') {
+          schemaExampleHtml = `
+            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #ffe0b2;">
+              <div style="font-weight: bold; color: #e65100; font-size: 0.85rem; margin-bottom: 5px;">
+                <i class="fas fa-minus-circle"></i> Column Removal:
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center;">
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">Previous Schema v2.0:</div>
+                  <div style="background: #f5f5f5; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.7rem;">
+                    customer_id: INT<br>
+                    <span style="text-decoration: line-through; color: #999;">legacy_field: STRING</span><br>
+                    email: STRING<br>
+                    created_at: TIMESTAMP
+                  </div>
+                </div>
+                <div style="color: #ff9800; font-size: 1.2rem;">→</div>
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">New Schema v2.1:</div>
+                  <div style="background: #fff3e0; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.7rem;">
+                    customer_id: INT<br>
+                    email: STRING<br>
+                    created_at: TIMESTAMP
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 5px; font-size: 0.75rem; color: #666;">
+                <i class="fas fa-archive"></i> Historical data preserved - column deprecated in metadata
+              </div>
+            </div>
+          `;
+        }
+
+        steps.push({
+          icon: 'file-contract',
+          title: 'Schema Change Detected',
+          description: schemaChange === 'type_change'
+            ? 'Breaking change detected: Type modification requires contract update and downstream notification'
+            : `Non-breaking change: ${schemaChange === 'add_column' ? 'New column added with default value' : 'Column removed, historical data preserved'}`,
+          color: schemaChange === 'type_change' ? '#f44336' : '#ff9800',
+          status: 'warning',
+          dataExample: schemaExampleHtml
+        });
+      }
+
+      // Load
+      steps.push({
+        icon: 'database',
+        title: 'Load (Validated Data)',
+        description: `Loaded ${validRecords.toLocaleString()} validated records to data warehouse. Only clean data stored.`,
+        color: '#9c27b0',
+        metrics: 'Target: Data Warehouse (Silver Layer)'
+      });
+
+      // Transform 2 (Business)
+      if (businessRule !== 'none') {
+        let businessExampleHtml = '';
+
+        if (businessRule === 'enrichment') {
+          businessExampleHtml = `
+            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #b2ebf2;">
+              <div style="font-weight: bold; color: #00838f; font-size: 0.85rem; margin-bottom: 5px;">
+                <i class="fas fa-plus-square"></i> Customer Enrichment Example:
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center;">
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">Before Enrichment:</div>
+                  <div style="background: #f5f5f5; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.65rem;">
+                    C001 | john@example.com | 42
+                  </div>
+                </div>
+                <div style="color: #00bcd4; font-size: 1.2rem;">+</div>
+                <div>
+                  <div style="font-size: 0.75rem; color: #666; margin-bottom: 3px;">After Enrichment:</div>
+                  <div style="background: #e0f7fa; padding: 8px; border-radius: 3px; font-family: monospace; font-size: 0.65rem;">
+                    C001 | john@example.com | 42<br>
+                    + <strong>lifetime_value: $12,450</strong><br>
+                    + <strong>segment: "Premium"</strong><br>
+                    + <strong>last_purchase: 2025-01-10</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (businessRule === 'aggregation') {
+          businessExampleHtml = `
+            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #b2ebf2;">
+              <div style="font-weight: bold; color: #00838f; font-size: 0.85rem; margin-bottom: 5px;">
+                <i class="fas fa-chart-bar"></i> Daily Aggregation Result:
+              </div>
+              <table style="width: 100%; font-size: 0.7rem; border-collapse: collapse;">
+                <thead>
+                  <tr style="background: #e0f7fa;">
+                    <th style="padding: 5px; border: 1px solid #ddd;">date</th>
+                    <th style="padding: 5px; border: 1px solid #ddd;">region</th>
+                    <th style="padding: 5px; border: 1px solid #ddd;">total_customers</th>
+                    <th style="padding: 5px; border: 1px solid #ddd;">total_revenue</th>
+                    <th style="padding: 5px; border: 1px solid #ddd;">avg_age</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="padding: 5px; border: 1px solid #ddd;">2025-01-20</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">North America</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">1,247</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">$458,920</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">38.5</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
+
+        steps.push({
+          icon: 'code',
+          title: 'Transform₂ (Business Logic)',
+          description: `Applied business transformation: ${getBusinessRuleName(businessRule)}`,
+          color: '#00bcd4',
+          metrics: 'Output: Gold Layer / Analytics-Ready',
+          dataExample: businessExampleHtml
+        });
+      }
+
+      // Enhanced features
+      if (hasContract) {
+        steps.push({
+          icon: 'chart-line',
+          title: 'Quality Monitoring',
+          description: 'Updated quality metrics dashboard. Null rate: 0.3%, Schema drift: None, Anomaly score: Low',
+          color: '#4caf50'
+        });
+        steps.push({
+          icon: 'network-wired',
+          title: 'Lineage & Observability',
+          description: 'Captured end-to-end lineage metadata. SLA compliance: 98.5%, Processing time within thresholds',
+          color: '#673ab7'
+        });
+      }
+
+      return steps;
+    }
+
+    function buildELTLSteps(pattern, source, validRecords, rejectedRecords, totalRecords, schemaChange, businessRule) {
+      const steps = [
+        {
+          icon: 'download',
+          title: 'Extract',
+          description: `Connected to ${getSourceName(source)} and extracted raw data`,
+          color: '#2196f3',
+          metrics: `Source: ${source.toUpperCase()}`
+        }
+      ];
+
+      // Load 1 (Raw)
+      const isEnhanced = pattern === 'eltl++';
+
+      // Generate raw data example showing ALL records are preserved
+      const rawDataExample = `
+        <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #d7ccc8;">
+          <div style="font-weight: bold; color: #5d4037; font-size: 0.85rem; margin-bottom: 5px;">
+            <i class="fas fa-database"></i> Sample Raw Data (Bronze Layer - ALL records preserved):
+          </div>
+          <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #efebe9;">
+                <th style="padding: 5px; border: 1px solid #ddd;">customer_id</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">email</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">age</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">created_at</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">_ingestion_time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #c8e6c9;">
+                <td style="padding: 5px; border: 1px solid #ddd;">C001</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">john@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">42</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-14</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-20 10:30:00</td>
+              </tr>
+              <tr style="background: #ffccbc;">
+                <td style="padding: 5px; border: 1px solid #ddd;">NULL</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">alice@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">28</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-15</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-20 10:30:01</td>
+              </tr>
+              <tr style="background: #ffccbc;">
+                <td style="padding: 5px; border: 1px solid #ddd;">C102</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">invalid-email</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">35</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-16</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-20 10:30:02</td>
+              </tr>
+              <tr style="background: #c8e6c9;">
+                <td style="padding: 5px; border: 1px solid #ddd;">C104</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">sara@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">31</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-18</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-20 10:30:03</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 8px; display: flex; gap: 15px; font-size: 0.75rem;">
+            <div><span style="display: inline-block; width: 12px; height: 12px; background: #c8e6c9; border: 1px solid #999; margin-right: 3px;"></span> Valid records</div>
+            <div><span style="display: inline-block; width: 12px; height: 12px; background: #ffccbc; border: 1px solid #999; margin-right: 3px;"></span> Invalid records (kept for audit)</div>
+          </div>
+          ${isEnhanced ? '<div style="margin-top: 5px; font-size: 0.75rem; color: #666;"><i class="fas fa-history"></i> Immutable storage with versioning - enables time travel queries</div>' : '<div style="margin-top: 5px; font-size: 0.75rem; color: #666;"><i class="fas fa-archive"></i> Complete raw fidelity - all data available for reprocessing</div>'}
+        </div>
+      `;
+
+      steps.push({
+        icon: 'archive',
+        title: 'Load₁ (Raw Data Preservation)',
+        description: isEnhanced
+          ? `Loaded all ${totalRecords.toLocaleString()} records to Bronze zone with immutable versioning. Schema snapshot v${Math.floor(Math.random() * 10) + 1} captured.`
+          : `Loaded all ${totalRecords.toLocaleString()} raw records to data lake. Complete data fidelity preserved including invalid records.`,
+        color: '#795548',
+        metrics: isEnhanced ? 'Target: Bronze Layer (Delta Lake)' : 'Target: Raw Data Lake',
+        background: '#fff8e1',
+        dataExample: rawDataExample
+      });
+
+      // Handle schema changes
+      if (schemaChange !== 'none' && isEnhanced) {
+        steps.push({
+          icon: 'code-branch',
+          title: 'Schema Evolution',
+          description: schemaChange === 'type_change'
+            ? 'Schema version updated. New transformation branch created for backward compatibility'
+            : `Schema evolved gracefully: ${schemaChange === 'add_column' ? 'Column added to latest version' : 'Column deprecated in metadata'}`,
+          color: '#ff9800',
+          status: 'warning'
+        });
+      }
+
+      // Transform
+      steps.push({
+        icon: 'cogs',
+        title: 'Transform (Quality + Business)',
+        description: `Applied quality filters and business transformations on raw data. Identified ${rejectedRecords.toLocaleString()} invalid records (kept in raw, excluded from curated).`,
+        color: '#7c4dff',
+        metrics: `Valid for curation: ${validRecords.toLocaleString()}`
+      });
+
+      if (businessRule !== 'none') {
+        steps.push({
+          icon: 'code',
+          title: 'Business Enrichment',
+          description: `Applied: ${getBusinessRuleName(businessRule)}`,
+          color: '#00bcd4',
+          metrics: 'Multiple teams can apply different logic on same raw data'
+        });
+      }
+
+      // Load 2 (Curated)
+      const curatedDataExample = `
+        <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; border: 1px solid #fff9c4;">
+          <div style="font-weight: bold; color: #f57f17; font-size: 0.85rem; margin-bottom: 5px;">
+            <i class="fas fa-star"></i> Sample Curated Data (Gold Layer - ONLY valid records):
+          </div>
+          <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #fff9c4;">
+                <th style="padding: 5px; border: 1px solid #ddd;">customer_id</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">email</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">age</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">created_at</th>
+                <th style="padding: 5px; border: 1px solid #ddd;">_quality_score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd;">C001</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">john@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">42</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-14</td>
+                <td style="padding: 5px; border: 1px solid #ddd; color: #2e7d32;">100%</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd;">C104</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">sara@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">31</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-18</td>
+                <td style="padding: 5px; border: 1px solid #ddd; color: #2e7d32;">100%</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd;">C105</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">mike@example.com</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">55</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">2025-01-19</td>
+                <td style="padding: 5px; border: 1px solid #ddd; color: #2e7d32;">100%</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 5px; font-size: 0.75rem; color: #666;">
+            <i class="fas fa-filter"></i> Invalid records from Bronze excluded - still available in raw layer for investigation
+          </div>
+          ${isEnhanced ? '<div style="margin-top: 5px; font-size: 0.75rem; color: #666;"><i class="fas fa-layer-group"></i> Multi-zone architecture: Bronze (raw) → Silver (cleansed) → Gold (business-ready)</div>' : ''}
+        </div>
+      `;
+
+      steps.push({
+        icon: 'database',
+        title: 'Load₂ (Curated Data)',
+        description: isEnhanced
+          ? `Loaded ${validRecords.toLocaleString()} transformed records to Gold zone. Silver zone contains cleansed intermediate data.`
+          : `Loaded ${validRecords.toLocaleString()} curated records to analytical warehouse. Raw data remains for reprocessing.`,
+        color: '#ffc107',
+        metrics: isEnhanced ? 'Target: Silver → Gold Layers' : 'Target: Curated Data Warehouse',
+        dataExample: curatedDataExample
+      });
+
+      // Enhanced features
+      if (isEnhanced) {
+        steps.push({
+          icon: 'clock',
+          title: 'Time Travel Enabled',
+          description: 'Historical data queryable at any point in time. Reprocessing available without re-ingestion from source.',
+          color: '#9c27b0'
+        });
+        steps.push({
+          icon: 'users-cog',
+          title: 'Multi-Team Access',
+          description: 'Data Science team can experiment on Bronze, Analytics team consumes Gold. Isolated transformation pipelines.',
+          color: '#4caf50'
+        });
+      }
+
+      return steps;
+    }
+
+    function getSourceName(source) {
+      const names = {
+        'crm': 'CRM System (Salesforce)',
+        'database': 'Transactional Database',
+        'iot': 'IoT Sensor Stream',
+        'api': 'External REST API',
+        'files': 'File Uploads (CSV/JSON)'
+      };
+      return names[source] || source;
+    }
+
+    function getBusinessRuleName(rule) {
+      const names = {
+        'enrichment': 'Customer Enrichment (joining demographics and purchase history)',
+        'aggregation': 'Daily Aggregation (rollup metrics by date/region)',
+        'deduplication': 'Cross-Source Deduplication (matching customer IDs across systems)'
+      };
+      return names[rule] || rule;
+    }
+  </script>
+
+  <style>
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    table tr:hover {
+      background: #e3f2fd !important;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
+      transition: all 0.3s ease;
+    }
+  </style>
+</body>
+</html>

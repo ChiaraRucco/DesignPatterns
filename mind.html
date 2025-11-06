@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIND - Metadata-driven Ingestion Design</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true });</script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>MIND: Metadata-driven Ingestion Design</h1>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="patterns.html" class="nav-link">Patterns</a>
+        <a href="implementation-guide.html" class="nav-link">Implementation Guide</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <!-- Vertical Cards Section -->
+    <section class="vertical-cards-section" style="padding: 40px; display: flex; gap: 30px; flex-wrap: wrap; justify-content: center;">
+      <!-- Summary Card -->
+      <div class="vertical-card" style="flex: 1; min-width: 300px; max-width: 500px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); padding: 40px; color: white; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+        <i class="fas fa-brain" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+        <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative;">What is MIND?</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; text-align: left; position: relative;">
+          <strong>MIND</strong> (Metadata-driven Ingestion Design) is a formalized, cloud-agnostic design pattern for orchestrating scalable, flexible, and maintainable data ingestion pipelines in modern data engineering. It tackles the perennial challenges introduced by source heterogeneity, rapid schema evolution, and the need to support mixed full/incremental/hybrid ingestion methods across diverse environments.
+        </p>
+      </div>
+
+      <!-- Context & Problem Card -->
+      <div class="vertical-card" style="flex: 1; min-width: 300px; max-width: 500px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); padding: 40px; color: white; position: relative; overflow: hidden;">
+        <div style="position: absolute; bottom: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.1); border-radius: 50%;"></div>
+        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px; display: block;"></i>
+        <h2 style="font-size: 2.2rem; margin-bottom: 20px; position: relative;">The Problem</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; text-align: left; position: relative;">
+          Conventional ingestion pipelines are <strong>rigid</strong>—hardcoded for each source, brittle under change, and non-portable across clouds or projects. This leads to excessive maintenance, code duplication, and slow onboarding when new sources or schema changes appear. Without a centralized metadata approach, teams waste time rewriting the same logic for every new data source.
+        </p>
+      </div>
+    </section>
+
+    <section class="solution-structure" style="padding: 40px;">
+      <div class="card" style="background: linear-gradient(to right, #ede7f6, #d1c4e9); border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px;">
+        <h2 style="font-size: 2rem; text-align: center;">Solution Structure</h2>
+        <p style="font-size: 1.2rem; line-height: 1.8; text-align: justify;">
+          MIND centralizes all source- and table-specific configuration in a metadata repository (Unified Metadata Table). This configures the ingestion mode (full/incremental), source properties, schema, transformation scripts, partitioning strategies, and errors. A generic ingestion pipeline reads these metadata rows, dynamically authenticates, runs the selected ingestion logic, applies transformations, and logs results—all without code changes.
+        </p>
+
+        <!-- Formal Definition -->
+        <div style="background: #f3e5f5; padding: 20px; border-radius: 8px; margin-top: 20px;">
+          <h3 style="font-size: 1.5rem; color: #4a148c; margin-bottom: 15px;">Formal Definition</h3>
+          <p style="font-size: 1.1rem; line-height: 1.8;">
+            MIND operates on a metadata table <strong>M</strong> with <strong>n</strong> rows. For each row <strong>r<sub>i</sub></strong> ∈ M, the pipeline executes:
+          </p>
+          <div style="background: white; padding: 15px; border-left: 4px solid #7b1fa2; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1rem;">
+            <strong>for</strong> each row r ∈ M:<br>
+            &nbsp;&nbsp;config ← extract_config(r)<br>
+            &nbsp;&nbsp;connect_to_source(config['data_source'])<br>
+            &nbsp;&nbsp;<strong>if</strong> config['ingestion_type'] == 'incremental':<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;run_incremental_ingestion(config)<br>
+            &nbsp;&nbsp;<strong>elif</strong> config['ingestion_type'] == 'full':<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;run_full_ingestion(config)<br>
+            &nbsp;&nbsp;apply_transformations(config['transformation_scripts'])<br>
+            &nbsp;&nbsp;load_data(config['table'])<br>
+            &nbsp;&nbsp;log_results(config)
+          </div>
+          <p style="font-size: 1rem; line-height: 1.6; color: #555;">
+            Each r<sub>i</sub> contains: data_source, table_name, credentials, primary_key, watermark (timestamp column for incremental), ingestion_type (Full/Incremental/Hybrid), and optional transformation_scripts.
+          </p>
+        </div>
+
+        <div class="metadata-table" style="margin-top: 30px;">
+          <h3 style="font-size: 1.5rem; text-align: center;">Example Metadata Table</h3>
+          <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; margin-top: 15px;">
+            <thead>
+              <tr style="background: #d1c4e9;">
+                <th style="border: 1px solid #ddd; padding: 10px;">Data Source</th>
+                <th style="border: 1px solid #ddd; padding: 10px;">Table</th>
+                <th style="border: 1px solid #ddd; padding: 10px;">Primary Key</th>
+                <th style="border: 1px solid #ddd; padding: 10px;">Watermark</th>
+                <th style="border: 1px solid #ddd; padding: 10px;">Ingestion Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;">Salesforce</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Customers</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">customer_id</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">updated_at</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Incremental</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;">PostgreSQL</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Orders</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">order_id</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">-</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Full</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;">MongoDB</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Products</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">product_id</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">modified_date</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Hybrid</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section style="padding: 40px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef);">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #333;">Key Benefits of MIND</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto;">
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #667eea;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-cogs" style="font-size: 2.5rem; color: #667eea;"></i>
+          </div>
+          <h3 style="color: #667eea; margin-bottom: 15px; text-align: center;">Flexibility & Reusability</h3>
+          <ul style="color: #555; line-height: 1.8;">
+            <li>Single pipeline handles all sources</li>
+            <li>No code changes for new sources</li>
+            <li>Dynamic schema adaptation</li>
+            <li>Cloud-agnostic architecture</li>
+          </ul>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #9c27b0;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-tachometer-alt" style="font-size: 2.5rem; color: #9c27b0;"></i>
+          </div>
+          <h3 style="color: #9c27b0; margin-bottom: 15px; text-align: center;">Scalability</h3>
+          <ul style="color: #555; line-height: 1.8;">
+            <li>Supports full & incremental loads</li>
+            <li>Hybrid ingestion strategies</li>
+            <li>Configurable batch processing</li>
+            <li>Optimized resource utilization</li>
+          </ul>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #4caf50;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: #4caf50;"></i>
+          </div>
+          <h3 style="color: #4caf50; margin-bottom: 15px; text-align: center;">Maintainability</h3>
+          <ul style="color: #555; line-height: 1.8;">
+            <li>Centralized configuration</li>
+            <li>Reduced code duplication</li>
+            <li>Built-in error handling & logging</li>
+            <li>Easy troubleshooting</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Ingestion Strategies Comparison -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #333;">MIND Ingestion Strategies</h2>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+
+        <!-- Date-based -->
+        <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <h3 style="color: #1565c0; margin-bottom: 15px;"><i class="fas fa-calendar-alt"></i> Date-based Incremental</h3>
+          <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 12px;">
+            Uses watermark timestamps to track changes. Efficient for time-series data.
+          </p>
+          <div style="background: white; padding: 12px; border-radius: 6px; font-size: 0.9rem;">
+            <strong>Example:</strong> <code>WHERE updated_at > last_run</code>
+          </div>
+        </div>
+
+        <!-- Hash-based -->
+        <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <h3 style="color: #6a1b9a; margin-bottom: 15px;"><i class="fas fa-hashtag"></i> Hash-based Incremental</h3>
+          <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 12px;">
+            Compares row hashes to detect changes. Works without timestamp columns.
+          </p>
+          <div style="background: white; padding: 12px; border-radius: 6px; font-size: 0.9rem;">
+            <strong>Process:</strong> <code>hash(source) ≠ hash(target)</code>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comparison Table -->
+      <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 30px;">
+        <h3 style="text-align: center; color: #333; margin-bottom: 20px;">Strategy Comparison</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+              <th style="padding: 12px; text-align: left;">Strategy</th>
+              <th style="padding: 12px; text-align: left;">Best For</th>
+              <th style="padding: 12px; text-align: left;">Requirements</th>
+              <th style="padding: 12px; text-align: left;">Performance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Full Load</td>
+              <td style="padding: 12px;">Initial ingestion, small datasets</td>
+              <td style="padding: 12px;">None</td>
+              <td style="padding: 12px;">High resource usage</td>
+            </tr>
+            <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Date-based</td>
+              <td style="padding: 12px;">Time-series, logs, events</td>
+              <td style="padding: 12px;">Watermark column</td>
+              <td style="padding: 12px;">Low overhead</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 12px; font-weight: bold;">Hash-based</td>
+              <td style="padding: 12px;">No timestamps, complex changes</td>
+              <td style="padding: 12px;">Primary key</td>
+              <td style="padding: 12px;">Moderate overhead</td>
+            </tr>
+            <tr style="background: #f5f7fa;">
+              <td style="padding: 12px; font-weight: bold;">Hybrid</td>
+              <td style="padding: 12px;">Large, frequently updated data</td>
+              <td style="padding: 12px;">Metadata orchestration</td>
+              <td style="padding: 12px;">Optimized balance</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Interactive Simulation Section -->
+    <section class="interactive-simulation" style="padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; margin: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+      <h2 style="font-size: 2.5rem; text-align: center; color: white; margin-bottom: 30px;">
+        <i class="fas fa-gamepad"></i> MIND Pipeline Simulator
+      </h2>
+      <p style="color: white; text-align: center; font-size: 1.2rem; margin-bottom: 30px;">
+        Experience how MIND dynamically handles different data sources using a single pipeline!
+      </p>
+
+      <!-- Game Container -->
+      <div style="background: white; border-radius: 10px; padding: 30px; max-width: 1200px; margin: 0 auto;">
+
+        <!-- Metadata Configuration Panel -->
+        <div style="background: #f5f7fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+          <h3 style="color: #667eea; margin-bottom: 15px;"><i class="fas fa-cog"></i> Configure Metadata</h3>
+
+          <!-- Row 1: Basic Config -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Data Source:</label>
+              <select id="dataSource" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="salesforce">Salesforce API</option>
+                <option value="postgresql">PostgreSQL DB</option>
+                <option value="s3">AWS S3 Bucket</option>
+                <option value="mongodb">MongoDB</option>
+                <option value="rest_api">REST API</option>
+                <option value="snowflake">Snowflake</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Table Name:</label>
+              <input type="text" id="tableName" value="customer_data" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+            </div>
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Ingestion Type:</label>
+              <select id="ingestionType" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="full">Full Load</option>
+                <option value="incremental">Incremental (Date-based)</option>
+                <option value="incremental_key">Incremental (Key-based)</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="cdc">Change Data Capture</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 2: Incremental Config (conditional) -->
+          <div id="incrementalConfig" style="display: none; background: #e8eaf6; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Date Column:</label>
+                <input type="text" id="dateColumn" placeholder="e.g., updated_at" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+              </div>
+              <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Key Column:</label>
+                <input type="text" id="keyColumn" placeholder="e.g., id" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+              </div>
+              <div>
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">Lookback Window (days):</label>
+                <input type="number" id="lookbackDays" value="7" min="1" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Data Quality & Transformation -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Cleaning Script:</label>
+              <select id="cleaningScript" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="none">None</option>
+                <option value="remove_nulls">Remove Nulls</option>
+                <option value="deduplicate">Deduplicate Records</option>
+                <option value="standardize_dates">Standardize Date Formats</option>
+                <option value="trim_strings">Trim Whitespace</option>
+                <option value="custom_validation">Custom Validation Rules</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Transformation Script:</label>
+              <select id="transformScript" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="none">None</option>
+                <option value="add_metadata">Add Audit Columns</option>
+                <option value="normalize_schema">Normalize Schema</option>
+                <option value="enrich_data">Enrich with Reference Data</option>
+                <option value="mask_pii">Mask PII Fields</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Partition Strategy:</label>
+              <select id="partitionStrategy" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="none">None</option>
+                <option value="daily">Daily Partition</option>
+                <option value="monthly">Monthly Partition</option>
+                <option value="yearly">Yearly Partition</option>
+                <option value="hash">Hash Partition</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 4: Advanced Options -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Error Handling:</label>
+              <select id="errorHandling" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="skip">Skip & Log Errors</option>
+                <option value="quarantine">Quarantine Bad Records</option>
+                <option value="fail">Fail on Error</option>
+                <option value="retry">Retry with Backoff</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Batch Size:</label>
+              <input type="number" id="batchSize" value="1000" min="100" step="100" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+            </div>
+            <div>
+              <label style="font-weight: bold; display: block; margin-bottom: 5px;">Target Format:</label>
+              <select id="targetFormat" style="width: 100%; padding: 8px; border-radius: 5px; border: 2px solid #667eea;">
+                <option value="parquet">Parquet</option>
+                <option value="delta">Delta Lake</option>
+                <option value="iceberg">Apache Iceberg</option>
+                <option value="avro">Avro</option>
+                <option value="json">JSON</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button id="runPipeline" style="padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              <i class="fas fa-play"></i> Run Pipeline
+            </button>
+            <button id="saveMetadata" style="padding: 12px 30px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              <i class="fas fa-save"></i> Save to Metadata Table
+            </button>
+          </div>
+        </div>
+
+        <!-- Pipeline Execution Visualization -->
+        <div id="pipelineSteps" style="margin-top: 30px;">
+          <h3 style="color: #667eea; margin-bottom: 15px;"><i class="fas fa-stream"></i> Pipeline Execution</h3>
+          <div id="stepsContainer" style="min-height: 200px;">
+            <p style="text-align: center; color: #999; padding: 40px;">Configure metadata and run the pipeline to see it in action!</p>
+          </div>
+        </div>
+
+        <!-- Statistics -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px;">
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+            <div style="font-size: 2rem; font-weight: bold;" id="pipelinesRun">0</div>
+            <div>Pipelines Run</div>
+          </div>
+          <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+            <div style="font-size: 2rem; font-weight: bold;" id="recordsProcessed">0</div>
+            <div>Records Processed</div>
+          </div>
+          <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+            <div style="font-size: 2rem; font-weight: bold;" id="sourcesConnected">0</div>
+            <div>Unique Sources</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // MIND Pipeline Simulator Logic
+      let stats = {
+        pipelinesRun: 0,
+        recordsProcessed: 0,
+        sourcesUsed: new Set()
+      };
+
+      let savedConfigs = [];
+
+      // Show/hide incremental config based on ingestion type
+      document.getElementById('ingestionType').addEventListener('change', function() {
+        const incrementalConfig = document.getElementById('incrementalConfig');
+        const value = this.value;
+        if (value === 'incremental' || value === 'incremental_key' || value === 'hybrid' || value === 'cdc') {
+          incrementalConfig.style.display = 'block';
+        } else {
+          incrementalConfig.style.display = 'none';
+        }
+      });
+
+      // Get current configuration
+      function getCurrentConfig() {
+        return {
+          dataSource: document.getElementById('dataSource').value,
+          tableName: document.getElementById('tableName').value,
+          ingestionType: document.getElementById('ingestionType').value,
+          dateColumn: document.getElementById('dateColumn').value,
+          keyColumn: document.getElementById('keyColumn').value,
+          lookbackDays: document.getElementById('lookbackDays').value,
+          cleaningScript: document.getElementById('cleaningScript').value,
+          transformScript: document.getElementById('transformScript').value,
+          partitionStrategy: document.getElementById('partitionStrategy').value,
+          errorHandling: document.getElementById('errorHandling').value,
+          batchSize: document.getElementById('batchSize').value,
+          targetFormat: document.getElementById('targetFormat').value
+        };
+      }
+
+      // Save metadata configuration
+      document.getElementById('saveMetadata').addEventListener('click', function() {
+        const config = getCurrentConfig();
+        savedConfigs.push(config);
+
+        // Show success message
+        const btn = this;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+        btn.style.background = 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)';
+
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+        }, 2000);
+
+        // Update metadata table view if visible
+        updateMetadataTableView();
+      });
+
+      // Run pipeline
+      document.getElementById('runPipeline').addEventListener('click', function() {
+        const config = getCurrentConfig();
+        const stepsContainer = document.getElementById('stepsContainer');
+        stepsContainer.innerHTML = '<div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #667eea;"></i><br>Executing pipeline...</div>';
+
+        // Simulate pipeline execution
+        setTimeout(() => {
+          stats.pipelinesRun++;
+          stats.sourcesUsed.add(config.dataSource);
+          const recordCount = Math.floor(Math.random() * 10000) + 1000;
+          stats.recordsProcessed += recordCount;
+
+          // Build dynamic steps based on configuration
+          const steps = [
+            { icon: 'database', title: 'Read Metadata', description: `Retrieved config for ${config.tableName} from metadata table`, color: '#667eea' },
+            { icon: 'plug', title: 'Connect to Source', description: `Connected to ${getSourceName(config.dataSource)}`, color: '#764ba2' }
+          ];
+
+          // Add incremental-specific steps
+          if (config.ingestionType === 'incremental' && config.dateColumn) {
+            steps.push({
+              icon: 'calendar',
+              title: 'Calculate Date Range',
+              description: `Using ${config.dateColumn} with ${config.lookbackDays}-day lookback window`,
+              color: '#9c27b0'
+            });
+          } else if (config.ingestionType === 'incremental_key' && config.keyColumn) {
+            steps.push({
+              icon: 'key',
+              title: 'Identify New Keys',
+              description: `Comparing ${config.keyColumn} to find new/updated records`,
+              color: '#9c27b0'
+            });
+          }
+
+          steps.push({
+            icon: 'download',
+            title: 'Extract Data',
+            description: `Running ${getIngestionTypeName(config.ingestionType)} (${recordCount.toLocaleString()} records, batch size: ${config.batchSize})`,
+            color: '#f093fb'
+          });
+
+          // Add cleaning step if configured
+          if (config.cleaningScript !== 'none') {
+            steps.push({
+              icon: 'broom',
+              title: 'Data Cleaning',
+              description: `Applied: ${getCleaningScriptName(config.cleaningScript)}`,
+              color: '#ff9800'
+            });
+          }
+
+          // Add transformation step if configured
+          if (config.transformScript !== 'none') {
+            steps.push({
+              icon: 'code',
+              title: 'Transform Data',
+              description: `Applied: ${getTransformScriptName(config.transformScript)}`,
+              color: '#f5576c'
+            });
+          }
+
+          // Add partition step if configured
+          if (config.partitionStrategy !== 'none') {
+            steps.push({
+              icon: 'layer-group',
+              title: 'Apply Partitioning',
+              description: `Strategy: ${getPartitionStrategyName(config.partitionStrategy)}`,
+              color: '#673ab7'
+            });
+          }
+
+          steps.push({
+            icon: 'upload',
+            title: 'Load Data',
+            description: `Loaded to ${config.tableName} as ${config.targetFormat.toUpperCase()}`,
+            color: '#4facfe'
+          });
+
+          steps.push({
+            icon: 'check-circle',
+            title: 'Complete',
+            description: `Pipeline successful! Error handling: ${getErrorHandlingName(config.errorHandling)}`,
+            color: '#00f2fe'
+          });
+
+          let html = '<div style="display: flex; flex-direction: column; gap: 15px;">';
+          steps.forEach((step, index) => {
+            html += `
+              <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f5f7fa; border-radius: 8px; border-left: 4px solid ${step.color}; animation: slideIn 0.3s ease ${index * 0.1}s both;">
+                <div style="width: 40px; height: 40px; background: ${step.color}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+                  <i class="fas fa-${step.icon}"></i>
+                </div>
+                <div style="flex: 1;">
+                  <div style="font-weight: bold; color: ${step.color};">${step.title}</div>
+                  <div style="font-size: 0.9rem; color: #666;">${step.description}</div>
+                </div>
+                <i class="fas fa-check" style="color: #4caf50; font-size: 1.2rem;"></i>
+              </div>
+            `;
+          });
+          html += '</div>';
+
+          stepsContainer.innerHTML = html;
+
+          // Update stats
+          document.getElementById('pipelinesRun').textContent = stats.pipelinesRun;
+          document.getElementById('recordsProcessed').textContent = stats.recordsProcessed.toLocaleString();
+          document.getElementById('sourcesConnected').textContent = stats.sourcesUsed.size;
+        }, 1500);
+      });
+
+      // Helper functions
+      function getSourceName(source) {
+        const names = {
+          'salesforce': 'Salesforce API',
+          'postgresql': 'PostgreSQL Database',
+          's3': 'AWS S3 Bucket',
+          'mongodb': 'MongoDB Collection',
+          'rest_api': 'REST API',
+          'snowflake': 'Snowflake Data Warehouse'
+        };
+        return names[source] || source;
+      }
+
+      function getIngestionTypeName(type) {
+        const names = {
+          'full': 'Full Load',
+          'incremental': 'Incremental (Date-based)',
+          'incremental_key': 'Incremental (Key-based)',
+          'hybrid': 'Hybrid Load',
+          'cdc': 'Change Data Capture'
+        };
+        return names[type] || type;
+      }
+
+      function getCleaningScriptName(script) {
+        const names = {
+          'remove_nulls': 'Remove Null Values',
+          'deduplicate': 'Deduplicate Records',
+          'standardize_dates': 'Standardize Date Formats',
+          'trim_strings': 'Trim Whitespace',
+          'custom_validation': 'Custom Validation Rules'
+        };
+        return names[script] || script;
+      }
+
+      function getTransformScriptName(script) {
+        const names = {
+          'add_metadata': 'Add Audit Columns (created_at, updated_at)',
+          'normalize_schema': 'Normalize Schema',
+          'enrich_data': 'Enrich with Reference Data',
+          'mask_pii': 'Mask PII Fields'
+        };
+        return names[script] || script;
+      }
+
+      function getPartitionStrategyName(strategy) {
+        const names = {
+          'daily': 'Daily Partition (by date)',
+          'monthly': 'Monthly Partition (YYYY-MM)',
+          'yearly': 'Yearly Partition (YYYY)',
+          'hash': 'Hash-based Partition'
+        };
+        return names[strategy] || strategy;
+      }
+
+      function getErrorHandlingName(handling) {
+        const names = {
+          'skip': 'Skip & Log Errors',
+          'quarantine': 'Quarantine Bad Records',
+          'fail': 'Fail on Error',
+          'retry': 'Retry with Exponential Backoff'
+        };
+        return names[handling] || handling;
+      }
+
+      function updateMetadataTableView() {
+        // This could be expanded to show saved configurations in a table view
+        console.log('Saved configurations:', savedConfigs);
+      }
+    </script>
+
+    <style>
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      table th, table td {
+        text-align: left;
+      }
+
+      button:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+      }
+
+      #runPipeline:hover {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      }
+
+      .vertical-card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+      }
+    </style>
+  </main>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Data Engineering Design Patterns. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

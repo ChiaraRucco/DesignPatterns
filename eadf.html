@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EADF - Environment-Aware Deployment Framework</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>EADF: Environment-Aware Deployment Framework</h1>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="patterns.html" class="nav-link">Patterns</a>
+        <a href="mind.html" class="nav-link">MIND Pattern</a>
+        <a href="etlt.html" class="nav-link">ETLT/ELTL</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 60px 20px; text-align: center;">
+      <h2 style="font-size: 2.8rem; margin-bottom: 20px;">Environment-Aware Deployment Framework</h2>
+      <p style="font-size: 1.3rem; max-width: 900px; margin: 0 auto;">
+        A design pattern for CI/CD in data engineering that enables portable, auditable, and reproducible deployments across environments and clouds
+      </p>
+    </section>
+
+    <!-- Introduction -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <div style="background: #f5f7fa; padding: 30px; border-radius: 10px; border-left: 5px solid #4facfe;">
+        <h2 style="color: #00838f; margin-bottom: 20px;">What is EADF?</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 15px;">
+          The <strong>Environment-Aware Deployment Framework (EADF)</strong> is not simply a tool or platform, but a <em>design pattern</em> for CI/CD in data engineering.
+          It formalizes a reusable abstraction for promoting heterogeneous data components—pipelines, models, schemas, transformation logics—across environments (dev, test, prod)
+          and clouds (Azure, AWS, GCP) in a portable, auditable, and reproducible manner.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333;">
+          Unlike traditional CI/CD that embeds environment-specific details causing drift and vendor lock-in, EADF uses <strong>late binding</strong> and standardized YAML descriptors
+          to decouple deployment logic from environment specifics—enabling teams to <em>write once and reuse everywhere</em>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Key Principles -->
+    <section style="padding: 40px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef);">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #333;">Core Principles</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto;">
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #4facfe;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-recycle" style="font-size: 2.5rem; color: #4facfe;"></i>
+          </div>
+          <h3 style="color: #4facfe; margin-bottom: 15px; text-align: center;">Automation</h3>
+          <p style="color: #555; line-height: 1.8;">
+            Automates build, test, and deployment processes, significantly reducing manual intervention and minimizing human error
+          </p>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #00bcd4;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-sync-alt" style="font-size: 2.5rem; color: #00bcd4;"></i>
+          </div>
+          <h3 style="color: #00bcd4; margin-bottom: 15px; text-align: center;">Frequent Integration</h3>
+          <p style="color: #555; line-height: 1.8;">
+            Integrates code changes frequently to prevent "integration hell" and resolve conflicts early in the development cycle
+          </p>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #0288d1;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-comments" style="font-size: 2.5rem; color: #0288d1;"></i>
+          </div>
+          <h3 style="color: #0288d1; margin-bottom: 15px; text-align: center;">Continuous Feedback</h3>
+          <p style="color: #555; line-height: 1.8;">
+            Provides immediate feedback through automated testing, including early detection of data contract violations with downstream consumers
+          </p>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #01579b;">
+          <div style="text-align: center; margin-bottom: 15px;">
+            <i class="fas fa-clone" style="font-size: 2.5rem; color: #01579b;"></i>
+          </div>
+          <h3 style="color: #01579b; margin-bottom: 15px; text-align: center;">Reproducibility</h3>
+          <p style="color: #555; line-height: 1.8;">
+            Ensures builds and deployments are consistent across environments, reducing discrepancies and failures due to environmental variations
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- The Problem -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #333;">The Challenge</h2>
+
+      <div style="background: #fff3e0; padding: 25px; border-radius: 10px; border-left: 5px solid #ff6f00; margin-bottom: 30px;">
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #333;">
+          Traditional CI/CD approaches, while transformative in application development, face unique challenges when applied to data workflows:
+        </p>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+            <th style="padding: 20px; text-align: left; font-size: 1.1rem;">Challenge</th>
+            <th style="padding: 20px; text-align: left; font-size: 1.1rem;">Current Approaches</th>
+            <th style="padding: 20px; text-align: left; font-size: 1.1rem;">Limitations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Data Versioning & Reproducibility</td>
+            <td style="padding: 15px;">DVC, MLflow, Delta Lake</td>
+            <td style="padding: 15px;">Limited scalability; not unified with CI/CD pipelines</td>
+          </tr>
+          <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Schema Evolution</td>
+            <td style="padding: 15px;">Apache Hudi, Iceberg, Delta Lake</td>
+            <td style="padding: 15px;">Lack of integration with automated deployment checks</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Environment Drift</td>
+            <td style="padding: 15px;">Jenkins, GitLab CI, IaC tools</td>
+            <td style="padding: 15px;">Early binding; duplicated configs; weak auditability</td>
+          </tr>
+          <tr style="background: #f5f7fa; border-bottom: 1px solid #e0e0e0;">
+            <td style="padding: 15px; font-weight: bold;">Multi-Cloud Deployment</td>
+            <td style="padding: 15px;">Ad-hoc adapters, vendor-specific APIs</td>
+            <td style="padding: 15px;">Vendor lock-in; inconsistent security and APIs</td>
+          </tr>
+          <tr>
+            <td style="padding: 15px; font-weight: bold;">Auditability & Provenance</td>
+            <td style="padding: 15px;">Manual logging, metadata stores</td>
+            <td style="padding: 15px;">Fragmented; no systematic promotion tracking</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- EADF Solution -->
+    <section style="padding: 40px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef);">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #333;">The EADF Solution</h2>
+
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 30px;">
+          <h3 style="color: #00838f; margin-bottom: 20px;">Late Binding vs Early Binding</h3>
+
+          <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; margin-bottom: 20px;">
+            <div style="background: #ffebee; padding: 20px; border-radius: 8px; border-left: 4px solid #f44336;">
+              <h4 style="color: #c62828; margin-bottom: 10px;"><i class="fas fa-times-circle"></i> Early Binding (Traditional)</h4>
+              <p style="font-size: 0.95rem; color: #555; margin-bottom: 10px;">
+                Environment details hard-coded at authoring time
+              </p>
+              <div style="background: white; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.8rem;">
+                endpoint: "https://prod-api.azure.com"<br>
+                region: "westeurope"<br>
+                credentials: "prod-key-123"
+              </div>
+              <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">
+                ❌ Creates fragility and duplication
+              </p>
+            </div>
+
+            <div style="font-size: 2rem; color: #4facfe;">→</div>
+
+            <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid #4caf50;">
+              <h4 style="color: #2e7d32; margin-bottom: 10px;"><i class="fas fa-check-circle"></i> Late Binding (EADF)</h4>
+              <p style="font-size: 0.95rem; color: #555; margin-bottom: 10px;">
+                Parameters bound at deployment time
+              </p>
+              <div style="background: white; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.8rem;">
+                endpoint: "{{env.api_endpoint}}"<br>
+                region: "{{env.region}}"<br>
+                credentials: "{{vault.credentials}}"
+              </div>
+              <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">
+                ✅ Enables reusability and portability
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7-Stage Pipeline -->
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+          <h3 style="color: #00838f; margin-bottom: 20px; text-align: center;">Deterministic 7-Stage Deployment Pipeline</h3>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #2196f3;">
+              <div style="font-size: 2rem; color: #2196f3; margin-bottom: 10px;">1</div>
+              <h4 style="color: #1565c0; margin-bottom: 8px;">Binding</h4>
+              <p style="font-size: 0.85rem; color: #555;">Environment parameters bound at deployment time</p>
+            </div>
+
+            <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #9c27b0;">
+              <div style="font-size: 2rem; color: #9c27b0; margin-bottom: 10px;">2</div>
+              <h4 style="color: #7b1fa2; margin-bottom: 8px;">Build</h4>
+              <p style="font-size: 0.85rem; color: #555;">Artifact packaged into consistent unit</p>
+            </div>
+
+            <div style="background: #fff3e0; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #ff9800;">
+              <div style="font-size: 2rem; color: #ff9800; margin-bottom: 10px;">3</div>
+              <h4 style="color: #e65100; margin-bottom: 8px;">Validation</h4>
+              <p style="font-size: 0.85rem; color: #555;">Schema and compatibility checks</p>
+            </div>
+
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #4caf50;">
+              <div style="font-size: 2rem; color: #4caf50; margin-bottom: 10px;">4</div>
+              <h4 style="color: #2e7d32; margin-bottom: 8px;">Deployment</h4>
+              <p style="font-size: 0.85rem; color: #555;">Artifact instantiated to target</p>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+            <div style="background: #fce4ec; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #e91e63;">
+              <div style="font-size: 2rem; color: #e91e63; margin-bottom: 10px;">5</div>
+              <h4 style="color: #c2185b; margin-bottom: 8px;">Smoke Test</h4>
+              <p style="font-size: 0.85rem; color: #555;">Lightweight verification tests</p>
+            </div>
+
+            <div style="background: #fff9c4; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #ffc107;">
+              <div style="font-size: 2rem; color: #ffc107; margin-bottom: 10px;">6</div>
+              <h4 style="color: #f57f17; margin-bottom: 8px;">Gate Evaluation</h4>
+              <p style="font-size: 0.85rem; color: #555;">Promotion policies evaluated</p>
+            </div>
+
+            <div style="background: #e0f2f1; padding: 15px; border-radius: 8px; text-align: center; border-top: 3px solid #009688;">
+              <div style="font-size: 2rem; color: #009688; margin-bottom: 10px;">7</div>
+              <h4 style="color: #00695c; margin-bottom: 8px;">Provenance</h4>
+              <p style="font-size: 0.85rem; color: #555;">Metadata captured for audit</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- YAML Artifacts -->
+    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #333;">Core YAML Artifacts</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px;">
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #2196f3;">
+          <h3 style="color: #2196f3; margin-bottom: 15px;"><i class="fas fa-cube"></i> component.yaml</h3>
+          <p style="color: #555; line-height: 1.7; margin-bottom: 15px;">
+            Declares the artifact to be deployed (pipeline, model, notebook, schema). Authored by feature teams.
+          </p>
+          <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.8rem; overflow-x: auto;">
+name: customer_orders_ingest<br>
+type: adf_pipeline<br>
+artifact: ./artifacts/adf/orders.json<br>
+params:<br>
+&nbsp;&nbsp;schedule: "0 * * * *"<br>
+&nbsp;&nbsp;tags: ["ingest", "orders"]
+          </div>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #9c27b0;">
+          <h3 style="color: #9c27b0; margin-bottom: 15px;"><i class="fas fa-server"></i> environments.yaml</h3>
+          <p style="color: #555; line-height: 1.7; margin-bottom: 15px;">
+            Centralizes environment-specific bindings (cloud, region, secrets). Maintained by platform teams.
+          </p>
+          <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.8rem; overflow-x: auto;">
+dev:<br>
+&nbsp;&nbsp;cloud: azure<br>
+&nbsp;&nbsp;region: westeurope<br>
+prod:<br>
+&nbsp;&nbsp;cloud: gcp<br>
+&nbsp;&nbsp;region: europe-west1
+          </div>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #ff9800;">
+          <h3 style="color: #ff9800; margin-bottom: 15px;"><i class="fas fa-project-diagram"></i> pipeline.yaml</h3>
+          <p style="color: #555; line-height: 1.7; margin-bottom: 15px;">
+            Reusable template defining build, validation, and deployment logic. Shared responsibility.
+          </p>
+          <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.8rem; overflow-x: auto;">
+steps:<br>
+&nbsp;&nbsp;- name: bind_parameters<br>
+&nbsp;&nbsp;- name: build<br>
+&nbsp;&nbsp;- name: validate<br>
+&nbsp;&nbsp;- name: deploy<br>
+&nbsp;&nbsp;- name: smoke_test
+          </div>
+        </div>
+
+        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #4caf50;">
+          <h3 style="color: #4caf50; margin-bottom: 15px;"><i class="fas fa-check-double"></i> promotion.yaml</h3>
+          <p style="color: #555; line-height: 1.7; margin-bottom: 15px;">
+            Defines gates and rules governing progression between environments. Joint governance.
+          </p>
+          <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.8rem; overflow-x: auto;">
+rules:<br>
+&nbsp;&nbsp;- env: dev<br>
+&nbsp;&nbsp;&nbsp;&nbsp;require: [smoke_test.success]<br>
+&nbsp;&nbsp;- env: prod<br>
+&nbsp;&nbsp;&nbsp;&nbsp;require: [approvals.security]
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section style="padding: 60px 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">Key Benefits</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-globe"></i> Cloud-Agnostic</h3>
+            <p>Deploy to Azure, AWS, or GCP by changing parameters—no code duplication needed</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-shield-alt"></i> Drift-Free</h3>
+            <p>Late binding eliminates configuration drift between environments</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-history"></i> Auditable</h3>
+            <p>Complete provenance tracking for every deployment decision and outcome</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-tachometer-alt"></i> Fast</h3>
+            <p>67% faster than scripts, 99% faster than manual deployments</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Data Engineering Design Patterns. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <style>
+    table tr:hover {
+      background: #e3f2fd !important;
+      transition: background 0.3s ease;
+    }
+  </style>
+</body>
+</html>
