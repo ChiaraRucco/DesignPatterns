@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools & Code Library - Data Engineering Design Patterns</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header style="background: #1a1a1a; border-bottom: 1px solid #333; padding: 15px 0;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <img src="https://avatars.githubusercontent.com/u/145194871?s=280&v=4" alt="DataLab Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+        <h1 style="font-size: 1.1rem; color: #fff; font-weight: 600; margin: 0;">Tools & Code Library</h1>
+      </div>
+      <nav style="display: flex; gap: 20px; align-items: center;">
+        <a href="index.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Home</a>
+        <a href="index.html#patterns" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Patterns</a>
+        <a href="resources.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Resources</a>
+        <a href="implementation-guide.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Docs</a>
+        <a href="https://github.com/DataLabUniSalento" target="_blank" class="nav-link github-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px; display: flex; align-items: center; gap: 6px;">
+          <i class="fab fa-github"></i>
+          <span>DataLab</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+    <!-- Hero Section -->
+    <section style="background: linear-gradient(135deg, #f57c00 0%, #e65100 100%); color: white; padding: 60px 20px;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="max-width: 800px;">
+          <div style="display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.15); border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; font-weight: 500;">
+            Interactive Tools
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; line-height: 1.2;">Tools: ROI Calculator & Code Library</h2>
+          <p style="font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.9); margin-bottom: 30px;">
+            Interactive ROI calculator to quantify business value and production-ready code snippets to accelerate your implementation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section style="padding: 50px 20px; background: white;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 style="font-size: 2rem; margin-bottom: 15px; font-weight: 600; color: #1a1a1a;">
+            <i class="fas fa-calculator" style="color: #f57c00;"></i> ROI Calculator
+          </h2>
+          <p style="font-size: 1rem; color: #666; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+            Based on our research showing teams spend 10-40% of time on configuration management, calculate your potential annual savings.
+          </p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 12px; padding: 40px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+
+          <!-- Input Section -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 35px;">
+
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 0.95rem;">
+                <i class="fas fa-users" style="color: #f57c00;"></i> Team Size
+              </label>
+              <input type="number" id="teamSize" value="5" min="1" max="100"
+                style="width: 100%; padding: 12px; border: 2px solid #ffe0b2; border-radius: 6px; font-size: 1rem; font-family: 'Inter', sans-serif;">
+              <small style="color: #666; font-size: 0.85rem;">Number of data engineers</small>
+            </div>
+
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 0.95rem;">
+                <i class="fas fa-dollar-sign" style="color: #f57c00;"></i> Average Salary ($)
+              </label>
+              <input type="number" id="avgSalary" value="120000" min="50000" max="300000" step="5000"
+                style="width: 100%; padding: 12px; border: 2px solid #ffe0b2; border-radius: 6px; font-size: 1rem; font-family: 'Inter', sans-serif;">
+              <small style="color: #666; font-size: 0.85rem;">Annual compensation per engineer</small>
+            </div>
+
+            <div>
+              <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 0.95rem;">
+                <i class="fas fa-clock" style="color: #f57c00;"></i> Config Time (%)
+              </label>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <input type="range" id="configTime" value="25" min="10" max="40" step="5"
+                  style="flex: 1; height: 8px; border-radius: 4px; background: #ffe0b2; outline: none;">
+                <span id="configTimeValue" style="font-weight: 700; color: #f57c00; font-size: 1.2rem; min-width: 50px;">25%</span>
+              </div>
+              <small style="color: #666; font-size: 0.85rem;">Time spent on configuration management</small>
+            </div>
+
+          </div>
+
+          <!-- Results Section -->
+          <div style="background: white; border-radius: 8px; padding: 30px; border: 3px solid #f57c00;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 20px; color: #1a1a1a; text-align: center;">
+              <i class="fas fa-chart-line"></i> Your Potential Savings
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px;">
+
+              <div style="text-align: center; padding: 20px; background: #fff3e0; border-radius: 8px;">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px; font-weight: 500;">Current Annual Cost</div>
+                <div id="currentCost" style="font-size: 2rem; font-weight: 700; color: #e65100;">$0</div>
+                <div style="font-size: 0.85rem; color: #666; margin-top: 5px;">Lost productivity</div>
+              </div>
+
+              <div style="text-align: center; padding: 20px; background: #e8f5e9; border-radius: 8px;">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px; font-weight: 500;">Potential Savings (30%)</div>
+                <div id="potentialSavings" style="font-size: 2rem; font-weight: 700; color: #2e7d32;">$0</div>
+                <div style="font-size: 0.85rem; color: #666; margin-top: 5px;">With pattern adoption</div>
+              </div>
+
+              <div style="text-align: center; padding: 20px; background: #e3f2fd; border-radius: 8px;">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px; font-weight: 500;">ROI Timeline</div>
+                <div id="roiTimeline" style="font-size: 2rem; font-weight: 700; color: #1976d2;">2-3</div>
+                <div style="font-size: 0.85rem; color: #666; margin-top: 5px;">Months to break even</div>
+              </div>
+
+            </div>
+
+            <div style="background: #f5f7fa; padding: 20px; border-radius: 6px; border-left: 4px solid #2196f3;">
+              <h4 style="font-size: 1rem; margin-bottom: 10px; color: #1a1a1a;">
+                <i class="fas fa-info-circle" style="color: #2196f3;"></i> What This Means for Your Team
+              </h4>
+              <p id="interpretation" style="color: #555; line-height: 1.7; margin: 0; font-size: 0.95rem;">
+                Enter your team details above to see personalized insights.
+              </p>
+            </div>
+
+            <div style="margin-top: 25px; text-align: center;">
+              <a href="implementation-guide.html" style="text-decoration: none;">
+                <button style="padding: 14px 32px; background: linear-gradient(135deg, #f57c00 0%, #e65100 100%); color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);">
+                  <i class="fas fa-rocket"></i> Start Implementation
+                </button>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Code Snippets Library -->
+    <section style="padding: 50px 20px; background: #fafafa;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 style="font-size: 2rem; margin-bottom: 15px; font-weight: 600; color: #1a1a1a;">
+            <i class="fas fa-code" style="color: #673ab7;"></i> Code Snippets Library
+          </h2>
+          <p style="font-size: 1rem; color: #666; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+            Ready-to-use implementations for each pattern. Copy, paste, and customize for your projects.
+          </p>
+        </div>
+
+        <!-- MIND Snippets -->
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 25px;">
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 1.3rem; font-weight: 600; color: #2196f3; margin: 0;">
+              <i class="fas fa-brain"></i> MIND Pattern - Metadata Table Schema
+            </h3>
+          </div>
+          <pre id="mind-schema" style="background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85rem;"><code>-- MIND Metadata Repository Schema
+CREATE TABLE ingestion_metadata (
+    source_id VARCHAR(50) PRIMARY KEY,
+    data_source VARCHAR(100) NOT NULL,      -- 'salesforce', 'postgresql', 'mongodb'
+    table_name VARCHAR(100) NOT NULL,
+    connection_string VARCHAR(500),
+    credentials_vault_key VARCHAR(100),
+
+    -- Ingestion Configuration
+    ingestion_type VARCHAR(20),             -- 'full', 'incremental', 'hybrid'
+    primary_key VARCHAR(100),
+    watermark_column VARCHAR(100),          -- For incremental loads
+    last_watermark TIMESTAMP,
+
+    -- Transformation & Quality
+    transformation_script TEXT,
+    data_quality_rules JSON,
+    partition_strategy VARCHAR(50),
+
+    -- Target Configuration
+    target_table VARCHAR(100),
+    target_format VARCHAR(20),              -- 'parquet', 'delta', 'iceberg'
+
+    -- Metadata & Monitoring
+    is_active BOOLEAN DEFAULT TRUE,
+    last_run_timestamp TIMESTAMP,
+    last_run_status VARCHAR(20),
+    record_count_last_run INT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Example Insert
+INSERT INTO ingestion_metadata VALUES (
+    'salesforce_accounts',
+    'salesforce',
+    'Account',
+    'https://mycompany.salesforce.com',
+    'salesforce_prod_creds',
+    'incremental',
+    'Id',
+    'LastModifiedDate',
+    NULL,
+    NULL,
+    '{"not_null": ["Id", "Name"], "unique": ["Id"]}',
+    'date',
+    'raw.salesforce_accounts',
+    'delta',
+    TRUE,
+    NULL,
+    NULL,
+    NULL,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+);</code></pre>
+          <div style="margin-top: 15px; padding: 12px; background: #e3f2fd; border-radius: 4px;">
+            <small style="color: #1565c0; font-weight: 500;">
+              <i class="fas fa-info-circle"></i> This schema supports full, incremental, and hybrid ingestion modes with built-in quality checks.
+            </small>
+          </div>
+        </div>
+
+        <!-- ETLT++ Snippet -->
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 25px;">
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 1.3rem; font-weight: 600; color: #9c27b0; margin: 0;">
+              <i class="fas fa-filter"></i> ETLT++ - Validation Pipeline
+            </h3>
+          </div>
+          <pre id="etlt-pipeline" style="background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85rem;"><code>import great_expectations as gx
+from deltalake import write_deltalake
+import pandas as pd
+
+class ETLTPlusPipeline:
+    """ETLT++ Pipeline: Extract → Transform (Validate) → Load → Transform (Business)"""
+
+    def __init__(self, data_contract_path):
+        self.context = gx.get_context()
+        self.contract = self._load_contract(data_contract_path)
+
+    def extract(self, source):
+        """Extract data from source"""
+        return pd.read_csv(source)  # or any data source
+
+    def transform_quality(self, data):
+        """Transform₁: Validate against data contract"""
+        # Create Great Expectations batch
+        batch = self.context.sources.pandas_default.read_dataframe(data)
+        results = batch.validate(self.contract)
+
+        # Separate valid and invalid records
+        valid_data = data[results.success_index]
+        invalid_data = data[~results.success_index]
+
+        # Add rejection metadata
+        invalid_data['rejection_reason'] = results.failure_reasons
+        invalid_data['rejection_timestamp'] = pd.Timestamp.now()
+
+        return valid_data, invalid_data
+
+    def load(self, valid_data, invalid_data):
+        """Load validated data to warehouse, quarantine invalids"""
+        # Load valid data
+        write_deltalake('warehouse/validated_data', valid_data, mode='append')
+
+        # Quarantine invalid records
+        if not invalid_data.empty:
+            write_deltalake('quarantine/failed_records', invalid_data, mode='append')
+
+    def transform_business(self, data):
+        """Transform₂: Apply business logic on validated data"""
+        data['processed_date'] = pd.Timestamp.now()
+        data['data_quality_score'] = 100.0
+        return data
+
+    def run(self, source):
+        """Execute ETLT++ pipeline"""
+        raw_data = self.extract(source)
+        valid, invalid = self.transform_quality(raw_data)
+        self.load(valid, invalid)
+        transformed = self.transform_business(valid)
+        return transformed, invalid
+
+# Usage
+pipeline = ETLTPlusPipeline('contracts/data_contract.yaml')
+result, rejected = pipeline.run('data/source.csv')</code></pre>
+          <div style="margin-top: 15px; padding: 12px; background: #f3e5f5; border-radius: 4px;">
+            <small style="color: #6a1b9a; font-weight: 500;">
+              <i class="fas fa-shield-alt"></i> This validates data BEFORE loading, ensuring only clean data enters your warehouse. Rejected records go to quarantine for replay.
+            </small>
+          </div>
+        </div>
+
+        <!-- ELTL++ Snippet -->
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 25px;">
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 1.3rem; font-weight: 600; color: #7c4dff; margin: 0;">
+              <i class="fas fa-database"></i> ELTL++ - Bronze/Silver/Gold Architecture
+            </h3>
+          </div>
+          <pre id="eltl-pipeline" style="background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85rem;"><code>from deltalake import write_deltalake, DeltaTable
+import pandas as pd
+
+class ELTLPlusPipeline:
+    """ELTL++ Pipeline: Extract → Load₁ (Bronze) → Transform → Load₂ (Silver/Gold)"""
+
+    def __init__(self, bronze_path, silver_path, gold_path):
+        self.bronze = bronze_path
+        self.silver = silver_path
+        self.gold = gold_path
+
+    def extract(self, source):
+        """Extract from source"""
+        return pd.read_csv(source)
+
+    def load_raw(self, data):
+        """Load₁: Store ALL data in Bronze (raw) layer"""
+        # Add ingestion metadata
+        data['_ingestion_timestamp'] = pd.Timestamp.now()
+        data['_source_file'] = 'source.csv'
+        data['_schema_version'] = '1.0'
+
+        # Write to Delta Lake for versioning & time travel
+        write_deltalake(
+            self.bronze,
+            data,
+            mode="append",
+            schema_mode="merge",  # Handle schema evolution
+            partition_by=["_ingestion_date"]
+        )
+
+    def transform_and_load(self):
+        """Transform: Quality + Business, Load₂: Curated layers"""
+        # Read from Bronze
+        bronze_table = DeltaTable(self.bronze)
+        raw_data = bronze_table.to_pandas()
+
+        # Silver: Cleansed and validated data
+        silver_data = self._cleanse_data(raw_data)
+        silver_data['_quality_checked'] = True
+        write_deltalake(self.silver, silver_data, mode="overwrite")
+
+        # Gold: Business-transformed data
+        gold_data = self._apply_business_logic(silver_data)
+        write_deltalake(self.gold, gold_data, mode="overwrite")
+
+        return gold_data
+
+    def time_travel_query(self, version=None, timestamp=None):
+        """Query historical data state"""
+        dt = DeltaTable(self.bronze)
+
+        if version:
+            return dt.load_version(version).to_pandas()
+        elif timestamp:
+            return dt.load_as_of_datetime(timestamp).to_pandas()
+        else:
+            return dt.to_pandas()
+
+    def reprocess_historical_data(self, start_date):
+        """Reprocess raw data with updated transformation logic"""
+        historical_data = self.time_travel_query(timestamp=start_date)
+        updated_silver = self._cleanse_data(historical_data)
+        updated_gold = self._apply_business_logic(updated_silver)
+        return updated_gold
+
+    def run(self, source):
+        """Execute ELTL++ pipeline"""
+        raw_data = self.extract(source)
+        self.load_raw(raw_data)
+        curated_data = self.transform_and_load()
+        return curated_data
+
+# Usage
+pipeline = ELTLPlusPipeline('bronze/', 'silver/', 'gold/')
+result = pipeline.run('data/source.csv')
+
+# Time travel example
+historical = pipeline.time_travel_query(timestamp='2025-01-01')</code></pre>
+          <div style="margin-top: 15px; padding: 12px; background: #ede7f6; border-radius: 4px;">
+            <small style="color: #5e35b1; font-weight: 500;">
+              <i class="fas fa-history"></i> ELTL++ preserves ALL raw data for time travel and reprocessing without re-ingestion. Perfect for evolving transformations.
+            </small>
+          </div>
+        </div>
+
+        <!-- EADF Snippet -->
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 25px;">
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 1.3rem; font-weight: 600; color: #673ab7; margin: 0;">
+              <i class="fas fa-cloud"></i> EADF - Environment Configuration
+            </h3>
+          </div>
+          <pre id="eadf-config" style="background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85rem;"><code># environments.yaml - Define all your deployment environments
+environments:
+  - name: dev
+    cloud: azure
+    region: westeurope
+    resource_group: rg-dataeng-dev
+    data_factory: adf-customer-dev
+    storage_account: stgcustomerdev
+    key_vault: kv-customer-dev
+    linked_services:
+      source_db: "{{vault.dev_db_connection}}"
+      target_dw: "{{vault.dev_dw_connection}}"
+
+  - name: staging
+    cloud: azure
+    region: westeurope
+    resource_group: rg-dataeng-staging
+    data_factory: adf-customer-staging
+    storage_account: stgcustomerstaging
+    key_vault: kv-customer-staging
+    linked_services:
+      source_db: "{{vault.staging_db_connection}}"
+      target_dw: "{{vault.staging_dw_connection}}"
+
+  - name: prod
+    cloud: azure
+    region: northeurope          # Different region for prod
+    resource_group: rg-dataeng-prod
+    data_factory: adf-customer-prod
+    storage_account: stgcustomerprod
+    key_vault: kv-customer-prod
+    linked_services:
+      source_db: "{{vault.prod_db_connection}}"
+      target_dw: "{{vault.prod_dw_connection}}"
+
+---
+# component.yaml - Define your data pipeline artifact
+name: customer_orders_pipeline
+type: adf_pipeline              # or databricks_notebook, synapse_pipeline
+version: "1.2.0"
+artifact: ./artifacts/adf/customer_orders.json
+
+params:
+  schedule: "0 2 * * *"         # Daily at 2 AM
+  tags:
+    - ingestion
+    - orders
+    - critical
+  dependencies:
+    - reference_data_pipeline
+
+---
+# promotion.yaml - Define promotion rules
+promotion_rules:
+  - from: dev
+    to: staging
+    conditions:
+      - all_tests_passed
+      - code_review_approved
+    automatic: true
+
+  - from: staging
+    to: prod
+    conditions:
+      - staging_running_for: 24h
+      - smoke_tests_passed
+      - manual_approval_required
+    automatic: false
+    approvers:
+      - data_engineering_lead
+      - platform_architect</code></pre>
+          <div style="margin-top: 15px; padding: 12px; background: #ede7f6; border-radius: 4px;">
+            <small style="color: #4527a0; font-weight: 500;">
+              <i class="fas fa-rocket"></i> EADF uses late binding: write once, deploy everywhere. Single artifact promotes from dev → staging → prod.
+            </small>
+          </div>
+        </div>
+
+        <!-- Quick Start Docker Compose -->
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 1.3rem; font-weight: 600; color: #43a047; margin: 0;">
+              <i class="fab fa-docker"></i> Quick Start - Docker Compose
+            </h3>
+          </div>
+          <pre id="docker-compose" style="background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85rem;"><code>version: '3.8'
+
+services:
+  # Metadata database for MIND pattern
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: metadata_db
+      POSTGRES_USER: dataeng
+      POSTGRES_PASSWORD: changeme
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  # Apache Spark for processing
+  spark:
+    image: bitnami/spark:3.4
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+
+  # MinIO for S3-compatible storage (Delta Lake)
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  # Jupyter for interactive development
+  jupyter:
+    image: jupyter/pyspark-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+
+volumes:
+  postgres_data:
+  minio_data:
+
+# Quick start:
+# 1. docker-compose up -d
+# 2. Access Jupyter: http://localhost:8888
+# 3. Access MinIO: http://localhost:9001
+# 4. Access Spark UI: http://localhost:8080</code></pre>
+          <div style="margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 4px;">
+            <small style="color: #2e7d32; font-weight: 500;">
+              <i class="fas fa-play-circle"></i> Complete local development environment with database, storage, and compute. Run <code>docker-compose up -d</code> to start.
+            </small>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section style="padding: 50px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+      <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+        <h2 style="font-size: 2rem; margin-bottom: 20px; font-weight: 700;">Need More Examples?</h2>
+        <p style="font-size: 1.1rem; line-height: 1.7; max-width: 700px; margin: 0 auto 30px;">
+          Check out our GitHub repositories for complete validation frameworks, example projects, and community contributions.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://github.com/ChiaraRucco/ETLT_DesignPattern_validation" target="_blank" style="text-decoration: none;">
+            <button style="padding: 14px 28px; background: white; color: #667eea; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+              <i class="fab fa-github"></i> ETLT++ Framework
+            </button>
+          </a>
+          <a href="https://github.com/ChiaraRucco/CICD_DesignPattern_Validation" target="_blank" style="text-decoration: none;">
+            <button style="padding: 14px 28px; background: white; color: #667eea; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+              <i class="fab fa-github"></i> EADF Framework
+            </button>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="background: #1a1a1a; border-top: 1px solid #333; padding: 30px 20px; color: #999;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <p style="margin: 0; font-size: 0.9rem;">&copy; 2025 DataLab - University of Salento. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ROI Calculator Logic
+    function updateCalculations() {
+      const teamSize = parseInt(document.getElementById('teamSize').value) || 5;
+      const avgSalary = parseInt(document.getElementById('avgSalary').value) || 120000;
+      const configTime = parseInt(document.getElementById('configTime').value) || 25;
+
+      // Update slider value display
+      document.getElementById('configTimeValue').textContent = configTime + '%';
+
+      // Calculate current annual cost
+      const currentCost = teamSize * avgSalary * (configTime / 100);
+
+      // Calculate potential savings (30% efficiency gain from patterns)
+      const potentialSavings = currentCost * 0.30;
+
+      // Display formatted values
+      document.getElementById('currentCost').textContent = '$' + Math.round(currentCost).toLocaleString();
+      document.getElementById('potentialSavings').textContent = '$' + Math.round(potentialSavings).toLocaleString();
+
+      // Update interpretation
+      let interpretation = `Your team of ${teamSize} engineers is losing approximately <strong>$${Math.round(currentCost).toLocaleString()}</strong> annually to configuration overhead. `;
+
+      if (potentialSavings > 100000) {
+        interpretation += `By implementing design patterns, you could save <strong>$${Math.round(potentialSavings).toLocaleString()}</strong> per year—equivalent to <strong>${Math.round(potentialSavings / avgSalary)} full-time engineers</strong>. `;
+      } else {
+        interpretation += `Pattern adoption could recover <strong>${Math.round((potentialSavings / currentCost) * 100)}%</strong> of this lost productivity. `;
+      }
+
+      interpretation += `Based on typical 2-3 week implementation timelines, your investment would break even in <strong>2-3 months</strong>.`;
+
+      document.getElementById('interpretation').innerHTML = interpretation;
+    }
+
+    // Copy code functionality
+    function copyCode(elementId) {
+      const codeElement = document.getElementById(elementId);
+      const code = codeElement.textContent;
+
+      navigator.clipboard.writeText(code).then(() => {
+        // Show feedback
+        const button = event.target.closest('button');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        button.style.background = '#4caf50';
+
+        setTimeout(() => {
+          button.innerHTML = originalHTML;
+          button.style.background = '';
+        }, 2000);
+      });
+    }
+
+    // Initialize calculations
+    document.getElementById('teamSize').addEventListener('input', updateCalculations);
+    document.getElementById('avgSalary').addEventListener('input', updateCalculations);
+    document.getElementById('configTime').addEventListener('input', updateCalculations);
+
+    // Initial calculation
+    updateCalculations();
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .nav-link:hover {
+      color: #fff !important;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .github-link:hover {
+      background: #2ea44f;
+      color: white !important;
+    }
+
+    button {
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    input[type="range"] {
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #f57c00;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #f57c00;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 768px) {
+      header nav {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      h2 {
+        font-size: 1.5rem !important;
+      }
+
+      pre {
+        font-size: 0.75rem !important;
+      }
+    }
+  </style>
+</body>
+</html>
