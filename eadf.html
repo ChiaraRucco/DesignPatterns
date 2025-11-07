@@ -6,91 +6,127 @@
   <title>EADF - Environment-Aware Deployment Framework</title>
   <link rel="stylesheet" href="./src/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1>EADF: Environment-Aware Deployment Framework</h1>
-      <nav>
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="patterns.html" class="nav-link">Patterns</a>
-        <a href="mind.html" class="nav-link">MIND Pattern</a>
-        <a href="etlt.html" class="nav-link">ETLT/ELTL</a>
+  <header style="background: #1a1a1a; border-bottom: 1px solid #333; padding: 15px 0;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <img src="https://avatars.githubusercontent.com/u/145194871?s=280&v=4" alt="DataLab Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+        <h1 style="font-size: 1.1rem; color: #fff; font-weight: 600; margin: 0;">EADF: Environment-Aware Deployment</h1>
+      </div>
+      <nav style="display: flex; gap: 20px; align-items: center;">
+        <a href="index.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Home</a>
+        <a href="index.html#patterns" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Patterns</a>
+        <a href="implementation-guide.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Docs</a>
+        <a href="https://github.com/DataLabUniSalento" target="_blank" class="nav-link github-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px; display: flex; align-items: center; gap: 6px;">
+          <i class="fab fa-github"></i>
+          <span>DataLab</span>
+        </a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 60px 20px; text-align: center;">
-      <h2 style="font-size: 2.8rem; margin-bottom: 20px;">Environment-Aware Deployment Framework</h2>
-      <p style="font-size: 1.3rem; max-width: 900px; margin: 0 auto;">
-        A design pattern for CI/CD in data engineering that enables portable, auditable, and reproducible deployments across environments and clouds
-      </p>
+    <section style="background: linear-gradient(135deg, #673ab7 0%, #512da8 100%); color: white; padding: 60px 20px;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="max-width: 800px;">
+          <div style="display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.15); border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; font-weight: 500;">
+            Deployment Pattern
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; line-height: 1.2;">Environment-Aware Deployment Framework</h2>
+          <p style="font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.9); margin-bottom: 30px;">
+            A cloud-agnostic CI/CD pattern for data engineering that enables portable, auditable, and reproducible deployments across environments using late binding.
+          </p>
+          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <a href="#what-is-eadf" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: white; color: #673ab7; border: none; border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                Learn More →
+              </button>
+            </a>
+            <a href="implementation-guide.html#eadf-guide" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: transparent; color: white; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
+                View Documentation
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Introduction -->
-    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
-      <div style="background: #f5f7fa; padding: 30px; border-radius: 10px; border-left: 5px solid #4facfe;">
-        <h2 style="color: #00838f; margin-bottom: 20px;">What is EADF?</h2>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 15px;">
-          The <strong>Environment-Aware Deployment Framework (EADF)</strong> is not simply a tool or platform, but a <em>design pattern</em> for CI/CD in data engineering.
-          It formalizes a reusable abstraction for promoting heterogeneous data components—pipelines, models, schemas, transformation logics—across environments (dev, test, prod)
-          and clouds (Azure, AWS, GCP) in a portable, auditable, and reproducible manner.
+    <section id="what-is-eadf" style="padding: 50px 20px; background: white;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 600; color: #1a1a1a;">What is EADF?</h2>
+        <p style="font-size: 1rem; color: #666; max-width: 700px; margin-bottom: 35px; line-height: 1.6;">
+          A design pattern for CI/CD in data engineering, not just a tool or platform.
         </p>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: #333;">
-          Unlike traditional CI/CD that embeds environment-specific details causing drift and vendor lock-in, EADF uses <strong>late binding</strong> and standardized YAML descriptors
-          to decouple deployment logic from environment specifics—enabling teams to <em>write once and reuse everywhere</em>.
-        </p>
+
+        <div style="background: #f5f7fa; padding: 30px; border-radius: 8px; border-left: 4px solid #673ab7; margin-bottom: 30px;">
+          <p style="font-size: 1rem; line-height: 1.7; color: #333; margin-bottom: 15px;">
+            The <strong>Environment-Aware Deployment Framework (EADF)</strong> formalizes a reusable abstraction for promoting heterogeneous data components—pipelines, models, schemas, transformation logics—across environments (dev, test, prod) and clouds (Azure, AWS, GCP) in a portable, auditable, and reproducible manner.
+          </p>
+          <p style="font-size: 1rem; line-height: 1.7; color: #333;">
+            Unlike traditional CI/CD that embeds environment-specific details causing drift and vendor lock-in, EADF uses <strong>late binding</strong> and standardized YAML descriptors to decouple deployment logic from environment specifics—enabling teams to <em>write once and reuse everywhere</em>.
+          </p>
+        </div>
       </div>
     </section>
 
     <!-- Key Principles -->
-    <section style="padding: 40px; background: linear-gradient(to bottom, #f8f9fa, #e9ecef);">
-      <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: #333;">Core Principles</h2>
+    <section style="padding: 50px 20px; background: #fafafa; border-bottom: 1px solid #e5e5e5;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 600; color: #1a1a1a;">Core Principles</h2>
+        <p style="font-size: 1rem; color: #666; max-width: 700px; margin-bottom: 35px; line-height: 1.6;">
+          Four foundational principles that make EADF effective for data engineering CI/CD.
+        </p>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
 
-        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #4facfe;">
-          <div style="text-align: center; margin-bottom: 15px;">
-            <i class="fas fa-recycle" style="font-size: 2.5rem; color: #4facfe;"></i>
+          <div style="background: white; border: 1px solid #e5e5e5; border-radius: 8px; padding: 25px;">
+            <div style="width: 40px; height: 40px; background: #e3f2fd; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+              <i class="fas fa-recycle" style="font-size: 1.3rem; color: #2196f3;"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; color: #1a1a1a;">Automation</h3>
+            <p style="color: #666; line-height: 1.6; font-size: 0.95rem;">
+              Automates build, test, and deployment processes, significantly reducing manual intervention and minimizing human error
+            </p>
           </div>
-          <h3 style="color: #4facfe; margin-bottom: 15px; text-align: center;">Automation</h3>
-          <p style="color: #555; line-height: 1.8;">
-            Automates build, test, and deployment processes, significantly reducing manual intervention and minimizing human error
-          </p>
-        </div>
 
-        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #00bcd4;">
-          <div style="text-align: center; margin-bottom: 15px;">
-            <i class="fas fa-sync-alt" style="font-size: 2.5rem; color: #00bcd4;"></i>
+          <div style="background: white; border: 1px solid #e5e5e5; border-radius: 8px; padding: 25px;">
+            <div style="width: 40px; height: 40px; background: #e0f2f1; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+              <i class="fas fa-sync-alt" style="font-size: 1.3rem; color: #00bcd4;"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; color: #1a1a1a;">Frequent Integration</h3>
+            <p style="color: #666; line-height: 1.6; font-size: 0.95rem;">
+              Integrates code changes frequently to prevent "integration hell" and resolve conflicts early in the development cycle
+            </p>
           </div>
-          <h3 style="color: #00bcd4; margin-bottom: 15px; text-align: center;">Frequent Integration</h3>
-          <p style="color: #555; line-height: 1.8;">
-            Integrates code changes frequently to prevent "integration hell" and resolve conflicts early in the development cycle
-          </p>
-        </div>
 
-        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #0288d1;">
-          <div style="text-align: center; margin-bottom: 15px;">
-            <i class="fas fa-comments" style="font-size: 2.5rem; color: #0288d1;"></i>
+          <div style="background: white; border: 1px solid #e5e5e5; border-radius: 8px; padding: 25px;">
+            <div style="width: 40px; height: 40px; background: #f3e5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+              <i class="fas fa-comments" style="font-size: 1.3rem; color: #9c27b0;"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; color: #1a1a1a;">Continuous Feedback</h3>
+            <p style="color: #666; line-height: 1.6; font-size: 0.95rem;">
+              Provides immediate feedback through automated testing, including early detection of data contract violations with downstream consumers
+            </p>
           </div>
-          <h3 style="color: #0288d1; margin-bottom: 15px; text-align: center;">Continuous Feedback</h3>
-          <p style="color: #555; line-height: 1.8;">
-            Provides immediate feedback through automated testing, including early detection of data contract violations with downstream consumers
-          </p>
-        </div>
 
-        <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid #01579b;">
-          <div style="text-align: center; margin-bottom: 15px;">
-            <i class="fas fa-clone" style="font-size: 2.5rem; color: #01579b;"></i>
+          <div style="background: white; border: 1px solid #e5e5e5; border-radius: 8px; padding: 25px;">
+            <div style="width: 40px; height: 40px; background: #ede7f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+              <i class="fas fa-clone" style="font-size: 1.3rem; color: #673ab7;"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; color: #1a1a1a;">Reproducibility</h3>
+            <p style="color: #666; line-height: 1.6; font-size: 0.95rem;">
+              Ensures builds and deployments are consistent across environments, reducing discrepancies and failures due to environmental variations
+            </p>
           </div>
-          <h3 style="color: #01579b; margin-bottom: 15px; text-align: center;">Reproducibility</h3>
-          <p style="color: #555; line-height: 1.8;">
-            Ensures builds and deployments are consistent across environments, reducing discrepancies and failures due to environmental variations
-          </p>
-        </div>
 
+        </div>
       </div>
     </section>
 
@@ -337,16 +373,75 @@ rules:<br>
 
   </main>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Data Engineering Design Patterns. All rights reserved.</p>
+  <footer style="background: #1a1a1a; border-top: 1px solid #333; padding: 30px 20px; color: #999;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <p style="margin: 0; font-size: 0.9rem;">&copy; 2025 DataLab - University of Salento. All rights reserved.</p>
     </div>
   </footer>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .nav-link:hover {
+      color: #fff !important;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .github-link:hover {
+      background: #2ea44f;
+      color: white !important;
+    }
+
+    .nav-link:active {
+      transform: translateY(0);
+    }
+
+    button {
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
     table tr:hover {
       background: #e3f2fd !important;
       transition: background 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      header nav {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      section > div {
+        padding: 0 15px;
+      }
+
+      h2 {
+        font-size: 1.5rem !important;
+      }
     }
   </style>
 </body>

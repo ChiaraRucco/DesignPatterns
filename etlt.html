@@ -29,31 +29,56 @@
     </div>
   </header>
 
-  <main>
+  <main style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center;">
-      <h2 style="font-size: 2.8rem; margin-bottom: 20px;">ETLT & ELTL Design Patterns</h2>
-      <p style="font-size: 1.3rem; max-width: 900px; margin: 0 auto;">
-        Hybrid transformation patterns that bridge the gap between traditional ETL and modern ELT approaches
-      </p>
+    <section style="background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%); color: white; padding: 60px 20px;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="max-width: 800px;">
+          <div style="display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.15); border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; font-weight: 500;">
+            Transformation Patterns
+          </div>
+          <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; line-height: 1.2;">ETLT & ELTL++ Design Patterns</h2>
+          <p style="font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.9); margin-bottom: 30px;">
+            Production-grade hybrid patterns with data contracts, quarantine layers, time travel capabilities, and multi-zone architecture for modern data platforms.
+          </p>
+          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <a href="#patterns" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: white; color: #9c27b0; border: none; border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                Explore Patterns →
+              </button>
+            </a>
+            <a href="implementation-guide.html#etlt-guide" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: transparent; color: white; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
+                View Documentation
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Introduction -->
-    <section style="padding: 40px; max-width: 1200px; margin: 0 auto;">
-      <div style="background: #f5f7fa; padding: 30px; border-radius: 10px; border-left: 5px solid #667eea;">
-        <h2 style="color: #667eea; margin-bottom: 20px;">The Evolution Beyond ETL and ELT</h2>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 15px;">
-          Traditional <strong>ETL</strong> (Extract-Transform-Load) and <strong>ELT</strong> (Extract-Load-Transform) architectures, while foundational to data engineering, are increasingly challenged by demands for scalability, governance, and real-time processing. Neither approach alone adequately addresses the conflicting requirements of modern data platforms:
+    <section style="padding: 50px 20px; background: white;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 15px; font-weight: 600; color: #1a1a1a;">The Evolution Beyond ETL and ELT</h2>
+        <p style="font-size: 1rem; color: #666; max-width: 700px; margin-bottom: 35px; line-height: 1.6;">
+          Addressing modern data platform requirements with hybrid transformation patterns.
         </p>
-        <ul style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-left: 20px;">
-          <li>Ensuring data quality while preserving raw fidelity</li>
-          <li>Balancing compliance (lineage, auditability) with performance</li>
-          <li>Supporting reprocessing at scale while containing storage costs</li>
-          <li>Allowing multiple teams to share pipelines without duplication</li>
-        </ul>
-        <p style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-top: 15px;">
-          <strong>ETLT</strong> (Extract-Transform-Load-Transform) and <strong>ELTL</strong> (Extract-Load-Transform-Load) emerge as hybrid patterns that blend the strengths of both paradigms, providing structured solutions for modern data engineering challenges.
-        </p>
+
+        <div style="background: #f5f7fa; padding: 30px; border-radius: 8px; border-left: 4px solid #9c27b0; margin-bottom: 30px;">
+          <p style="font-size: 1rem; line-height: 1.7; color: #333; margin-bottom: 15px;">
+            Traditional <strong>ETL</strong> (Extract-Transform-Load) and <strong>ELT</strong> (Extract-Load-Transform) architectures, while foundational to data engineering, are increasingly challenged by demands for scalability, governance, and real-time processing. Neither approach alone adequately addresses the conflicting requirements of modern data platforms:
+          </p>
+          <ul style="font-size: 0.95rem; line-height: 1.7; color: #555; margin-left: 20px; margin-bottom: 15px;">
+            <li>Ensuring data quality while preserving raw fidelity</li>
+            <li>Balancing compliance (lineage, auditability) with performance</li>
+            <li>Supporting reprocessing at scale while containing storage costs</li>
+            <li>Allowing multiple teams to share pipelines without duplication</li>
+          </ul>
+          <p style="font-size: 1rem; line-height: 1.7; color: #333;">
+            <strong>ETLT</strong> (Extract-Transform-Load-Transform) and <strong>ELTL</strong> (Extract-Load-Transform-Load) emerge as hybrid patterns that blend the strengths of both paradigms, providing structured solutions for modern data engineering challenges.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -1070,6 +1095,50 @@
   </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .nav-link:hover {
+      color: #fff !important;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .github-link:hover {
+      background: #2ea44f;
+      color: white !important;
+    }
+
+    .nav-link:active {
+      transform: translateY(0);
+    }
+
+    button {
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -1086,10 +1155,19 @@
       transition: background 0.3s ease;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.3) !important;
-      transition: all 0.3s ease;
+    @media (max-width: 768px) {
+      header nav {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      section > div {
+        padding: 0 15px;
+      }
+
+      h2 {
+        font-size: 1.5rem !important;
+      }
     }
   </style>
 </body>
