@@ -23,6 +23,8 @@
         <a href="resources.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Resources</a>
         <a href="tools.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Tools</a>
         <a href="implementation-guide.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Docs</a>
+        <a href="llm.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">LLM Study</a>
+        <a href="defense.html" class="nav-link" style="color: #ffd700; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px; font-weight: 600;">🎓 Defense</a>
         <a href="https://github.com/DataLabUniSalento" target="_blank" class="nav-link github-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px; display: flex; align-items: center; gap: 6px;">
           <i class="fab fa-github"></i>
           <span>DataLab</span>
@@ -52,6 +54,16 @@
             <a href="implementation-guide.html#etlt-guide" style="text-decoration: none;">
               <button style="padding: 12px 24px; background: transparent; color: white; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
                 View Documentation
+              </button>
+            </a>
+            <a href="#pattern-framework" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.5); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
+                Pattern Framework
+              </button>
+            </a>
+            <a href="#sota" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.5); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
+                vs. State of Art
               </button>
             </a>
           </div>
@@ -498,6 +510,274 @@
             <p>ETLT++ and ELTL++ extend these patterns with explicit contracts, versioned storage, and continuous quality monitoring.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PATTERN FRAMEWORK SECTION (GoF / POSA Template)
+    ════════════════════════════════════════════════════════════════ -->
+    <section id="pattern-framework" style="padding: 60px 20px; background: linear-gradient(135deg, #f3e5f5 0%, #f0f4ff 100%);">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <div style="display: inline-block; padding: 4px 14px; background: #9c27b0; color: white; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.5px;">FORMAL SPECIFICATION</div>
+          <h2 style="font-size: 2rem; font-weight: 700; color: #1a1a1a; margin-bottom: 12px;">Pattern Framework</h2>
+          <p style="font-size: 1rem; color: #555; max-width: 750px; margin: 0 auto; line-height: 1.6;">
+            ETLT, ELTL, ETLT++, and ELTL++ are formalized following the POSA / GoF pattern template, providing the <em>first systematic treatment</em> of hybrid transformation patterns in the data engineering literature.
+          </p>
+        </div>
+
+        <!-- ETLT and ELTL base patterns side-by-side -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+
+          <!-- ETLT -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(33,150,243,0.1); border-top: 4px solid #2196f3;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <div style="width: 40px; height: 40px; background: #e3f2fd; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-filter" style="color: #2196f3; font-size: 1.1rem;"></i>
+              </div>
+              <div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #1a1a1a; margin: 0;">ETLT</h3>
+                <p style="font-size: 0.8rem; color: #666; margin: 0;">Extract → Transform (Quality) → Load → Transform (Business)</p>
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #ff5722; margin: 0 0 6px 0;">Problem context</p>
+            <p style="font-size: 0.92rem; color: #555; line-height: 1.6; margin: 0 0 14px 0;">Data quality cannot be taken for granted at ingestion: heterogeneous sources produce inconsistencies, missing values, and schema mismatches. If allowed through unchecked, corrupted data silently contaminates the central repository and all downstream analytics.</p>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #2196f3; margin: 0 0 6px 0;">When to use</p>
+            <p style="font-size: 0.92rem; color: #555; line-height: 1.6; margin: 0;">Regulatory contexts (financial, healthcare), real-time feeds from unreliable sources, large-scale migration projects, anywhere that data contracts must be enforced at the point of entry.</p>
+          </div>
+
+          <!-- ELTL -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(156,39,176,0.1); border-top: 4px solid #9c27b0;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+              <div style="width: 40px; height: 40px; background: #f3e5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-archive" style="color: #9c27b0; font-size: 1.1rem;"></i>
+              </div>
+              <div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #1a1a1a; margin: 0;">ELTL</h3>
+                <p style="font-size: 0.8rem; color: #666; margin: 0;">Extract → Load (Raw) → Transform → Load (Curated)</p>
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #ff5722; margin: 0 0 6px 0;">Problem context</p>
+            <p style="font-size: 0.92rem; color: #555; line-height: 1.6; margin: 0 0 14px 0;">The primary concern is data preservation and flexibility. Compliance, lineage, and forensic requirements mandate retaining every record exactly as received, even if flawed — for audit reconstruction, historical reprocessing, and regulatory scrutiny.</p>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #9c27b0; margin: 0 0 6px 0;">When to use</p>
+            <p style="font-size: 0.92rem; color: #555; line-height: 1.6; margin: 0;">IoT/streaming platforms with unpredictable schemas, multi-tenant analytics where teams apply distinct transforms, environments with strict auditability requirements (SOX, GDPR, IFRS).</p>
+          </div>
+
+        </div>
+
+        <!-- Full POSA template grid for ++ variants -->
+        <div style="background: #f8f9fa; border-radius: 12px; padding: 28px; margin-bottom: 24px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: #1a1a1a; margin: 0 0 20px 0; border-bottom: 2px solid #9c27b0; padding-bottom: 10px;">
+            ETLT++ &amp; ELTL++ — Complete Pattern Specification
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+
+            <!-- Context -->
+            <div style="background: white; border-radius: 8px; padding: 18px; border-left: 4px solid #7b1fa2;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #7b1fa2; margin: 0 0 8px 0;"><i class="fas fa-map-marker-alt" style="margin-right: 6px;"></i>Context</h4>
+              <p style="font-size: 0.88rem; color: #555; line-height: 1.6; margin: 0;">Modern cloud-native data platforms requiring formal data contract enforcement, deterministic replay, continuous data quality SLIs/SLOs, versioned raw storage, and governance-ready orchestration.</p>
+            </div>
+
+            <!-- Problem -->
+            <div style="background: white; border-radius: 8px; padding: 18px; border-left: 4px solid #f44336;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #f44336; margin: 0 0 8px 0;"><i class="fas fa-exclamation-circle" style="margin-right: 6px;"></i>Problem</h4>
+              <p style="font-size: 0.88rem; color: #555; line-height: 1.6; margin: 0;">Classic ETL and ELT cannot simultaneously address data quality, raw data preservation, governance, scalability, and cross-team coordination — leading to brittle or inconsistent pipelines. 78% of organizations implement hybrid approaches without formal frameworks, leading to duplicated effort and 64% higher data quality incident rates.</p>
+            </div>
+
+            <!-- Forces -->
+            <div style="background: white; border-radius: 8px; padding: 18px; border-left: 4px solid #ff9800;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #ff9800; margin: 0 0 8px 0;"><i class="fas fa-balance-scale" style="margin-right: 6px;"></i>Forces</h4>
+              <ul style="font-size: 0.88rem; color: #555; line-height: 1.7; margin: 0; padding-left: 16px;">
+                <li>Early validation vs. raw fidelity retention</li>
+                <li>Schema evolution and heterogeneous formats</li>
+                <li>Compliance, audit, and traceability requirements</li>
+                <li>Cloud scalability and cost constraints</li>
+                <li>Multi-team reuse without duplication</li>
+              </ul>
+            </div>
+
+            <!-- Solution ETLT++ -->
+            <div style="background: white; border-radius: 8px; padding: 18px; border-left: 4px solid #2196f3;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #2196f3; margin: 0 0 8px 0;"><i class="fas fa-puzzle-piece" style="margin-right: 6px;"></i>Solution — ETLT++</h4>
+              <p style="font-size: 0.88rem; color: #555; line-height: 1.6; margin: 0;">Embed explicit <strong>data contracts</strong> as mandatory pipeline gates (hard/soft rules); implement <strong>versioned raw staging</strong> with lineage metadata; enforce <strong>deterministic business logic replay</strong>; integrate <strong>automated SLIs/SLOs</strong> (freshness, completeness, accuracy, contract adherence) within orchestration workflows.</p>
+            </div>
+
+            <!-- Solution ELTL++ -->
+            <div style="background: white; border-radius: 8px; padding: 18px; border-left: 4px solid #9c27b0;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #9c27b0; margin: 0 0 8px 0;"><i class="fas fa-puzzle-piece" style="margin-right: 6px;"></i>Solution — ELTL++</h4>
+              <p style="font-size: 0.88rem; color: #555; line-height: 1.6; margin: 0;">Metadata-driven ingestion with tiered retention policies (hot 0–90d / warm 91–365d / cold 365d+); enforce contract validation at L1→L2 boundary; maintain versioned raw and curated datasets; automate quality monitoring; expose a <strong>curated semantic layer (L2)</strong> enabling self-service analytics without raw complexity.</p>
+            </div>
+
+            <!-- Consequences -->
+            <div style="background: white; border-radius: 8px; padding: 18px; border-left: 4px solid #4caf50;">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #4caf50; margin: 0 0 8px 0;"><i class="fas fa-list-check" style="margin-right: 6px;"></i>Consequences</h4>
+              <p style="font-size: 0.82rem; font-weight: 600; color: #4caf50; margin: 0 0 4px 0;">Benefits</p>
+              <ul style="font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0 0 8px 0; padding-left: 14px;">
+                <li>ETLT++ delivers cleaner downstream data with strong reproducibility</li>
+                <li>ELTL++ maximizes auditability, flexibility, and self-service BI</li>
+                <li>Both improve maintainability, observability, and team collaboration</li>
+              </ul>
+              <p style="font-size: 0.82rem; font-weight: 600; color: #f44336; margin: 0 0 4px 0;">Liabilities</p>
+              <ul style="font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; padding-left: 14px;">
+                <li>ETLT++: reduces raw traceability (bad records quarantined, not stored)</li>
+                <li>ELTL++: increases storage costs; requires metadata management</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Validation metrics -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div style="background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+            <div style="font-size: 1.8rem; font-weight: 700; color: #2196f3;">3.3×</div>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 4px;">query speedup<br>L2 vs L1 (P50)</div>
+          </div>
+          <div style="background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+            <div style="font-size: 1.8rem; font-weight: 700; color: #9c27b0;">69%</div>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 4px;">TCO reduction<br>ELTL vs ELTL++</div>
+          </div>
+          <div style="background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+            <div style="font-size: 1.8rem; font-weight: 700; color: #4caf50;">100%</div>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 4px;">contract compliance<br>after L1→L2 promotion</div>
+          </div>
+          <div style="background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+            <div style="font-size: 1.8rem; font-weight: 700; color: #ff9800;">4.4/5</div>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 4px;">expert survey rating<br>(N=21 practitioners)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STATE OF THE ART COMPARISON
+    ════════════════════════════════════════════════════════════════ -->
+    <section id="sota" style="padding: 60px 20px; background: white;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <div style="display: inline-block; padding: 4px 14px; background: #1a1a1a; color: white; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.5px;">LITERATURE POSITIONING</div>
+          <h2 style="font-size: 2rem; font-weight: 700; color: #1a1a1a; margin-bottom: 12px;">Comparison with State of the Art</h2>
+          <p style="font-size: 1rem; color: #555; max-width: 750px; margin: 0 auto; line-height: 1.6;">
+            The literature presents ETL and ELT as binary, mutually exclusive choices. Yet 78% of data engineering teams implement hybrid approaches — without formal names, documented trade-offs, or reusable patterns to guide them.
+          </p>
+        </div>
+
+        <!-- Gap Banner -->
+        <div style="background: linear-gradient(135deg, #fff3e0 0%, #fbe9e7 100%); border-left: 5px solid #ff5722; border-radius: 8px; padding: 24px 28px; margin-bottom: 36px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #bf360c; margin: 0 0 10px 0;">
+            <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>Identified Literature Gap
+          </h3>
+          <p style="font-size: 0.95rem; color: #555; line-height: 1.7; margin: 0;">
+            Academic literature treats ETL and ELT as dichotomous paradigms. Grey literature documents hybrid arrangements ad hoc, without articulating <em>when</em> each variant is appropriate. <strong>No systematic treatment of transformation ordering as an architectural design decision exists.</strong> Practitioners describe these workflows awkwardly as "mostly ELT but with some pre-processing" — indicating widespread use of unnamed patterns that practitioners cannot document, transfer, or evaluate.
+          </p>
+        </div>
+
+        <!-- Maturity comparison table -->
+        <div style="overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 36px;">
+          <table style="width: 100%; border-collapse: collapse; background: white;">
+            <thead>
+              <tr style="background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: white;">
+                <th style="padding: 16px 18px; text-align: left; font-size: 0.9rem; font-weight: 600;">Approach</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Formal Definition</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Data Contracts</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Versioned Lineage</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Tool-Independent</th>
+                <th style="padding: 16px 18px; text-align: left; font-size: 0.9rem; font-weight: 600;">Key Limitation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Traditional ETL</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Pre-load only; no hybrid; governance as afterthought</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Traditional ELT</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Post-load only; governance gaps; no systematic hybrid guidance</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">dbt (Data Build Tool)</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">SQL-based tests only; limited versioning; tool-specific practices</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Azure Mapping Data Flows</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Configurable but vendor documentation only; no semantic versioning</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Databricks Delta Live Tables</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Platform-specific; built-in expectations but table-level only</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Industry Hybrid Approaches</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">78% adoption but entirely ad hoc, undocumented, and non-transferable</td>
+              </tr>
+              <tr style="background: linear-gradient(135deg, #f3e5f5 0%, #e8f5e9 100%); border: 2px solid #9c27b0;">
+                <td style="padding: 16px 18px; font-weight: 700; color: #6a1b9a;">
+                  <i class="fas fa-star" style="color: #ffc107; margin-right: 6px;"></i>ETLT++/ELTL++ (this work)
+                </td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; font-size: 0.88rem; color: #6a1b9a; font-weight: 600;">Hybrid decision-driven; formalized contracts; semantic versioning; POSA-based architectural patterns; validated with TPC-H benchmarks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- How the patterns overcome the gap -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div style="background: #e8f5e9; border-radius: 10px; padding: 22px; border-left: 4px solid #4caf50;">
+            <h4 style="font-size: 1rem; font-weight: 700; color: #2e7d32; margin: 0 0 10px 0;">
+              <i class="fas fa-check-circle" style="margin-right: 6px;"></i>What ETLT++/ELTL++ Add
+            </h4>
+            <ul style="font-size: 0.9rem; color: #444; line-height: 1.7; margin: 0; padding-left: 16px;">
+              <li>First formal treatment of multi-stage transformation patterns (POSA template)</li>
+              <li>Explicit decision framework: when to validate-first vs. load-first</li>
+              <li>Data contracts as mandatory pipeline gates (hard + soft rules)</li>
+              <li>Semantic versioning and time-travel enabling deterministic replay</li>
+              <li>Continuous SLI/SLO monitoring embedded in pipeline fabric</li>
+              <li>Curated semantic layer (L2) enabling self-service analytics</li>
+              <li>Open-source reproducible validation framework (GitHub)</li>
+            </ul>
+          </div>
+          <div style="background: #fff3e0; border-radius: 10px; padding: 22px; border-left: 4px solid #ff9800;">
+            <h4 style="font-size: 1rem; font-weight: 700; color: #e65100; margin: 0 0 10px 0;">
+              <i class="fas fa-microscope" style="margin-right: 6px;"></i>Empirical Evidence
+            </h4>
+            <ul style="font-size: 0.9rem; color: #444; line-height: 1.7; margin: 0; padding-left: 16px;">
+              <li>3.3× average query speedup (L2 semantic vs. L1 raw, 30 iterations)</li>
+              <li>69% TCO reduction through tiered storage (ELTL vs. ELTL++)</li>
+              <li>100% contract compliance after L1→L2 promotion (5,000 invalid rows detected)</li>
+              <li>Expert survey: 88% recognize hybrid use; 4.4/5.0 utility rating (N=21)</li>
+              <li>Reproducible open-source validation framework: 0$ infrastructure cost</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </section>
 

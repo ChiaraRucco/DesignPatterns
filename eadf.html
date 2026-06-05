@@ -23,6 +23,8 @@
         <a href="resources.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Resources</a>
         <a href="tools.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Tools</a>
         <a href="implementation-guide.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">Docs</a>
+        <a href="llm.html" class="nav-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px;">LLM Study</a>
+        <a href="defense.html" class="nav-link" style="color: #ffd700; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px; font-weight: 600;">🎓 Defense</a>
         <a href="https://github.com/DataLabUniSalento" target="_blank" class="nav-link github-link" style="color: #ccc; text-decoration: none; font-size: 0.95rem; padding: 5px 10px; border-radius: 4px; display: flex; align-items: center; gap: 6px;">
           <i class="fab fa-github"></i>
           <span>DataLab</span>
@@ -52,6 +54,16 @@
             <a href="implementation-guide.html#eadf-guide" style="text-decoration: none;">
               <button style="padding: 12px 24px; background: transparent; color: white; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
                 View Documentation
+              </button>
+            </a>
+            <a href="#pattern-framework" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.5); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
+                Pattern Framework
+              </button>
+            </a>
+            <a href="#sota" style="text-decoration: none;">
+              <button style="padding: 12px 24px; background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.5); border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;">
+                vs. State of Art
               </button>
             </a>
           </div>
@@ -370,6 +382,336 @@ rules:<br>
             <p>67% faster than scripts, 99% faster than manual deployments</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PATTERN FRAMEWORK SECTION (GoF / POSA Template)
+    ════════════════════════════════════════════════════════════════ -->
+    <section id="pattern-framework" style="padding: 60px 20px; background: linear-gradient(135deg, #ede7f6 0%, #f0f4ff 100%);">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <div style="display: inline-block; padding: 4px 14px; background: #673ab7; color: white; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.5px;">FORMAL SPECIFICATION</div>
+          <h2 style="font-size: 2rem; font-weight: 700; color: #1a1a1a; margin-bottom: 12px;">Pattern Framework</h2>
+          <p style="font-size: 1rem; color: #555; max-width: 750px; margin: 0 auto; line-height: 1.6;">
+            EADF is formalized following the POSA / GoF pattern template — the <em>first reusable design abstraction</em> for CI/CD in data engineering, analogous to what MVC provided for traditional software.
+          </p>
+        </div>
+
+        <!-- Pattern template grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+
+          <!-- Name + Intent -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(103,58,183,0.1); border-top: 4px solid #673ab7;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #ede7f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-tag" style="color: #673ab7; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Name &amp; Intent</h3>
+            </div>
+            <p style="font-size: 0.95rem; color: #333; margin-bottom: 8px;"><strong>Name:</strong> Environment-Aware Deployment Framework (EADF)</p>
+            <p style="font-size: 0.95rem; color: #555; line-height: 1.6; margin: 0;">
+              <strong>Intent:</strong> Enable data engineering teams to <em>write once and reuse everywhere</em> — decoupling CI/CD logic from specific environments and cloud providers through late-binding, parameterized YAML artifacts and standardized deployment descriptors.
+            </p>
+          </div>
+
+          <!-- Context -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(103,58,183,0.1); border-top: 4px solid #512da8;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #ede7f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-map-marker-alt" style="color: #512da8; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Context</h3>
+            </div>
+            <p style="font-size: 0.95rem; color: #555; line-height: 1.6; margin: 0;">
+              Data engineering and MLOps projects requiring consistent promotion of heterogeneous components — ETL pipelines, dbt models, ML notebooks, schemas, Airflow DAGs — across environments (dev, test, prod) and clouds (Azure, AWS, GCP). Operational complexity stems from differing configurations, credentials, and infrastructure across stages.
+            </p>
+          </div>
+
+          <!-- Problem -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(244,67,54,0.1); border-top: 4px solid #f44336;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #ffebee; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-exclamation-circle" style="color: #f44336; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Problem</h3>
+            </div>
+            <p style="font-size: 0.95rem; color: #555; line-height: 1.6; margin: 0;">
+              Traditional CI/CD embeds environment-specific details (endpoints, credentials, regions) directly into deployment scripts — a practice known as <strong>early binding</strong>. This causes configuration drift, irreproducible deployments, and vendor lock-in. Without standard abstractions, promotion workflows are fragile, duplicated across environments, and hard to audit.
+            </p>
+          </div>
+
+          <!-- Forces -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(103,58,183,0.1); border-top: 4px solid #7b1fa2;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #ede7f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-balance-scale" style="color: #7b1fa2; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Forces</h3>
+            </div>
+            <ul style="font-size: 0.92rem; color: #555; line-height: 1.8; margin: 0; padding-left: 18px;">
+              <li>Pipelines are stateful and sensitive to schema/configuration changes</li>
+              <li>Environments differ in credentials, regions, and resource limits</li>
+              <li>Components vary (Airflow DAGs, dbt models, Spark jobs, notebooks)</li>
+              <li>Cloud providers expose different APIs and deployment mechanisms</li>
+              <li>Governance requires auditability, reproducibility, and controlled promotion gates</li>
+            </ul>
+          </div>
+
+          <!-- Solution -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(76,175,80,0.1); border-top: 4px solid #4caf50;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #e8f5e9; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-puzzle-piece" style="color: #4caf50; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Solution</h3>
+            </div>
+            <p style="font-size: 0.9rem; color: #555; line-height: 1.6; margin: 0 0 10px 0;">A minimal, composable set of four parameterized YAML artifacts with <strong>late binding</strong> (parameters resolved at deployment time, not authoring time):</p>
+            <ul style="font-size: 0.88rem; color: #555; line-height: 1.7; margin: 0; padding-left: 16px;">
+              <li><code style="background:#f5f5f5; padding: 1px 5px; border-radius: 3px;">component.yaml</code> — declares component type, location, parameters</li>
+              <li><code style="background:#f5f5f5; padding: 1px 5px; border-radius: 3px;">environments.yaml</code> — centralized env catalog (cloud, region, secrets)</li>
+              <li><code style="background:#f5f5f5; padding: 1px 5px; border-radius: 3px;">pipeline.yaml</code> — generic ordered steps (build → validate → deploy → smoke test)</li>
+              <li><code style="background:#f5f5f5; padding: 1px 5px; border-radius: 3px;">promotion.yaml</code> — promotion gates (approvals, quality thresholds)</li>
+            </ul>
+          </div>
+
+          <!-- Consequences -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(103,58,183,0.1); border-top: 4px solid #673ab7;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #ede7f6; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-list-check" style="color: #673ab7; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Consequences</h3>
+            </div>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #4caf50; margin: 0 0 5px 0;">Benefits</p>
+            <ul style="font-size: 0.9rem; color: #555; line-height: 1.7; margin: 0 0 10px 0; padding-left: 16px;">
+              <li>Standardized, portable cloud-agnostic deployments (write once, reuse everywhere)</li>
+              <li>Eliminated cross-environment drift; 61% reduction in CI/CD configuration volume</li>
+              <li>67–78% deployment time reduction vs. ad-hoc scripts</li>
+              <li>Full provenance: every deployment decision is recorded and auditable</li>
+            </ul>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #f44336; margin: 0 0 5px 0;">Trade-offs</p>
+            <ul style="font-size: 0.9rem; color: #555; line-height: 1.7; margin: 0; padding-left: 16px;">
+              <li>Adds a thin configuration layer requiring team coordination on YAML conventions</li>
+              <li>Assumes pre-provisioned infrastructure (complements, not replaces, IaC tools)</li>
+            </ul>
+          </div>
+
+          <!-- Known Uses -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(103,58,183,0.1); border-top: 4px solid #00bcd4;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #e0f7fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-industry" style="color: #00bcd4; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Known Uses</h3>
+            </div>
+            <ul style="font-size: 0.92rem; color: #555; line-height: 1.7; margin: 0; padding-left: 18px;">
+              <li>Promoting dbt transformation workflows from Azure (dev) to GCP (prod)</li>
+              <li>Deploying Airflow DAGs consistently across AWS and Azure environments</li>
+              <li>Orchestrating ML notebooks on Databricks with approval gates</li>
+              <li>Cross-cloud data pipeline promotion at UN International Computing Centre (UNICC)</li>
+            </ul>
+          </div>
+
+          <!-- Validation -->
+          <div style="background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(255,152,0,0.1); border-top: 4px solid #ff9800;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; background: #fff3e0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-chart-bar" style="color: #ff9800; font-size: 1rem;"></i>
+              </div>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin: 0;">Validation Results</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+              <div style="background: #ede7f6; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 1.6rem; font-weight: 700; color: #673ab7;">61%</div>
+                <div style="font-size: 0.8rem; color: #666;">reduction in CI/CD configuration volume</div>
+              </div>
+              <div style="background: #e8f5e9; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 1.6rem; font-weight: 700; color: #4caf50;">67–78%</div>
+                <div style="font-size: 0.8rem; color: #666;">deployment time reduction vs. scripts</div>
+              </div>
+              <div style="background: #e3f2fd; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 1.6rem; font-weight: 700; color: #2196f3;">0</div>
+                <div style="font-size: 0.8rem; color: #666;">drift events in cross-env validation (10 experiments)</div>
+              </div>
+              <div style="background: #fff3e0; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 1.6rem; font-weight: 700; color: #ff9800;">4.2/5</div>
+                <div style="font-size: 0.8rem; color: #666;">expert survey utility rating (N=21)</div>
+              </div>
+            </div>
+            <p style="font-size: 0.85rem; color: #666; margin: 0; line-height: 1.5;">Validated across 10 experiments covering core pipeline capabilities, multi-environment promotion, and cross-cloud portability.</p>
+          </div>
+
+        </div>
+
+        <!-- Deterministic stages table -->
+        <div style="margin-top: 32px; background: white; border-radius: 12px; padding: 28px; box-shadow: 0 4px 16px rgba(103,58,183,0.08);">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #1a1a1a; margin: 0 0 18px 0; border-bottom: 2px solid #673ab7; padding-bottom: 10px;">
+            Deterministic Deployment Stages
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #673ab7;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #673ab7; margin: 0 0 6px 0;">1. Binding</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Environment-specific parameters resolved at deployment time (late binding — not hard-coded)</p>
+            </div>
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #7b1fa2;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #7b1fa2; margin: 0 0 6px 0;">2. Build</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Artifact (pipeline, notebook, schema) packaged into a consistent, reusable unit</p>
+            </div>
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #2196f3;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #2196f3; margin: 0 0 6px 0;">3. Validation</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Schema rules, configuration requirements, and compatibility constraints verified before deployment</p>
+            </div>
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #4caf50;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #4caf50; margin: 0 0 6px 0;">4. Deployment</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Artifact instantiated into target environment using resolved bindings</p>
+            </div>
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #ff9800;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #ff9800; margin: 0 0 6px 0;">5. Smoke Test</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Lightweight test verifies artifact runs correctly in target environment</p>
+            </div>
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #f44336;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #f44336; margin: 0 0 6px 0;">6. Gate</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Promotion policies (approvals, quality thresholds) evaluated before advancing to next stage</p>
+            </div>
+            <div style="background: #f9f4ff; border-radius: 8px; padding: 14px; border-top: 3px solid #607d8b;">
+              <p style="font-size: 0.85rem; font-weight: 700; color: #607d8b; margin: 0 0 6px 0;">7. Provenance</p>
+              <p style="font-size: 0.82rem; color: #555; margin: 0; line-height: 1.5;">Deployment metadata (artifact version, bindings, outcomes) recorded for auditability</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STATE OF THE ART COMPARISON
+    ════════════════════════════════════════════════════════════════ -->
+    <section id="sota" style="padding: 60px 20px; background: white;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <div style="display: inline-block; padding: 4px 14px; background: #1a1a1a; color: white; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.5px;">LITERATURE POSITIONING</div>
+          <h2 style="font-size: 2rem; font-weight: 700; color: #1a1a1a; margin-bottom: 12px;">Comparison with State of the Art</h2>
+          <p style="font-size: 1rem; color: #555; max-width: 750px; margin: 0 auto; line-height: 1.6;">
+            While CI/CD practices are mature in software engineering, their application to data pipeline deployment has remained entirely ad hoc. EADF is the first formalized pattern addressing this gap.
+          </p>
+        </div>
+
+        <!-- Gap banner -->
+        <div style="background: linear-gradient(135deg, #fff3e0 0%, #fbe9e7 100%); border-left: 5px solid #ff5722; border-radius: 8px; padding: 24px 28px; margin-bottom: 36px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #bf360c; margin: 0 0 10px 0;">
+            <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>Identified Literature Gap
+          </h3>
+          <p style="font-size: 0.95rem; color: #555; line-height: 1.7; margin: 0;">
+            Cloud-native data engineering routinely operates across development, staging, and production environments — yet <strong>environment-aware deployment is handled through project-specific configuration conventions rather than any recognized architectural pattern</strong>. No existing framework explicitly models the promotion semantics of data artifacts (pipelines, schemas, transformation logic) at the pattern level, with explicit context, forces, and consequences in the POSA/GoF sense. Data teams rely on bespoke deployment scripts, leading to duplicated effort, configuration drift, and limited auditability.
+          </p>
+        </div>
+
+        <!-- Comparison Table -->
+        <div style="overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 36px;">
+          <table style="width: 100%; border-collapse: collapse; background: white;">
+            <thead>
+              <tr style="background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: white;">
+                <th style="padding: 16px 18px; text-align: left; font-size: 0.9rem; font-weight: 600;">Approach</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Data-Specific</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Late Binding</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">POSA-Formalized</th>
+                <th style="padding: 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 600;">Cloud-Agnostic</th>
+                <th style="padding: 16px 18px; text-align: left; font-size: 0.9rem; font-weight: 600;">Key Limitation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Terraform / CloudFormation</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Infrastructure provisioning only; early binding; agnostic to data pipeline semantics</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">GitHub Actions / Jenkins / GitLab CI</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Workflow orchestration only; agnostic to schema evolution, dataset versioning, data quality gates</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">TFX / MLflow</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">ML artifacts only; not applicable to data pipelines, schemas, or transformation jobs</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">DataOps Principles</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Operational principles only; not pattern-based; no reusable deployment specification</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Delta Lake / Hudi / Iceberg</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #4caf50;">✓</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Storage-level primitives (ACID, time travel); do not prescribe how to promote pipelines across environments</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <td style="padding: 14px 18px; font-weight: 600; color: #333;">Ad-hoc Environment Scripts</td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #ff9800;">⚠️</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; text-align: center;"><span style="color: #f44336;">✗</span></td>
+                <td style="padding: 14px 18px; font-size: 0.88rem; color: #666;">Early binding; duplicated per environment; configuration drift; no auditability; not transferable</td>
+              </tr>
+              <tr style="background: linear-gradient(135deg, #ede7f6 0%, #e8f5e9 100%); border: 2px solid #673ab7;">
+                <td style="padding: 16px 18px; font-weight: 700; color: #4527a0;">
+                  <i class="fas fa-star" style="color: #ffc107; margin-right: 6px;"></i>EADF (this work)
+                </td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; text-align: center;"><span style="color: #4caf50; font-weight: 700;">✓</span></td>
+                <td style="padding: 16px 18px; font-size: 0.88rem; color: #4527a0; font-weight: 600;">First pattern-level solution for data pipeline deployment; late-binding YAML descriptors; data-specific validation; 61% config reduction; 0 drift events across 10 experiments</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- How EADF overcomes the gap -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div style="background: #ede7f6; border-radius: 10px; padding: 22px; border-left: 4px solid #673ab7;">
+            <h4 style="font-size: 1rem; font-weight: 700; color: #4527a0; margin: 0 0 10px 0;">
+              <i class="fas fa-check-circle" style="margin-right: 6px;"></i>What EADF Adds
+            </h4>
+            <ul style="font-size: 0.9rem; color: #444; line-height: 1.7; margin: 0; padding-left: 16px;">
+              <li>First POSA/GoF-formalized pattern for data pipeline CI/CD</li>
+              <li>Late binding: parameters resolved at deployment, not authoring time</li>
+              <li>Data artifacts (pipelines, schemas, jobs) treated as first-class deployment units</li>
+              <li>Tool-agnostic: works with GitHub Actions, Jenkins, GitLab CI, or direct CLI</li>
+              <li>Complements IaC tools (Terraform) — operates at application layer</li>
+              <li>Gregor &amp; Hevner Level 3 contribution: new solution, mature problem, emerging domain</li>
+            </ul>
+          </div>
+          <div style="background: #fff3e0; border-radius: 10px; padding: 22px; border-left: 4px solid #ff9800;">
+            <h4 style="font-size: 1rem; font-weight: 700; color: #e65100; margin: 0 0 10px 0;">
+              <i class="fas fa-microscope" style="margin-right: 6px;"></i>Empirical Evidence
+            </h4>
+            <ul style="font-size: 0.9rem; color: #444; line-height: 1.7; margin: 0; padding-left: 16px;">
+              <li>61% reduction in CI/CD configuration code volume</li>
+              <li>67–78% deployment time reduction vs. equivalent manual/script approaches</li>
+              <li>Zero cross-environment drift events across 10 validation experiments</li>
+              <li>Expert survey: 60–70% adoption intent; 4.2/5.0 utility rating (N=21)</li>
+              <li>Validated on Azure + GCP across pipelines, notebooks, dbt models, and schemas</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </section>
 
