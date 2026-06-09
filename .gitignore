@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-.resources/*
+resources/
 defense_notes.txt
 
