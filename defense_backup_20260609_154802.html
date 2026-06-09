@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhD Defense — Pattern-Driven Data Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f7f8fa;
+      --bg2:       #eef0f4;
+      --surface:   #ffffff;
+      --border:    rgba(0,0,0,0.08);
+      --border2:   rgba(0,0,0,0.12);
+      --text:      #111827;
+      --text2:     #374151;
+      --muted:     #6b7280;
+      --muted2:    #9ca3af;
+
+      --blue:      #1d4ed8;
+      --blue-l:    #3b82f6;
+      --blue-bg:   rgba(29,78,216,0.06);
+      --blue-b:    rgba(29,78,216,0.18);
+
+      --purple:    #7c3aed;
+      --purple-l:  #a78bfa;
+      --purple-bg: rgba(124,58,237,0.06);
+      --purple-b:  rgba(124,58,237,0.18);
+
+      --violet:    #5b21b6;
+      --violet-l:  #8b5cf6;
+      --violet-bg: rgba(91,33,182,0.06);
+      --violet-b:  rgba(91,33,182,0.18);
+
+      --green:     #065f46;
+      --green-l:   #059669;
+      --green-bg:  rgba(5,150,105,0.07);
+      --green-b:   rgba(5,150,105,0.2);
+
+      --red:       #991b1b;
+      --red-l:     #dc2626;
+      --red-bg:    rgba(220,38,38,0.06);
+      --red-b:     rgba(220,38,38,0.18);
+
+      --gold:      #b45309;
+      --gold-l:    #d97706;
+      --gold-bg:   rgba(180,83,9,0.06);
+      --gold-b:    rgba(180,83,9,0.2);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #progress-bar {
+      position: fixed; top: 0; left: 0; width: 0%; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-l));
+      z-index: 1000; transition: width 0.4s ease;
+    }
+
+    #slide-counter {
+      position: fixed; top: 14px; right: 20px; z-index: 1000;
+      font-size: 0.75rem; color: var(--muted); font-weight: 600; letter-spacing: 1px;
+    }
+
+    #nav-hint {
+      position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; font-size: 0.7rem; color: var(--muted2);
+      display: flex; gap: 18px; align-items: center; pointer-events: none;
+    }
+
+    .slide-btn {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      z-index: 1000; background: var(--surface); border: 1px solid var(--border2);
+      color: var(--muted); cursor: pointer; width: 40px; height: 40px; border-radius: 50%;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .slide-btn:hover { background: var(--bg2); color: var(--text); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+    #btn-prev { left: 14px; }
+    #btn-next { right: 14px; }
+
+    #home-btn {
+      position: fixed; top: 12px; left: 16px; z-index: 1000;
+      background: var(--surface); border: 1px solid var(--border2);
+      color: var(--muted); text-decoration: none; font-size: 0.78rem;
+      padding: 5px 12px; border-radius: 20px; font-family: 'Inter', sans-serif;
+      transition: all 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    #home-btn:hover { color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+    #slides-container {
+      width: 100%; height: 100vh; position: relative; overflow: hidden;
+    }
+
+    .slide {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 36px 72px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform: translateX(0);
+    }
+    .slide.active { opacity: 1; pointer-events: all; }
+    .slide.from-right { transform: translateX(44px); }
+    .slide.from-left  { transform: translateX(-44px); }
+    .slide.to-left    { transform: translateX(-44px); }
+    .slide.to-right   { transform: translateX(44px); }
+
+    .slide-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 14px; align-self: flex-start;
+    }
+
+    .slide-title {
+      font-size: 2.2rem; font-weight: 800; line-height: 1.18; margin-bottom: 20px;
+      align-self: flex-start; color: var(--text);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 18px; text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stat-num { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .stat-label { font-size: 0.73rem; color: var(--muted); margin-top: 5px; line-height: 1.4; }
+
+    .mini-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    .mini-table th {
+      padding: 8px 12px; text-align: left; background: var(--bg2);
+      color: var(--muted); font-weight: 600; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border2);
+    }
+    .mini-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text2); }
+    .mini-table tr:last-child td { border-bottom: none; }
+    .mini-table tr:hover td { background: var(--bg); }
+
+    .slide img {
+      border: 1px solid var(--border2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .pattern-intro-title { letter-spacing: 1px; }
+    .intro-quote {
+      max-width: 820px;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    .pill {
+      display: inline-block; border-radius: 20px; padding: 4px 13px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    }
+
+    .tag-badge {
+      display: inline-block; border-radius: 5px; padding: 2px 7px;
+      font-size: 0.67rem; font-weight: 700;
+    }
+
+    /* ===== SLIDE BACKGROUNDS ===== */
+    /* Title / global slides: clean white */
+    #slide-1  { background: linear-gradient(160deg, #f0f4ff 0%, #f7f8fa 60%, #fff8f0 100%); }
+    #slide-2  { background: var(--bg); }
+    #slide-20 { background: linear-gradient(160deg, #f0f4ff 0%, #f7f8fa 100%); } /* NEW positioning slide */
+
+    /* Methodology */
+    #slide-3  { background: var(--bg); }
+
+    /* MIND — blue family */
+    #slide-4  { background: linear-gradient(150deg, #eff6ff 0%, #f7f8fa 100%); border-left: 4px solid var(--blue-l); }
+    #slide-5  { background: linear-gradient(150deg, #eff6ff 0%, #f7f8fa 100%); border-left: 4px solid var(--blue-l); }
+    #slide-6  { background: linear-gradient(150deg, #eff6ff 0%, #f7f8fa 100%); border-left: 4px solid var(--blue-l); }
+
+    /* ETLT intro */
+    #slide-7  { background: linear-gradient(150deg, #f5f3ff 0%, #f7f8fa 100%); }
+
+    /* ETLT — purple family */
+    #slide-8  { background: linear-gradient(150deg, #f5f3ff 0%, #f7f8fa 100%); border-left: 4px solid var(--purple-l); }
+    #slide-9  { background: linear-gradient(150deg, #f5f3ff 0%, #f7f8fa 100%); border-left: 4px solid var(--purple-l); }
+    #slide-10 { background: linear-gradient(150deg, #f5f3ff 0%, #f7f8fa 100%); border-left: 4px solid var(--purple-l); justify-content: flex-start; padding-top: 50px; }
+
+    /* EADF intro */
+    #slide-11 { background: linear-gradient(150deg, #f3f0ff 0%, #f7f8fa 100%); }
+
+    /* EADF — violet family */
+    #slide-12 { background: linear-gradient(150deg, #f3f0ff 0%, #f7f8fa 100%); border-left: 4px solid var(--violet-l); }
+    #slide-13 { background: linear-gradient(150deg, #f3f0ff 0%, #f7f8fa 100%); border-left: 4px solid var(--violet-l); }
+
+    /* LLM — green family */
+    #slide-14 { background: linear-gradient(150deg, #ecfdf5 0%, #f7f8fa 100%); border-left: 4px solid var(--green-l); }
+    #slide-15 { background: linear-gradient(150deg, #ecfdf5 0%, #f7f8fa 100%); border-left: 4px solid var(--green-l); }
+
+    /* Survey */
+    #slide-16 { background: linear-gradient(150deg, #f0fdf4 0%, #f7f8fa 100%); border-left: 4px solid #16a34a; }
+
+    /* Contributions + Conclusions */
+    #slide-17 { background: var(--bg); }
+    #slide-18 { background: linear-gradient(160deg, #f0f4ff 0%, #f7f8fa 100%); }
+    #slide-19 { background: var(--bg); border-left: 4px solid var(--gold-l); }
+
+    @media (max-width: 1100px) {
+      .slide { padding: 26px 28px; }
+      .slide-title { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+  <div id="slide-counter">1 / 20</div>
+  <a href="index.html" id="home-btn">← Home</a>
+  <button class="slide-btn" id="btn-prev" onclick="changeSlide(-1)">‹</button>
+  <button class="slide-btn" id="btn-next" onclick="changeSlide(1)">›</button>
+  <div id="nav-hint">
+    <span>← → Arrow Keys</span>
+    <span>|</span>
+    <span>Space to advance</span>
+  </div>
+
+  <div id="slides-container">
+
+    <!-- ═══ S1: TITLE ═══ -->
+    <div class="slide active" id="slide-1">
+      <div style="text-align:center; max-width:820px;">
+        <div style="display:inline-block; background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:20px; padding:4px 14px; font-size:0.68rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--blue); margin-bottom:22px;">PhD Defense · XXXVII Cycle</div>
+        <h1 style="font-size:2.6rem; font-weight:900; line-height:1.15; margin-bottom:10px; color:var(--text);">Pattern-Driven<br>Data Engineering</h1>
+        <p style="font-size:1rem; color:var(--muted); margin-bottom:4px;">Formalizing Systematic Solutions for Cloud-based Data Lakehouses</p>
+        <div style="width:48px; height:2px; background:var(--blue); margin:18px auto; border-radius:2px;"></div>
+        <p style="font-size:1rem; color:var(--text2); font-weight:600;">PhD Candidate Chiara Rucco</p>
+        <p style="font-size:0.84rem; color:var(--muted); margin-top:4px;">Supervisors: Prof.ssa Antonella Longo &nbsp;·&nbsp; Dr. Motaz Saad</p>
+        <p style="font-size:0.7rem; color:var(--muted2); margin-top:2px;">Engineering of Complex Systems · Dept. of Engineering for Innovation · University of Salento</p>
+        <div style="margin-top:14px; display:flex; justify-content:center;">
+          <img src="resources/img/image3.png" alt="Universita del Salento" style="width:260px; max-width:75%; border:none; box-shadow:none; opacity:0.85;">
+        </div>
+        <div style="display:flex; justify-content:center; gap:44px; margin-top:26px;">
+          <div style="text-align:center;"><div style="font-size:1.8rem; font-weight:800; color:var(--blue);">3</div><div style="font-size:0.67rem; color:var(--muted2); margin-top:2px;">Design Patterns</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem; font-weight:800; color:var(--blue);">7</div><div style="font-size:0.67rem; color:var(--muted2); margin-top:2px;">LLMs Benchmarked</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem; font-weight:800; color:var(--blue);">21</div><div style="font-size:0.67rem; color:var(--muted2); margin-top:2px;">Expert Practitioners</div></div>
+          <div style="text-align:center;"><div style="font-size:1.8rem; font-weight:800; color:var(--blue);">165+</div><div style="font-size:0.67rem; color:var(--muted2); margin-top:2px;">Sources Reviewed</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S2: AGENDA ═══ -->
+    <div class="slide" id="slide-2">
+      <div style="max-width:940px; width:100%;">
+        <div class="slide-label">Defense Roadmap</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:18px;">8 Sections · 20 Minutes</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--red-l); border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:var(--red-b); min-width:28px;">01</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--text);">Motivation</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">4 challenges · 4 research questions</div></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid #818cf8; border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:rgba(129,140,248,0.35); min-width:28px;">02</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--text);">Research Positioning</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">Differentiation from related tools</div></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid #818cf8; border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:rgba(129,140,248,0.35); min-width:28px;">03</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--text);">Research Approach</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">DSR (Peffers 2007) + POSA pattern template</div></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--blue-l); border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:var(--blue-b); min-width:28px;">04</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--blue);">RQ1 — MIND Pattern</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">Metadata-driven ingestion · N-source problem</div></div>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--purple-l); border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:var(--purple-b); min-width:28px;">05</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--purple);">RQ2 — ETLT++/ELTL++ Patterns</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">Transformation timing · decision framework</div></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--violet-l); border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:var(--violet-b); min-width:28px;">06</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--violet);">RQ3 — EADF Pattern</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">Late binding · deployment drift · provenance</div></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--green-l); border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:var(--green-b); min-width:28px;">07</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--green);">RQ4 — LLM Benchmarking Study</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">7 models · 3 providers · complexity ceiling</div></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--gold-l); border-radius:7px; padding:11px 14px; display:flex; gap:12px; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <span style="font-size:1.3rem; font-weight:900; color:var(--gold-b); min-width:28px;">08</span>
+              <div><div style="font-weight:700; font-size:0.87rem; color:var(--gold);">Validation · Contributions · Conclusions</div><div style="font-size:0.71rem; color:var(--muted); margin-top:2px;">N=21 survey · 6 contributions · future agenda</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S3: MOTIVATION + 4 RQs ═══ -->
+    <div class="slide" id="slide-3">
+      <div style="max-width:1040px; width:100%;">
+        <div class="slide-label" style="color:var(--red-l);">01 — Motivation</div>
+        <h2 class="slide-title" style="font-size:1.7rem; margin-bottom:14px;">4 Open Challenges → 4 Research Questions</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:7px;">
+            <div style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:2px;">Challenges — MLR (165 sources)</div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">C1 · Source Heterogeneity</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">100+ source types · REST, RDBMS, streams, blobs · <strong style="color:var(--red-l);">one bespoke pipeline per source, no reuse</strong></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">C2 · Transformation Timing</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;"><strong style="color:var(--red-l);">43% use informal hybrid</strong> ETL/ELT · no formal decision criteria · data contracts undefined</div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">C3 · Deployment Drift</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">Hardcoded configs · 62% maintain separate config files per env · <strong style="color:var(--red-l);">14% have no standardised approach</strong></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">C4 · LLM Potential, Unknown Limits</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">60–70% dev time on repetitive tasks · <strong style="color:var(--red-l);">no multi-model benchmark for data engineering</strong> existed</div>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:7px;">
+            <div style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:2px;">Research Questions</div>
+            <div style="background:var(--surface); border:1px solid var(--blue-b); border-left:3px solid var(--blue-l); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">RQ1 — MIND Pattern</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">How can multi-source data ingestion be <em>systematized</em> through a reusable, cloud-agnostic design pattern?</div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--purple-b); border-left:3px solid var(--purple-l); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">RQ2 — ETLT++/ELTL++ Patterns</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">What formal criteria guide the choice between transformation strategies in a cloud lakehouse?</div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--violet-b); border-left:3px solid var(--violet-l); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--violet); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">RQ3 — EADF Pattern</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">How can data pipeline deployment be made <em>environment-aware, auditable, and drift-free</em> across cloud providers?</div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--green-b); border-left:3px solid var(--green-l); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">RQ4 — LLM Study</div>
+              <div style="font-size:0.82rem; color:var(--text2); line-height:1.5;">Can LLMs reliably generate <em>production-ready</em> data engineering pipeline code conformant with formal patterns?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S20: RESEARCH POSITIONING (NEW) ═══ -->
+    <div class="slide" id="slide-20">
+      <div style="max-width:1080px; width:100%;">
+        <div class="slide-label" style="color:var(--blue);">02 — Research Positioning</div>
+        <h2 class="slide-title" style="font-size:1.7rem; margin-bottom:6px;">This thesis is <em>not</em> another tool — it is the first pattern formalization</h2>
+        <p style="font-size:0.84rem; color:var(--muted); margin-bottom:14px; align-self:flex-start;">One pattern per data-pipeline stage. Existing tools implement point solutions; this thesis <strong>formalizes the architecture</strong> with the POSA template — context, forces, solution, consequences, known uses.</p>
+        <div style="background:var(--surface); border:1px solid var(--border2); border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.07); margin-bottom:14px;">
+          <table class="mini-table" style="font-size:0.79rem;">
+            <thead>
+              <tr>
+                <th style="width:13%;">Pipeline stage</th>
+                <th style="width:17%;">Existing tool</th>
+                <th style="width:28%;">What it does</th>
+                <th style="width:21%;">Gap it leaves</th>
+                <th style="width:21%;">This thesis adds</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span style="display:inline-block; background:var(--blue-bg); border:1px solid var(--blue-b); color:var(--blue); font-weight:700; font-size:0.72rem; padding:3px 9px; border-radius:5px;">Ingestion</span></td>
+                <td style="font-weight:700; color:var(--text);">Apache Atlas / Amundsen</td>
+                <td>Metadata <em>catalog</em> — documents data assets that exist</td>
+                <td style="color:var(--red-l);">Does not drive pipeline execution</td>
+                <td style="color:var(--blue); font-weight:600;"><strong>MIND</strong> — UMT is the runtime control plane, not a descriptor</td>
+              </tr>
+              <tr>
+                <td><span style="display:inline-block; background:var(--purple-bg); border:1px solid var(--purple-b); color:var(--purple); font-weight:700; font-size:0.72rem; padding:3px 9px; border-radius:5px;">Transformation</span></td>
+                <td style="font-weight:700; color:var(--text);">dbt</td>
+                <td>SQL-based tests in an ELT paradigm, tool-specific</td>
+                <td style="color:var(--red-l);">No formal timing criteria; technology-bound</td>
+                <td style="color:var(--purple); font-weight:600;"><strong>ETLT++/ELTL++</strong> — technology-independent POSA patterns with explicit decision forces</td>
+              </tr>
+              <tr>
+                <td><span style="display:inline-block; background:var(--violet-bg); border:1px solid var(--violet-b); color:var(--violet); font-weight:700; font-size:0.72rem; padding:3px 9px; border-radius:5px;">Deployment</span></td>
+                <td style="font-weight:700; color:var(--text);">Terraform / Helm</td>
+                <td>Infrastructure provisioning, app deployment</td>
+                <td style="color:var(--red-l);">No data-quality promotion gates; no data SLIs</td>
+                <td style="color:var(--violet); font-weight:600;"><strong>EADF</strong> — promotion.yaml enforces data freshness &amp; schema gates at deploy time</td>
+              </tr>
+              <tr>
+                <td><span style="display:inline-block; background:var(--green-bg); border:1px solid var(--green-b); color:var(--green); font-weight:700; font-size:0.72rem; padding:3px 9px; border-radius:5px;">All stages</span></td>
+                <td style="font-weight:700; color:var(--text);">Azure / AWS / Databricks blueprints</td>
+                <td>Platform-specific best practices, vendor docs</td>
+                <td style="color:var(--red-l);">No formal pattern structure; not portable</td>
+                <td style="color:var(--green); font-weight:600;"><strong>All three patterns</strong> — validated on Azure + GCP, cloud-agnostic by POSA design</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:8px; padding:11px 16px;">
+          <p style="font-size:0.84rem; color:var(--text); margin:0; line-height:1.5;">The contribution is not a new tool. It is the <strong>first systematic application of POSA architectural pattern methodology to data engineering</strong> — one formalized pattern for each stage of the pipeline.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S4: RESEARCH APPROACH ═══ -->
+    <div class="slide" id="slide-4">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#6366f1;">03 — Research Approach</div>
+        <h2 class="slide-title" style="font-size:1.55rem; line-height:1.18; margin-bottom:12px;">Design Science Research + POSA Pattern Template</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:9px;">DSR 6-Stage Process — Peffers et al. 2007 → mapped to this thesis</p>
+            <div style="background:var(--surface); border:1px solid var(--border2); border-radius:10px; padding:10px; margin-bottom:9px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+              <img src="resources/img/image11.png" alt="Research Methodology Steps" style="width:94%; display:block; margin:0 auto; border-radius:7px; filter:brightness(0.96) contrast(1.04);">
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text2);"><span style="color:#6366f1; font-weight:700; min-width:130px;">Problem ID</span><span>MLR · 165 sources · PRISMA 2020 flow</span></div>
+              <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text2);"><span style="color:#6366f1; font-weight:700; min-width:130px;">Objective</span><span>4 RQs · one per pipeline stage</span></div>
+              <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text2);"><span style="color:#6366f1; font-weight:700; min-width:130px;">Design</span><span>POSA pattern formalization</span></div>
+              <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text2);"><span style="color:#6366f1; font-weight:700; min-width:130px;">Demonstration</span><span>Azure + GCP implementations</span></div>
+              <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text2);"><span style="color:#6366f1; font-weight:700; min-width:130px;">Evaluation</span><span>Expert survey N=21 + experiments + LLM benchmark</span></div>
+              <div style="display:flex; gap:8px; font-size:0.75rem; color:var(--text2);"><span style="color:#6366f1; font-weight:700; min-width:130px;">Communication</span><span>Open pattern catalog + thesis</span></div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:9px;">POSA Components — uniform template across all 3 patterns</p>
+            <div style="background:var(--surface); border:1px solid var(--border2); border-radius:10px; overflow:hidden; margin-bottom:10px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+              <table class="mini-table" style="font-size:0.78rem;">
+                <thead><tr><th style="width:38%;">Component</th><th>Descriptor</th></tr></thead>
+                <tbody>
+                  <tr><td style="color:var(--gold); font-weight:700;">Name + Context</td><td>Scope, stakeholders, deployment environment</td></tr>
+                  <tr><td style="color:var(--red-l); font-weight:700;">Problem + Forces</td><td>Constraints and competing quality attributes</td></tr>
+                  <tr><td style="color:var(--green-l); font-weight:700;">Solution Structure</td><td>Architecture, flow, implementation boundaries</td></tr>
+                  <tr><td style="color:var(--purple); font-weight:700;">Consequences + Known Uses</td><td>Trade-offs, benefits, real-world validation</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="background:var(--bg2); border:1px solid var(--border2); border-radius:8px; padding:11px 14px;">
+              <p style="font-size:0.8rem; color:var(--text); margin:0; line-height:1.5;"><strong style="color:#6366f1;">Novel:</strong> explicit <em>forces and consequences</em> are formalized per pattern — enabling reproducible comparison and systematic selection across all three.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- ═══ S4 (MIND intro) ═══ -->
+    <div class="slide" id="slide-5">
+      <div style="max-width:1060px; width:100%;">
+        <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span class="pill" style="background:var(--blue-bg); border:1px solid var(--blue-b); color:var(--blue);">RQ1</span>
+          <span class="slide-label" style="color:var(--blue); margin-bottom:0;">Pattern 1 of 3 · Ingestion Stage</span>
+        </div>
+        <div style="display:grid; grid-template-columns:0.92fr 1.08fr; gap:30px; align-items:center;">
+          <div>
+            <h2 class="pattern-intro-title" style="font-size:3rem; font-weight:900; color:var(--blue); margin-bottom:4px;">MIND</h2>
+            <p style="font-size:1.02rem; color:var(--text2); font-weight:600; margin-bottom:14px;">Metadata-Driven Ingestion Design Pattern</p>
+            <div class="intro-quote" style="border-left:3px solid var(--blue-l); margin-bottom:16px;">
+              <p style="font-size:0.9rem; color:var(--text); line-height:1.55; margin:0; font-style:italic;">“Ingestion should scale by metadata growth — not by pipeline code growth.”</p>
+            </div>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:9px; margin:0;">
+              <li style="display:flex; gap:10px; align-items:flex-start;"><span style="color:var(--red-l); font-weight:800; min-width:58px; font-size:0.8rem;">Problem</span><span style="font-size:0.85rem; color:var(--text2); line-height:1.45;">N heterogeneous sources → N bespoke pipelines, no reuse</span></li>
+              <li style="display:flex; gap:10px; align-items:flex-start;"><span style="color:var(--blue); font-weight:800; min-width:58px; font-size:0.8rem;">Idea</span><span style="font-size:0.85rem; color:var(--text2); line-height:1.45;">One <strong>Unified Metadata Table (UMT)</strong> describes every source declaratively</span></li>
+              <li style="display:flex; gap:10px; align-items:flex-start;"><span style="color:var(--green-l); font-weight:800; min-width:58px; font-size:0.8rem;">Result</span><span style="font-size:0.85rem; color:var(--text2); line-height:1.45;">A generic engine reads the UMT and builds pipelines at runtime</span></li>
+            </ul>
+            <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+              <span class="tag-badge" style="background:var(--blue-bg); border:1px solid var(--blue-b); color:var(--blue);">Cloud-agnostic</span>
+              <span class="tag-badge" style="background:var(--blue-bg); border:1px solid var(--blue-b); color:var(--blue);">Full / Incremental / Hybrid</span>
+              <span class="tag-badge" style="background:var(--blue-bg); border:1px solid var(--blue-b); color:var(--blue);">Zero code duplication</span>
+            </div>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border2); border-radius:12px; padding:12px; box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+            <img src="resources/img/image14.png" alt="MIND metadata-driven orchestration" style="width:100%; border:none; box-shadow:none; border-radius:7px;">
+            <p style="font-size:0.68rem; color:var(--muted); text-align:center; margin-top:6px;">Orchestrator reads the Metadata Table → generates &amp; executes ingestion per source</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S6: MIND SOLUTION ═══ -->
+    <div class="slide" id="slide-6">
+      <div style="max-width:1080px; width:100%;">
+        <div class="slide-label" style="color:var(--blue);">MIND · Solution</div>
+        <h2 class="slide-title" style="color:var(--blue); font-size:1.6rem; margin-bottom:12px;">One Unified Metadata Table governs N sources — zero code duplication</h2>
+        <div style="display:grid; grid-template-columns:1.12fr 0.88fr; gap:22px; align-items:start;">
+          <div>
+            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">Sample UMT — adding a source = one row, no code change</p>
+            <div style="background:var(--surface); border:1px solid var(--border2); border-radius:9px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06); margin-bottom:12px;">
+              <table class="mini-table" style="font-size:0.72rem; font-family:'JetBrains Mono',monospace;">
+                <thead><tr><th>source</th><th>type</th><th>strategy</th><th>watermark</th><th>key</th></tr></thead>
+                <tbody>
+                  <tr><td>crm_api</td><td>REST API</td><td style="color:var(--blue); font-weight:600;">full</td><td>—</td><td>customer_id</td></tr>
+                  <tr><td>orders_db</td><td>PostgreSQL</td><td style="color:var(--blue); font-weight:600;">date_incr</td><td>updated_at</td><td>order_id</td></tr>
+                  <tr><td>clicks</td><td>Kafka stream</td><td style="color:var(--blue); font-weight:600;">hybrid</td><td>event_ts</td><td>event_id</td></tr>
+                  <tr style="background:var(--green-bg);"><td colspan="5" style="color:var(--green-l); font-weight:600; font-family:'Inter',sans-serif;">+ new source → INSERT 1 row → engine picks it up automatically</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:7px;">
+              <div style="background:var(--surface); border:1px solid var(--blue-b); border-left:3px solid var(--blue-l); border-radius:7px; padding:9px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <strong style="font-size:0.83rem; color:var(--blue);">4 ingestion strategies, runtime-selected</strong>
+                <span style="font-size:0.78rem; color:var(--text2);"> — Full · Date-incremental · Hash-incremental · Hybrid, chosen per UMT row.</span>
+              </div>
+              <div style="background:var(--surface); border:1px solid var(--blue-b); border-left:3px solid var(--blue-l); border-radius:7px; padding:9px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <strong style="font-size:0.83rem; color:var(--blue);">Cloud-agnostic engine</strong>
+                <span style="font-size:0.78rem; color:var(--text2);"> — same UMT validated on Azure (ADF + Databricks) &amp; GCP.</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:7px;">
+            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted);">POSA Formalization</p>
+            <div style="background:var(--gold-bg); border-left:3px solid var(--gold-l); border-radius:0 6px 6px 0; padding:7px 11px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px;">Context</span>
+              <p style="font-size:0.75rem; color:var(--text2); line-height:1.4; margin:2px 0 0;">Cloud lakehouses ingesting REST, RDBMS, streams &amp; blobs under schema evolution.</p>
+            </div>
+            <div style="background:var(--red-bg); border-left:3px solid var(--red-l); border-radius:0 6px 6px 0; padding:7px 11px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">Forces</span>
+              <p style="font-size:0.75rem; color:var(--text2); line-height:1.4; margin:2px 0 0;">O(N) maintenance · schema changes break code · vendor lock-in vs. portability.</p>
+            </div>
+            <div style="background:var(--green-bg); border-left:3px solid var(--green-l); border-radius:0 6px 6px 0; padding:7px 11px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--green-l); text-transform:uppercase; letter-spacing:0.5px;">Consequences</span>
+              <ul style="list-style:none; font-size:0.74rem; color:var(--text2); line-height:1.5; margin:2px 0 0;">
+                <li style="color:var(--green-l);">✓ New source = 1 INSERT, 0 code</li>
+                <li style="color:var(--green-l);">✓ Schema drift absorbed by UMT</li>
+                <li style="color:var(--gold-l);">⚠ UMT schema must be governed</li>
+              </ul>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:2px;">
+              <div class="stat-card" style="padding:9px;"><div class="stat-num" style="color:var(--blue); font-size:1.5rem;">4.3×</div><div class="stat-label">speedup @1B rows</div></div>
+              <div class="stat-card" style="padding:9px;"><div class="stat-num" style="color:var(--green-l); font-size:1.5rem;">61%</div><div class="stat-label">less config code</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S7: MIND RESULTS ═══ -->
+    <div class="slide" id="slide-7">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:var(--blue);">MIND · Validation Results</div>
+        <h2 class="slide-title" style="color:var(--blue); font-size:1.6rem; margin-bottom:14px;">Validated on 2 clouds — experts confirm real-world utility</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:12px;">
+              <div class="stat-card"><div class="stat-num" style="color:var(--blue);">4.3×</div><div class="stat-label">ingestion speedup (1B rows)</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--blue);">61%</div><div class="stat-label">config code reduction</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--blue);">4.7/5</div><div class="stat-label">expert utility (N=21)</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--blue);">76%</div><div class="stat-label">problem recognition</div></div>
+            </div>
+            <div style="background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:8px; padding:10px 13px;">
+              <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--blue); margin-bottom:4px;">Literature gap closed</p>
+              <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;">No prior tool (ADF, Glue, NiFi, Airbyte, Data Mesh) combines <strong>multi-source + cloud-agnostic + runtime strategy + empirical validation</strong>. MIND is the first to do all four.</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">Known Uses</p>
+            <div class="card" style="margin-bottom:10px;">
+              <ul style="list-style:none; font-size:0.78rem; color:var(--text2); line-height:1.7;">
+                <li>▸ <strong style="color:var(--blue);">Azure:</strong> ADF + Databricks — hash-incremental @1B rows</li>
+                <li>▸ <strong style="color:var(--blue);">GCP:</strong> CockroachDB + Colab — date-watermark ingestion</li>
+                <li>▸ <strong style="color:var(--blue);">Healthcare:</strong> 30+ IoT + EHR sources via one UMT</li>
+              </ul>
+            </div>
+            <img src="resources/img/image16.png" alt="MIND 3-Phase Validation" style="width:100%; border-radius:9px;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S8: RQ2 — ETLT/ELTL INTRO ═══ -->
+    <div class="slide" id="slide-8">
+      <div style="max-width:1080px; width:100%;">
+        <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <span class="pill" style="background:var(--purple-bg); border:1px solid var(--purple-b); color:var(--purple);">RQ2</span>
+          <span class="slide-label" style="color:var(--purple); margin-bottom:0;">Pattern 2 of 3 · Transformation Stage</span>
+        </div>
+        <h2 class="pattern-intro-title" style="font-size:2.2rem; font-weight:900; color:var(--purple); margin-bottom:2px;">ETLT++ / ELTL++</h2>
+        <p style="font-size:0.98rem; color:var(--text2); font-weight:600; margin-bottom:14px;">Formalizing Hybrid Transformation Timing as Design Patterns</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+          <div style="background:var(--surface); border:1px solid var(--purple-b); border-left:3px solid var(--purple-l); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;"><span style="width:20px; height:20px; background:var(--purple); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:800;">1</span><strong style="font-size:0.86rem; color:var(--purple);">Formalize the patterns</strong></div>
+            <p style="font-size:0.79rem; color:var(--text2); line-height:1.45; margin:0;">78% of teams already do hybrid ETL/ELT — but informally. We give ETLT &amp; ELTL a <strong>formal POSA structure</strong>: context, forces, solution, consequences.</p>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--green-b); border-left:3px solid var(--green-l); border-radius:8px; padding:11px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;"><span style="width:20px; height:20px; background:var(--green-l); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:800;">2</span><strong style="font-size:0.86rem; color:var(--green);">Enhance them (the &ldquo;++&rdquo;)</strong></div>
+            <p style="font-size:0.79rem; color:var(--text2); line-height:1.45; margin:0;">The <strong>++ variants add explicit steps</strong>: data contracts, validation gates, quarantine for rejects, and semantic versioning for deterministic replay.</p>
+          </div>
+        </div>
+        <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">The two pattern flows</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="background:var(--surface); border:1px solid var(--purple-b); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span style="font-size:0.8rem; font-weight:800; color:var(--purple); min-width:64px;">ETLT++</span>
+            <span style="display:flex; align-items:center; flex-wrap:wrap; gap:2px;"><span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;">E</span> <span style="color:var(--muted2); font-weight:700;">→</span> <span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;"><strong>T₁ quality + contracts</strong></span> <span style="color:var(--muted2); font-weight:700;">→</span> <span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;">L</span> <span style="color:var(--muted2); font-weight:700;">→</span> <span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;">T₂ business</span></span>
+            <span style="font-size:0.72rem; color:var(--muted); margin-left:auto; font-style:italic;">quality before storage</span>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--purple-b); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span style="font-size:0.8rem; font-weight:800; color:var(--purple); min-width:64px;">ELTL++</span>
+            <span style="display:flex; align-items:center; flex-wrap:wrap; gap:2px;"><span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;">E</span> <span style="color:var(--muted2); font-weight:700;">→</span> <span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;">L raw / L1</span> <span style="color:var(--muted2); font-weight:700;">→</span> <span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;"><strong>T validate</strong></span> <span style="color:var(--muted2); font-weight:700;">→</span> <span style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:5px; padding:3px 8px; font-size:0.72rem; color:var(--text2); white-space:nowrap;">L curated / L2</span></span>
+            <span style="font-size:0.72rem; color:var(--muted); margin-left:auto; font-style:italic;">raw fidelity first</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+          <span class="tag-badge" style="background:var(--purple-bg); border:1px solid var(--purple-b); color:var(--purple);">Data Contracts</span>
+          <span class="tag-badge" style="background:var(--purple-bg); border:1px solid var(--purple-b); color:var(--purple);">Validation Gates</span>
+          <span class="tag-badge" style="background:var(--purple-bg); border:1px solid var(--purple-b); color:var(--purple);">Semantic Versioning</span>
+          <span class="tag-badge" style="background:var(--purple-bg); border:1px solid var(--purple-b); color:var(--purple);">Decision Matrix</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S9: ETLT/ELTL SOLUTION ═══ -->
+    <div class="slide" id="slide-9">
+      <div style="max-width:1080px; width:100%;">
+        <div class="slide-label" style="color:var(--purple);">ETLT++/ELTL++ · Solution</div>
+        <h2 class="slide-title" style="color:var(--purple); font-size:1.55rem; margin-bottom:12px;">What the &ldquo;++&rdquo; adds — and how to choose between the two patterns</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
+          <div>
+            <div style="background:var(--surface); border:1px solid var(--blue-b); border-top:2px solid var(--blue-l); border-radius:0 0 8px 8px; padding:10px 13px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.88rem; font-weight:700; color:var(--blue); margin-bottom:3px;">ETLT++ — quality before load</div>
+              <div style="font-size:0.77rem; color:var(--text2); line-height:1.5;">E → <strong>T₁ quality</strong> → L → T₂ business<br><span style="color:var(--green-l); font-weight:600;">++ adds:</span> data contracts at T₁ · quarantine for rejects</div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--purple-b); border-top:2px solid var(--purple-l); border-radius:0 0 8px 8px; padding:10px 13px; margin-bottom:10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="font-size:0.88rem; font-weight:700; color:var(--purple); margin-bottom:3px;">ELTL++ — raw fidelity first</div>
+              <div style="font-size:0.77rem; color:var(--text2); line-height:1.5;">E → L raw → T → <strong>L curated</strong><br><span style="color:var(--green-l); font-weight:600;">++ adds:</span> immutable raw + time travel · validation before curation</div>
+            </div>
+            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:5px;">Sample data contract — the &ldquo;++&rdquo; gate</p>
+            <div style="background:#1e1e2e; border-radius:8px; padding:11px 14px; font-family:'JetBrains Mono',monospace; font-size:0.73rem; line-height:1.6; color:#cdd6f4;">
+              <span style="color:#89b4fa;">columns</span>:<br>
+              &nbsp;&nbsp;- <span style="color:#a6e3a1;">order_id</span>: {type: int, <span style="color:#f9e2af;">not_null</span>: true}<br>
+              &nbsp;&nbsp;- <span style="color:#a6e3a1;">amount</span>:&nbsp;&nbsp; {type: decimal, <span style="color:#f9e2af;">min</span>: 0}<br>
+              <span style="color:#89b4fa;">on_violation</span>: <span style="color:#fab387;">quarantine</span>
+            </div>
+          </div>
+          <div>
+            <div style="background:var(--red-bg); border-left:3px solid var(--red-l); border-radius:0 6px 6px 0; padding:8px 12px; margin-bottom:10px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">POSA — Forces</span>
+              <p style="font-size:0.76rem; color:var(--text2); line-height:1.45; margin:2px 0 0;">Quality vs. raw fidelity vs. cost vs. compliance pull apart — no single classic ETL/ELT satisfies all. 78% improvise → <strong>64% more quality incidents</strong>.</p>
+            </div>
+            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:6px;">Decision matrix — when to use which</p>
+            <div style="background:var(--surface); border:1px solid var(--border2); border-radius:9px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06); margin-bottom:10px;">
+              <table class="mini-table" style="font-size:0.78rem;">
+                <thead><tr><th>Decision driver</th><th style="text-align:center; color:var(--blue);">ETLT++</th><th style="text-align:center; color:var(--purple);">ELTL++</th></tr></thead>
+                <tbody>
+                  <tr><td>Strict quality gate first</td><td style="text-align:center; color:var(--green-l); font-weight:700;">✓✓</td><td style="text-align:center; color:var(--muted2);">○</td></tr>
+                  <tr><td>Raw replay &amp; forensics</td><td style="text-align:center; color:var(--muted2);">○</td><td style="text-align:center; color:var(--green-l); font-weight:700;">✓✓</td></tr>
+                  <tr><td>Storage efficiency</td><td style="text-align:center; color:var(--green-l); font-weight:700;">✓</td><td style="text-align:center; color:var(--muted2);">higher cost</td></tr>
+                  <tr><td>Multi-team raw reuse</td><td style="text-align:center; color:var(--muted2);">○</td><td style="text-align:center; color:var(--green-l); font-weight:700;">✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="background:var(--gold-bg); border:1px solid var(--gold-b); border-radius:7px; padding:9px 13px;">
+              <p style="font-size:0.78rem; color:var(--text); margin:0; line-height:1.45;">★ <strong>Both coexist</strong> in one lakehouse: ETLT++ for latency-sensitive streams, ELTL++ for compliance workloads.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S10: ETLT/ELTL RESULTS ═══ -->
+    <div class="slide" id="slide-10">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:var(--purple);">ETLT++/ELTL++ · Validation Results</div>
+        <h2 class="slide-title" style="color:var(--purple); font-size:1.55rem; margin-bottom:12px;">Faster queries, lower cost, full contract compliance</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:12px;">
+              <div class="stat-card"><div class="stat-num" style="color:var(--purple); font-size:1.7rem;">3.3×</div><div class="stat-label">query speedup L2 vs L1</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--purple); font-size:1.7rem;">69%</div><div class="stat-label">TCO reduction (ELTL++)</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--purple); font-size:1.5rem;">100%</div><div class="stat-label">contract compliance (5k caught)</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--purple); font-size:1.7rem;">4.4/5</div><div class="stat-label">expert utility (N=21)</div></div>
+            </div>
+            <div style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:8px; padding:10px 13px;">
+              <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--purple); margin-bottom:4px;">Literature gap closed</p>
+              <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;">dbt, Mapping Data Flows &amp; DLT are tool-bound and ELT-only. None offer <strong>formal hybrid timing + contracts + semantic versioning</strong> that transfer across technologies. The ++ patterns do.</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">Pattern architecture reference</p>
+            <img src="resources/img/image26.png" alt="ETLT and ELTL pattern architecture" style="width:100%; border-radius:9px; margin-bottom:10px;">
+            <div style="background:var(--gold-bg); border:1px solid var(--gold-b); border-radius:7px; padding:9px 13px;">
+              <p style="font-size:0.78rem; color:var(--text); margin:0; line-height:1.45;">★ <strong>Interpretation:</strong> ETLT++ when pre-load quality dominates; ELTL++ when raw fidelity &amp; replay dominate.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- ═══ S11: RQ3 — EADF INTRO ═══ -->
+    <div class="slide" id="slide-11">
+      <div style="max-width:1060px; width:100%;">
+        <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span class="pill" style="background:var(--violet-bg); border:1px solid var(--violet-b); color:var(--violet);">RQ3</span>
+          <span class="slide-label" style="color:var(--violet); margin-bottom:0;">Pattern 3 of 3 · Deployment Stage</span>
+        </div>
+        <div style="display:grid; grid-template-columns:0.92fr 1.08fr; gap:30px; align-items:center;">
+          <div>
+            <h2 class="pattern-intro-title" style="font-size:2.7rem; font-weight:900; color:var(--violet); margin-bottom:4px;">EADF</h2>
+            <p style="font-size:1rem; color:var(--text2); font-weight:600; margin-bottom:14px;">Environment-Aware Deployment Framework</p>
+            <div class="intro-quote" style="border-left:3px solid var(--violet-l); margin-bottom:16px;">
+              <p style="font-size:0.9rem; color:var(--text); line-height:1.55; margin:0; font-style:italic;">“Author once, bind the environment at deploy time — eliminate config drift by construction.”</p>
+            </div>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:9px; margin:0;">
+              <li style="display:flex; gap:10px; align-items:flex-start;"><span style="color:var(--red-l); font-weight:800; min-width:58px; font-size:0.8rem;">Problem</span><span style="font-size:0.85rem; color:var(--text2); line-height:1.45;">Early binding hardcodes env values → drift, no audit trail</span></li>
+              <li style="display:flex; gap:10px; align-items:flex-start;"><span style="color:var(--violet); font-weight:800; min-width:58px; font-size:0.8rem;">Idea</span><span style="font-size:0.85rem; color:var(--text2); line-height:1.45;">Late-binding <strong>YAML descriptors</strong> + data-quality promotion gates</span></li>
+              <li style="display:flex; gap:10px; align-items:flex-start;"><span style="color:var(--green-l); font-weight:800; min-width:58px; font-size:0.8rem;">Result</span><span style="font-size:0.85rem; color:var(--text2); line-height:1.45;">Same artifact promotes dev → prod with full provenance</span></li>
+            </ul>
+            <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;">
+              <span class="tag-badge" style="background:var(--violet-bg); border:1px solid var(--violet-b); color:var(--violet);">Late Binding</span>
+              <span class="tag-badge" style="background:var(--violet-bg); border:1px solid var(--violet-b); color:var(--violet);">Quality Gates</span>
+              <span class="tag-badge" style="background:var(--violet-bg); border:1px solid var(--violet-b); color:var(--violet);">Multi-cloud</span>
+              <span class="tag-badge" style="background:var(--violet-bg); border:1px solid var(--violet-b); color:var(--violet);">Immutable Provenance</span>
+            </div>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border2); border-radius:12px; padding:12px; box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+            <img src="resources/img/image34.png" alt="EADF deployment pipeline" style="width:100%; border:none; box-shadow:none; border-radius:7px;">
+            <p style="font-size:0.68rem; color:var(--muted); text-align:center; margin-top:6px;">Prepare → Validate → Gate evaluation → Provenance → Deploy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S12: EADF SOLUTION ═══ -->
+    <div class="slide" id="slide-12">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:var(--violet);">EADF · Solution</div>
+        <h2 class="slide-title" style="color:var(--violet); font-size:1.55rem; margin-bottom:12px;">4 late-binding YAML descriptors + 7-stage deterministic pipeline</h2>
+        <div style="display:grid; grid-template-columns:0.85fr 1.15fr; gap:22px; align-items:start;">
+          <div style="display:flex; flex-direction:column; gap:7px;">
+            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted);">POSA Formalization</p>
+            <div style="background:var(--gold-bg); border-left:3px solid var(--gold-l); border-radius:0 6px 6px 0; padding:7px 11px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px;">Context</span>
+              <p style="font-size:0.75rem; color:var(--text2); line-height:1.4; margin:2px 0 0;">Promoting pipelines, dbt models, schemas &amp; DAGs across dev/test/prod and clouds.</p>
+            </div>
+            <div style="background:var(--red-bg); border-left:3px solid var(--red-l); border-radius:0 6px 6px 0; padding:7px 11px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">Forces</span>
+              <p style="font-size:0.75rem; color:var(--text2); line-height:1.4; margin:2px 0 0;">Early binding → drift &amp; lock-in · governance needs audit + reproducibility.</p>
+            </div>
+            <div style="background:var(--green-bg); border-left:3px solid var(--green-l); border-radius:0 6px 6px 0; padding:7px 11px;">
+              <span style="font-size:0.6rem; font-weight:700; color:var(--green-l); text-transform:uppercase; letter-spacing:0.5px;">Consequences</span>
+              <ul style="list-style:none; font-size:0.74rem; color:var(--text2); line-height:1.5; margin:2px 0 0;">
+                <li style="color:var(--green-l);">✓ Portable: bind env at promote-time</li>
+                <li style="color:var(--green-l);">✓ Drift eliminated by construction</li>
+                <li style="color:var(--gold-l);">⚠ Complements Terraform, not replaces</li>
+              </ul>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted);">4 YAML artifacts — the pattern structure</p>
+            <div style="background:var(--surface); border:1px solid var(--violet-b); border-radius:7px; padding:9px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);"><span style="font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:0.8rem; font-weight:600;">component.yaml</span><span style="font-size:0.74rem; color:var(--muted); margin-left:8px;">— authored once, zero hardcoded env values</span></div>
+            <div style="background:var(--surface); border:1px solid var(--violet-b); border-radius:7px; padding:9px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);"><span style="font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:0.8rem; font-weight:600;">environments.yaml</span><span style="font-size:0.74rem; color:var(--muted); margin-left:8px;">— endpoints per env, bound at deploy time</span></div>
+            <div style="background:var(--surface); border:1px solid var(--violet-b); border-radius:7px; padding:9px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);"><span style="font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:0.8rem; font-weight:600;">promotion.yaml</span><span style="font-size:0.74rem; color:var(--muted); margin-left:8px;">— data-quality gates: freshness, error rate, schema <strong style="color:var(--violet);">· unique to EADF</strong></span></div>
+            <div style="background:var(--surface); border:1px solid var(--violet-b); border-radius:7px; padding:9px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);"><span style="font-family:'JetBrains Mono',monospace; color:var(--violet); font-size:0.8rem; font-weight:600;">provenance.yaml</span><span style="font-size:0.74rem; color:var(--muted); margin-left:8px;">— immutable audit: who, what, from → to, when</span></div>
+            <div style="background:var(--violet-bg); border:1px solid var(--violet-b); border-radius:7px; padding:9px 13px; margin-top:2px;">
+              <p style="font-size:0.78rem; color:var(--text); line-height:1.45; margin:0;"><strong style="color:var(--violet);">Key principle:</strong> the same <code style="font-size:0.73rem; color:var(--violet);">component.yaml</code> promotes dev → staging → prod unchanged — config drift eliminated by construction, not by discipline.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S13: EADF RESULTS ═══ -->
+    <div class="slide" id="slide-13">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:var(--violet);">EADF · Validation Results</div>
+        <h2 class="slide-title" style="color:var(--violet); font-size:1.55rem; margin-bottom:14px;">61% config reduction, 0 drift events — deployment made auditable</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:12px;">
+              <div class="stat-card"><div class="stat-num" style="color:var(--violet);">61%</div><div class="stat-label">CI/CD config reduced</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--violet);">0</div><div class="stat-label">drift events post-adoption</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--violet); font-size:1.6rem;">67–78%</div><div class="stat-label">fewer deploy failures</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--violet);">4.2/5</div><div class="stat-label">expert utility (N=21)</div></div>
+            </div>
+            <div style="background:var(--violet-bg); border:1px solid var(--violet-b); border-radius:8px; padding:10px 13px;">
+              <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--violet); margin-bottom:4px;">Literature gap closed</p>
+              <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;">Terraform, CI tools &amp; Delta Lake handle infra, workflows or storage — none model <strong>data-artifact promotion with quality gates</strong>. EADF is the first pattern-level solution.</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">Known Uses</p>
+            <div class="card" style="margin-bottom:10px;">
+              <ul style="list-style:none; font-size:0.78rem; color:var(--text2); line-height:1.7;">
+                <li>▸ <strong style="color:var(--violet);">Azure DEDP:</strong> multi-env promotion + provenance logging</li>
+                <li>▸ <strong style="color:var(--violet);">GCP + Databricks:</strong> cross-cloud promotion w/ schema gates</li>
+                <li>▸ <strong style="color:var(--violet);">Healthcare:</strong> HIPAA-regulated deploys w/ audit trails</li>
+              </ul>
+            </div>
+            <img src="resources/img/image36.png" alt="EADF 7-Stage Pipeline" style="width:100%; border-radius:9px;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S14: RQ4 — LLM INTRO ═══ -->
+    <div class="slide" id="slide-14">
+      <div style="max-width:1060px; width:100%;">
+        <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span class="pill" style="background:var(--green-bg); border:1px solid var(--green-b); color:var(--green);">RQ4</span>
+          <span class="slide-label" style="color:var(--green-l); margin-bottom:0;">LLM Benchmarking · Methodology</span>
+        </div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:14px;">Can LLMs generate reliable, production-ready data pipelines?</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px;">7 Models · 3 Providers · Databricks Serverless · 5 Repeated Runs</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:12px;">
+              <div style="background:var(--surface); border:1px solid var(--border); border-top:2px solid #10a37f; border-radius:0 0 7px 7px; padding:9px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <p style="font-size:0.63rem; font-weight:700; color:#10a37f; margin-bottom:5px;">OpenAI</p>
+                <div style="font-size:0.76rem; font-weight:600; color:var(--text2); line-height:1.7;">GPT-5<br>GPT-5 Mini<br>GPT-5 Nano</div>
+              </div>
+              <div style="background:var(--surface); border:1px solid var(--border); border-top:2px solid #d4a017; border-radius:0 0 7px 7px; padding:9px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <p style="font-size:0.63rem; font-weight:700; color:#b45309; margin-bottom:5px;">Anthropic</p>
+                <div style="font-size:0.76rem; font-weight:600; color:var(--text2); line-height:1.7;">Claude 4 Opus<br>Claude 4 Sonnet<br>Claude 3.5 Haiku</div>
+              </div>
+              <div style="background:var(--surface); border:1px solid var(--border); border-top:2px solid #9333ea; border-radius:0 0 7px 7px; padding:9px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <p style="font-size:0.63rem; font-weight:700; color:#7c3aed; margin-bottom:5px;">Alibaba</p>
+                <div style="font-size:0.76rem; font-weight:600; color:var(--text2); line-height:1.7;">Qwen3-235B</div>
+              </div>
+            </div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">3 Pipeline Scenarios — Progressive Complexity</p>
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--blue-b); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:var(--blue-l); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; flex-shrink:0;">1</div><div><p style="font-size:0.79rem; font-weight:600; color:var(--blue); margin:0;">Data Quality Check</p><p style="font-size:0.71rem; color:var(--muted); margin:0;">API ingest + null checks + Bronze/Silver Delta</p></div></div>
+              <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--purple-b); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:var(--purple-l); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; flex-shrink:0;">2</div><div><p style="font-size:0.79rem; font-weight:600; color:var(--purple); margin:0;">Monthly Aggregation</p><p style="font-size:0.71rem; color:var(--muted); margin:0;">Historical groupBy + partitioned Delta output</p></div></div>
+              <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--red-b); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:var(--red-l); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; flex-shrink:0;">3</div><div><p style="font-size:0.79rem; font-weight:600; color:var(--red-l); margin:0;">Multi-Source Merge</p><p style="font-size:0.71rem; color:var(--muted); margin:0;">Air + weather join · schema alignment · join logic</p></div></div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px;">5 Evaluation Metrics</p>
+            <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px;">
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Fix Count</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Edits needed to reach a working pipeline (0 = first pass)</p></div>
+              <div class="card" style="border-left:3px solid var(--green-l);"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">C&amp;S Score (1–5) <span style="font-size:0.68rem; color:var(--muted); font-weight:400;">primary metric</span></p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Correctness × architectural quality</p></div>
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Execution Time (s)</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Mean of 5 runs on Databricks Serverless</p></div>
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Pylint / PEP8</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Static code quality 0–10</p></div>
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Action Correctness</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Expert panel: Fully / Partially / Incorrect</p></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">7</div><div class="stat-label">LLMs · 3 providers</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">105</div><div class="stat-label">total runs (3×5×7)</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S15: LLM RESULTS ═══ -->
+    <div class="slide" id="slide-15">
+      <div style="max-width:1100px; width:100%;">
+        <div class="slide-label" style="color:var(--green-l);">LLM Benchmarking · Results</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:14px;">LLMs accelerate pipelines — but hit a <em>complexity ceiling</em></h2>
+        <div style="display:grid; grid-template-columns:1.15fr 0.85fr; gap:22px; align-items:start;">
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">Fix Counts — all models × all 3 pipeline scenarios</p>
+            <div style="background:var(--surface); border:1px solid var(--border2); border-radius:9px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+              <table class="mini-table" style="font-size:0.8rem;">
+                <thead><tr><th>Model</th><th style="text-align:center; color:var(--blue-l); font-size:0.66rem;">P1 · Basic</th><th style="text-align:center; color:var(--purple); font-size:0.66rem;">P2 · Medium</th><th style="text-align:center; color:var(--red-l); font-size:0.66rem;">P3 · Multi-src</th><th style="text-align:center;">Verdict</th></tr></thead>
+                <tbody>
+                  <tr><td style="font-weight:600;">Claude 4 Opus</td><td style="text-align:center;">1</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center;"><span style="background:var(--green-bg); color:var(--green-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700;">Most Reliable</span></td></tr>
+                  <tr><td style="font-weight:600;">GPT-5 Mini</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center;"><span style="background:var(--green-bg); color:var(--green-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700;">Best All-Rounder</span></td></tr>
+                  <tr><td style="font-weight:600;">Claude 4 Sonnet</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center;">2</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center;"><span style="background:var(--gold-bg); color:var(--gold-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700;">Inconsistent</span></td></tr>
+                  <tr><td style="font-weight:600;">GPT-5 Nano</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center;">1</td><td style="text-align:center;">1</td><td style="text-align:center;"><span style="background:var(--gold-bg); color:var(--gold-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700;">Good Lightweight</span></td></tr>
+                  <tr><td style="font-weight:600;">Qwen3-235B</td><td style="text-align:center;">1</td><td style="text-align:center;">1</td><td style="text-align:center;">2</td><td style="text-align:center;"><span style="background:var(--gold-bg); color:var(--gold-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700;">Moderate</span></td></tr>
+                  <tr><td style="font-weight:600;">GPT-5</td><td style="text-align:center; color:var(--gold-l); font-weight:700;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td><td style="text-align:center;"><span style="background:var(--green-bg); color:var(--green-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700;">Fastest runtime</span></td></tr>
+                  <tr style="background:var(--red-bg);"><td style="color:var(--red-l); font-weight:700;">Claude 3.5 Haiku</td><td style="text-align:center; color:var(--green-l); font-weight:700;">0</td><td style="text-align:center;">1</td><td style="text-align:center; color:var(--red-l); font-weight:800; font-size:1.05rem;">8</td><td style="text-align:center;"><span style="background:var(--red-bg); color:var(--red-l); font-size:0.68rem; padding:2px 7px; border-radius:4px; font-weight:700; border:1px solid var(--red-b);">Complexity cliff ⚠</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px;">Key Findings</p>
+            <div style="display:flex; flex-direction:column; gap:7px;">
+              <div style="background:var(--surface); border:1px solid var(--green-b); border-left:3px solid var(--green-l); border-radius:6px; padding:10px 12px;"><strong style="font-size:0.83rem; color:var(--green);">Opus 4 + GPT-5 Mini most reliable</strong><p style="font-size:0.76rem; color:var(--muted); margin:3px 0 0;">0–1 fixes across all scenarios</p></div>
+              <div style="background:var(--surface); border:1px solid var(--green-b); border-left:3px solid var(--green-l); border-radius:6px; padding:10px 12px;"><strong style="font-size:0.83rem; color:var(--green);">GPT-5 fastest after correction</strong><p style="font-size:0.76rem; color:var(--muted); margin:3px 0 0;">Best runtime: 3–9s</p></div>
+              <div style="background:var(--surface); border:1px solid var(--red-b); border-left:3px solid var(--red-l); border-radius:6px; padding:10px 12px;"><strong style="font-size:0.83rem; color:var(--red-l);">Clear complexity cliff appears</strong><p style="font-size:0.76rem; color:var(--muted); margin:3px 0 0;">Haiku 3.5: 0 fixes → 8 fixes at multi-source merge</p></div>
+              <div style="background:var(--surface); border:1px solid var(--red-b); border-left:3px solid var(--red-l); border-radius:6px; padding:10px 12px;"><strong style="font-size:0.83rem; color:var(--red-l);">Main failures are semantic</strong><p style="font-size:0.76rem; color:var(--muted); margin:3px 0 0;">Aggregation logic, join casting, null handling</p></div>
+              <div style="background:var(--gold-bg); border:1px solid var(--gold-b); border-radius:6px; padding:10px 12px;"><strong style="font-size:0.83rem; color:var(--gold);">LLMs accelerate, but do not replace engineers</strong><p style="font-size:0.76rem; color:var(--muted); margin:3px 0 0;">Human oversight required for semantic correctness</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S16: EXPERT VALIDATION ═══ -->
+    <div class="slide" id="slide-16">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#16a34a;">Expert Validation</div>
+        <h2 class="slide-title" style="font-size:1.85rem; margin-bottom:14px;">N=21 industry practitioners confirm real-world applicability</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+          <div>
+            <div class="card" style="margin-bottom:11px;">
+              <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16a34a; margin-bottom:6px;">Participant Profile</p>
+              <ul style="list-style:none; font-size:0.8rem; color:var(--text2); line-height:1.75;">
+                <li>▸ Data Engineers (38%) · Data Architects (24%) · Platform Engineers</li>
+                <li>▸ Average 7+ years in data engineering · 100+ pipeline environments</li>
+                <li>▸ Platforms: Azure, GCP, AWS, Databricks · Multi-cloud (24%)</li>
+                <li>▸ Orgs: startups to enterprise · international &amp; multi-national sample</li>
+              </ul>
+            </div>
+            <div style="background:var(--gold-bg); border-left:3px solid var(--gold-l); border-radius:0 7px 7px 0; padding:11px 13px; margin-bottom:9px;">
+              <p style="font-size:0.8rem; color:var(--text); line-height:1.6; margin:0; font-style:italic;">"Config management consumes 10–40% of my team's time. A formalized pattern for this would be immediately adopted."</p>
+              <p style="font-size:0.69rem; color:var(--muted); margin-top:4px;">— Senior Data Architect, survey respondent</p>
+            </div>
+            <div style="background:var(--gold-bg); border-left:3px solid var(--gold-l); border-radius:0 7px 7px 0; padding:11px 13px;">
+              <p style="font-size:0.8rem; color:var(--text); line-height:1.6; margin:0; font-style:italic;">"We've done ETLT-like flows for years without knowing it had a name. A formal decision framework changes how I onboard engineers."</p>
+              <p style="font-size:0.69rem; color:var(--muted); margin-top:4px;">— Principal Engineer, survey respondent</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:10px;">Utility Score per Pattern (1–5 Likert)</p>
+            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:14px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="font-size:0.83rem; font-weight:600; color:var(--blue);">MIND <span style="font-size:0.71rem; color:var(--muted); font-weight:400;">76% recognition · 67% adoption intent</span></span><span style="font-size:0.95rem; font-weight:800; color:var(--gold);">4.7/5</span></div>
+                <div style="background:var(--bg2); border-radius:4px; height:14px;"><div style="width:94%; background:linear-gradient(90deg,var(--blue-l),var(--blue)); height:100%; border-radius:4px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="font-size:0.83rem; font-weight:600; color:var(--purple);">ETLT++/ELTL++ <span style="font-size:0.71rem; color:var(--muted); font-weight:400;">80% recognition · 70% adoption intent</span></span><span style="font-size:0.95rem; font-weight:800; color:var(--gold);">4.4/5</span></div>
+                <div style="background:var(--bg2); border-radius:4px; height:14px;"><div style="width:88%; background:linear-gradient(90deg,var(--purple-l),var(--purple)); height:100%; border-radius:4px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="font-size:0.83rem; font-weight:600; color:var(--violet);">EADF <span style="font-size:0.71rem; color:var(--muted); font-weight:400;">62% recognition · 60% adoption intent</span></span><span style="font-size:0.95rem; font-weight:800; color:var(--gold);">4.2/5</span></div>
+                <div style="background:var(--bg2); border-radius:4px; height:14px;"><div style="width:84%; background:linear-gradient(90deg,var(--violet-l),var(--violet)); height:100%; border-radius:4px;"></div></div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div class="stat-card"><div class="stat-num" style="color:#16a34a;">4.6/5</div><div class="stat-label">avg utility across all patterns</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#16a34a; font-size:1.6rem;">76%</div><div class="stat-label">adoption intent · 0% negative</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S17: CONTRIBUTIONS ═══ -->
+    <div class="slide" id="slide-17">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:var(--gold);">6 Contributions</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:16px;">Bridging theory and practice in data engineering</h2>
+        <div style="display:grid; grid-template-columns:1fr; gap:10px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px;">
+            <div class="card" style="border-left:3px solid var(--blue-l);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C1 · Theory</div>
+              <div style="font-size:0.81rem; color:var(--text2); line-height:1.45;">Formal vocabulary and 8-category taxonomy for cloud data engineering patterns — inductively derived from 165 sources</div>
+            </div>
+            <div class="card" style="border-left:3px solid var(--purple-l);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C2 · Method</div>
+              <div style="font-size:0.81rem; color:var(--text2); line-height:1.45;">First DSR + POSA validation playbook for data engineering — replicable methodology for future pattern research</div>
+            </div>
+            <div class="card" style="border-left:3px solid var(--violet-l);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--violet); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C3 · Practice</div>
+              <div style="font-size:0.81rem; color:var(--text2); line-height:1.45;">3 reusable POSA-formalised patterns (MIND, ETLT++/ELTL++, EADF) with open-source implementations on Azure + GCP</div>
+            </div>
+            <div class="card" style="border-left:3px solid var(--green-l);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C4 · Bridge</div>
+              <div style="font-size:0.81rem; color:var(--text2); line-height:1.45;">Industry↔academia transfer via expert survey N=21 — confirmed real-world relevance, 76% adoption intent, 0% negative</div>
+            </div>
+            <div class="card" style="border-left:3px solid #16a34a;">
+              <div style="font-size:0.63rem; font-weight:700; color:#16a34a; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C5 · Lens</div>
+              <div style="font-size:0.81rem; color:var(--text2); line-height:1.45;">First situated LLM benchmark for data engineering code generation — C&amp;S scoring framework · reproducible on Open-Meteo APIs</div>
+            </div>
+            <div class="card" style="border-left:3px solid var(--gold-l); background:var(--gold-bg);">
+              <div style="font-size:0.63rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C6 · Direction</div>
+              <div style="font-size:0.81rem; color:var(--text2); line-height:1.45;">Open pattern catalog at <a href="index.html" style="color:var(--gold-l); text-decoration:none; font-weight:600;">chiararucco.github.io/DesignPatterns</a> — cited by practitioners as adoption pathway</div>
+            </div>
+          </div>
+          <div style="background:var(--bg2); border:1px solid var(--border2); border-radius:8px; padding:11px 14px;">
+            <p style="font-size:0.82rem; color:var(--text); margin:0; line-height:1.5;">★ <strong>Takeaway:</strong> contributions span <em>theory, method, implementation, industry transfer, evaluation framework, and dissemination</em> — with measurable empirical impact at each level.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S18: CONCLUSIONS ═══ -->
+    <div class="slide" id="slide-18">
+      <div style="max-width:1000px; width:100%;">
+        <div class="slide-label" style="color:var(--muted);">Conclusions &amp; Future Work</div>
+        <h2 style="font-size:2.1rem; font-weight:900; line-height:1.2; margin-bottom:6px; text-align:center; color:var(--text);">Patterns work. Formalism pays off.</h2>
+        <p style="font-size:0.87rem; color:var(--muted); margin-bottom:18px; text-align:center;">Reusable abstractions reduce cognitive load, accelerate delivery, and survive technology churn.</p>
+        <div style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:22px; align-items:start; margin-bottom:16px;">
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:12px;">
+              <div class="stat-card" style="border-left:3px solid var(--blue-l);"><div class="stat-num" style="color:var(--blue);">4.3×</div><div class="stat-label">ingestion speedup · MIND</div></div>
+              <div class="stat-card" style="border-left:3px solid var(--purple-l);"><div class="stat-num" style="color:var(--purple);">3.3× / 69%</div><div class="stat-label">throughput / cost · ETLT++</div></div>
+              <div class="stat-card" style="border-left:3px solid var(--violet-l);"><div class="stat-num" style="color:var(--violet);">61% / 0</div><div class="stat-label">config ↓ / drift events · EADF</div></div>
+              <div class="stat-card" style="border-left:3px solid #16a34a;"><div class="stat-num" style="color:#16a34a;">4.6/5</div><div class="stat-label">expert utility · N=21</div></div>
+            </div>
+            <div class="card" style="background:var(--bg2);">
+              <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:7px;">Future Work</p>
+              <ul style="list-style:none; font-size:0.81rem; color:var(--text2); line-height:1.8;">
+                <li>→ Pattern catalog expansion (streaming, quality, governance)</li>
+                <li>→ LLM + pattern-guided automated code generation</li>
+                <li>→ Regulated industry adaptations (HIPAA, GDPR, SOC2)</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:9px;">Open Pattern Catalog</p>
+            <a href="index.html" style="text-decoration:none;"><img src="resources/img/image42.png" alt="Pattern Website" style="width:100%; border-radius:9px; opacity:0.92;"></a>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:center; gap:9px; flex-wrap:wrap; margin-bottom:10px;">
+          <a href="mind.html" style="text-decoration:none;"><div style="background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:7px; padding:5px 12px; font-size:0.77rem; color:var(--blue); font-weight:600;">MIND →</div></a>
+          <a href="etlt.html" style="text-decoration:none;"><div style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:7px; padding:5px 12px; font-size:0.77rem; color:var(--purple); font-weight:600;">ETLT/ELTL →</div></a>
+          <a href="eadf.html" style="text-decoration:none;"><div style="background:var(--violet-bg); border:1px solid var(--violet-b); border-radius:7px; padding:5px 12px; font-size:0.77rem; color:var(--violet); font-weight:600;">EADF →</div></a>
+          <a href="llm.html" style="text-decoration:none;"><div style="background:var(--green-bg); border:1px solid var(--green-b); border-radius:7px; padding:5px 12px; font-size:0.77rem; color:var(--green); font-weight:600;">LLM Study →</div></a>
+          <a href="index.html" style="text-decoration:none;"><div style="background:var(--gold-bg); border:1px solid var(--gold-b); border-radius:7px; padding:5px 12px; font-size:0.77rem; color:var(--gold); font-weight:600;">Pattern Website →</div></a>
+        </div>
+        <p style="font-size:0.7rem; color:var(--muted2); text-align:center;">Chiara Rucco · University of Salento / DataLab · XXXVII Cycle · 2025</p>
+      </div>
+    </div>
+
+    <!-- ═══ S19: PUBLICATIONS ═══ -->
+    <div class="slide" id="slide-19">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:var(--gold);">Publications Supporting the Thesis</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:14px;">Evidence base across pattern and validation streams</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; margin-bottom:12px;">
+          <div class="card" style="border-left:3px solid var(--gold-l);">
+            <p style="font-size:0.63rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:7px;">Pattern formalization papers</p>
+            <ul style="list-style:none; font-size:0.81rem; color:var(--text2); line-height:1.75;">
+              <li>▸ MIND: metadata-driven ingestion pattern formalization (DSE 2025, Big Data Research 2026)</li>
+              <li>▸ ETLT++/ELTL++: hybrid transformation timing patterns</li>
+              <li>▸ EADF: environment-aware deployment pattern for CI/CD (Research Square 2025)</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left:3px solid var(--gold-l);">
+            <p style="font-size:0.63rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:7px;">Validation and empirical studies</p>
+            <ul style="list-style:none; font-size:0.81rem; color:var(--text2); line-height:1.75;">
+              <li>▸ Multi-cloud case-study validation (Azure + GCP implementations)</li>
+              <li>▸ Expert survey N=21 on utility and adoption intent</li>
+              <li>▸ LLM benchmarking for pattern-conformant pipeline generation</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:10px; background:var(--bg2);">
+          <p style="font-size:0.63rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.1px; margin-bottom:8px;">Selected bibliography themes</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+            <div style="background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:7px; padding:8px 10px; font-size:0.77rem; color:var(--blue);">Ingestion architecture and metadata patterns</div>
+            <div style="background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:7px; padding:8px 10px; font-size:0.77rem; color:var(--purple);">Transformation strategy and quality governance</div>
+            <div style="background:var(--green-bg); border:1px solid var(--green-b); border-radius:7px; padding:8px 10px; font-size:0.77rem; color:var(--green);">AI-assisted data engineering reliability studies</div>
+          </div>
+        </div>
+        <div class="card" style="background:var(--gold-bg); border-color:var(--gold-b);">
+          <p style="font-size:0.8rem; color:var(--text); margin:0; line-height:1.5;"><strong style="color:var(--gold);">Note:</strong> Full bibliographic references in the dissertation manuscript. GitHub repositories: ChiaraRucco/DataEngDesignPattern_paper · ETLT_DesignPattern_validation · CICD_DesignPattern_Validation</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides-container -->
+
+  <script>
+    // Slide order: 1,2,3,20,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+    const ORDER = [1,2,3,20,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+    const TOTAL = ORDER.length;
+    let pos = 0; // index into ORDER
+    let isAnimating = false;
+
+    function getSlide(id) { return document.getElementById('slide-' + id); }
+
+    function changeSlide(dir) {
+      if (isAnimating) return;
+      const nextPos = pos + dir;
+      if (nextPos < 0 || nextPos >= TOTAL) return;
+      isAnimating = true;
+
+      const curr = getSlide(ORDER[pos]);
+      const nxt  = getSlide(ORDER[nextPos]);
+
+      curr.classList.remove('active');
+      curr.classList.add(dir > 0 ? 'to-left' : 'to-right');
+
+      nxt.style.transition = 'none';
+      nxt.classList.remove('from-right','from-left','to-left','to-right');
+      nxt.classList.add(dir > 0 ? 'from-right' : 'from-left');
+      void nxt.offsetWidth;
+
+      nxt.style.transition = '';
+      nxt.classList.remove('from-right','from-left');
+      nxt.classList.add('active');
+
+      setTimeout(() => {
+        curr.classList.remove('to-left','to-right');
+        isAnimating = false;
+      }, 400);
+
+      pos = nextPos;
+      updateUI();
+    }
+
+    function goToPos(p) {
+      if (p === pos || isAnimating) return;
+      getSlide(ORDER[pos]).classList.remove('active');
+      getSlide(ORDER[p]).classList.add('active');
+      pos = p;
+      updateUI();
+    }
+
+    function updateUI() {
+      document.getElementById('progress-bar').style.width = ((pos + 1) / TOTAL * 100) + '%';
+      document.getElementById('slide-counter').textContent = (pos + 1) + ' / ' + TOTAL;
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); changeSlide(1); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); changeSlide(-1); }
+      else if (e.key === 'Home') goToPos(0);
+      else if (e.key === 'End') goToPos(TOTAL - 1);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) changeSlide(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    updateUI();
+  </script>
+</body>
+</html>
