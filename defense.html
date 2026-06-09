@@ -828,7 +828,8 @@
                 <li style="font-size:0.77rem; color:var(--text2); line-height:1.4;"><strong style="color:var(--purple);">4 &middot; Load curated (L2)</strong> &mdash; serving-ready, versioned</li>
               </ol>
             </div>
-            <img src="assets/img/image26.png" alt="ETLT and ELTL pattern architecture" style="width:100%; max-height:120px; object-fit:contain; border-radius:9px; border:1px solid var(--border2);">
+            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin:2px 0 4px;">Pattern architecture &mdash; ETLT++ &amp; ELTL++ flows</p>
+            <img src="assets/img/image26.png" alt="ETLT and ELTL pattern architecture" style="width:100%; max-height:320px; object-fit:contain; border-radius:9px; border:1px solid var(--border2); background:#fff; padding:8px;">
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <div>
@@ -842,17 +843,16 @@
             </div>
             <div>
               <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:5px;">Sample &mdash; immutable raw layer (L1)</p>
-              <div style="background:#1e1e2e; border-radius:8px; padding:11px 14px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; line-height:1.6; color:#cdd6f4;">
-                <span style="color:#fab387;">raw/orders/</span><span style="color:#a6e3a1;">dt=2025-06-09</span>/part-0.parquet<br>
-                <span style="color:#89b4fa;">order_id</span> | <span style="color:#89b4fa;">amount</span> | <span style="color:#89b4fa;">_ingested_at</span> | <span style="color:#89b4fa;">_src</span><br>
-                <span style="color:#6c7086;"># append-only &middot; schema-on-read &middot; time-travel</span>
+              <div style="background:#1e1e2e; border-radius:8px; padding:11px 14px; font-family:'JetBrains Mono',monospace; font-size:0.71rem; line-height:1.55; color:#cdd6f4;">
+                <span style="color:#6c7086;"># raw is WRITE-ONCE &mdash; never updated in place</span><br>
+                raw/orders/<span style="color:#a6e3a1;">ingest_date=2025-06-09</span>/&nbsp;<span style="color:#fab387;">&#8592; snapshot v1</span><br>
+                raw/orders/<span style="color:#a6e3a1;">ingest_date=2025-06-10</span>/&nbsp;<span style="color:#fab387;">&#8592; v2 (appended)</span><br>
+                <span style="color:#6c7086;"># corrections add a NEW snapshot, old stays</span><br>
+                <span style="color:#89b4fa;">SELECT</span> * <span style="color:#89b4fa;">FROM</span> raw.orders <span style="color:#f9e2af;">TIMESTAMP AS OF</span> <span style="color:#a6e3a1;">&#39;2025-06-09&#39;</span>
               </div>
             </div>
-            <div style="background:var(--surface); border:1px solid var(--green-b); border-left:3px solid var(--green-l); border-radius:7px; padding:9px 13px;">
-              <p style="font-size:0.77rem; color:var(--text2); margin:0; line-height:1.45;"><strong style="color:var(--green-l);">Overcomes SOTA:</strong> contracts + semantic versioning are <strong>tool-independent</strong> &mdash; portable across dbt, Spark or SQL engines.</p>
-            </div>
             <div style="background:var(--gold-bg); border:1px solid var(--gold-b); border-radius:7px; padding:9px 13px;">
-              <p style="font-size:0.77rem; color:var(--text); margin:0; line-height:1.45;">&#9733; <strong>Both coexist:</strong> ETLT++ for latency-sensitive streams, ELTL++ for compliance &amp; replay workloads.</p>
+              <p style="font-size:0.77rem; color:var(--text); margin:0; line-height:1.45;"><strong style="color:var(--green-l);">Overcomes SOTA:</strong> contracts + semantic versioning are tool-independent (portable across dbt, Spark, SQL). <strong style="color:var(--gold);">&#9733;</strong> Both coexist &mdash; ETLT++ for latency-sensitive streams, ELTL++ for compliance &amp; replay.</p>
             </div>
           </div>
         </div>
