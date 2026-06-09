@@ -1,0 +1,210 @@
+PhD Defense Speaker Notes (20 minutes)
+Candidate: Chiara Rucco
+Title: Pattern-Driven Data Engineering
+
+Usage note:
+- These notes are intentionally discursive and detailed.
+- Read naturally, not verbatim. Keep eye contact every 2-3 sentences.
+- Suggested total time: about 20 minutes.
+
+------------------------------------------------------------
+Slide 1 - Title (0:00-0:50)
+Good morning, and thank you for the opportunity to present my doctoral work.
+My thesis is titled "Pattern-Driven Data Engineering: Formalizing Systematic Solutions for Cloud-based Data Lakehouses".
+
+The central claim of this work is simple but ambitious: data engineering has reached high technological maturity, but it still lacks the same degree of formalized design knowledge that software engineering achieved through design pattern traditions.
+
+Over the past three years, I developed and validated three pattern artifacts addressing ingestion, transformation timing, and deployment, and I assessed the role of LLMs in implementing such patterns under realistic constraints.
+
+------------------------------------------------------------
+Slide 2 - Research Context and Problem Framing (0:50-2:10)
+I begin by framing the problem at a methodological level.
+In software engineering, patterns provided a shared vocabulary and a way to reason about recurring solutions, trade-offs, and context-specific applicability.
+This facilitated education, communication, and architecture governance.
+
+In data engineering, by contrast, most core architectural decisions are still handled in a local and experience-driven way.
+Teams often solve the same classes of problems repeatedly, with limited formal transfer of knowledge between organizations, projects, or even teams in the same organization.
+
+This asymmetry is the starting point of the thesis.
+The research question is not only technical, but epistemological: how can we move from tacit operational knowledge to explicit, reusable, and evaluable pattern knowledge in cloud data engineering?
+
+------------------------------------------------------------
+Slide 3 - Agenda (2:10-2:40)
+This presentation follows a strict research logic.
+First, I present motivation and methodological approach.
+Then I discuss each research question and the corresponding artifact.
+After that, I present cross-artifact validation, summarize contributions, discuss limitations and future work, and conclude with the publication trajectory supporting the thesis.
+
+------------------------------------------------------------
+Slide 4 - Motivation: Challenges and Research Questions (2:40-4:00)
+The motivation is derived from a systematic literature review and from recurring industrial observations.
+I identified four persistent challenge areas.
+
+First, source heterogeneity: ingestion architectures are frequently source-specific and difficult to scale sustainably.
+Second, transformation timing: the ETL versus ELT choice is often made heuristically rather than through explicit criteria.
+Third, deployment drift: environment-specific configuration handling is a frequent source of fragility and audit issues.
+Fourth, the rise of LLMs: strong practical interest, but unclear reliability for production-grade data engineering tasks.
+
+These four challenge clusters are translated into four aligned research questions, each addressed by a dedicated artifact and evaluation strategy.
+
+------------------------------------------------------------
+Slide 5 - Research Approach (4:00-4:50)
+Methodologically, I adopted Design Science Research.
+This was essential because the thesis aims to produce and validate artifacts, not only describe phenomena.
+
+For artifact specification, I used a POSA-inspired structure including context, problem, forces, solution, and consequences.
+This formal template enables comparability and prevents purely narrative pattern descriptions.
+
+Validation combines quantitative and qualitative evidence:
+benchmarking where measurable performance is relevant, and expert assessment where transferability, clarity, and usability matter.
+
+------------------------------------------------------------
+Slide 6 - RQ1 Problem: Ingestion (4:50-5:40)
+RQ1 investigates how ingestion can be systematized under high source heterogeneity.
+The practical issue is that many organizations still encode source-specific logic directly in pipeline code.
+
+As source count and variability increase, this leads to significant maintenance overhead, brittle evolution under schema changes, and reduced reuse.
+
+The literature includes platforms and frameworks, but limited formalization of ingestion as a reusable architectural pattern with explicit strategy-selection logic.
+
+------------------------------------------------------------
+Slide 7 - RQ1 Solution: MIND (5:40-6:50)
+The artifact for RQ1 is MIND: Metadata-Driven Ingestion Design.
+Its architectural principle is to move variability from code to metadata.
+
+The Unified Metadata Table acts as a declarative control layer that parameterizes ingestion behavior.
+This enables controlled reuse across sources and supports strategy selection at runtime.
+
+The key contribution is not simply automation.
+It is the separation of concerns between ingestion logic and source-specific characteristics, in a way that remains cloud-agnostic and pattern-formalized.
+
+------------------------------------------------------------
+Slide 8 - RQ1 Results (6:50-7:30)
+Empirical and expert results indicate practical relevance.
+We observed measurable performance and configuration-effort improvements, and high perceived utility in practitioner evaluation.
+
+Importantly, the pattern was not evaluated as an isolated toy artifact but in realistic platform combinations.
+This strengthens the argument for operational transferability.
+
+------------------------------------------------------------
+Slide 9 - RQ2 Problem: Transformation Timing (7:30-8:20)
+RQ2 addresses the transformation timing dilemma.
+In practice, teams combine early and late transformations, but often without explicit design criteria.
+
+This leads to inconsistent architecture decisions, quality-management ambiguity, and difficulty in explaining why one strategy is preferred in a given context.
+
+Therefore, the problem is not whether ETL or ELT exists; it is the lack of formal decision framing for hybrid transformation pipelines.
+
+------------------------------------------------------------
+Slide 10 - RQ2 Solution: ETLT/ELTL Formalization and ++ Variants (8:20-9:50)
+The contribution proceeds in two steps.
+First, ETLT and ELTL are formalized as patterns with explicit context, forces, and consequences.
+Second, they are extended to ETLT++ and ELTL++ with implementation-level enhancements such as quality gates, contracts, and reject-handling mechanisms.
+
+This makes the design space explicit.
+Instead of selecting transformation style by convention, architects can reason from constraints:
+latency requirements, data quality tolerance, compliance requirements, and storage/compute trade-offs.
+
+The novelty lies in transforming an implicit practitioner dichotomy into a formal and evaluable pattern framework.
+
+------------------------------------------------------------
+Slide 11 - RQ2 Results (9:50-10:50)
+Validation of the enhanced variants shows improvements in throughput and cost dimensions, together with strong expert acceptance.
+
+The three-phase validation design is important here:
+technical benchmarking, practitioner evaluation, and known-use evidence.
+This triangulation reduces the risk of over-interpreting a single evidence source.
+
+The result is not a universal winner between ETLT++ and ELTL++, but a structured way to justify architectural choice based on context.
+
+------------------------------------------------------------
+Slide 12 - RQ3 Problem: Deployment Drift (10:50-11:40)
+RQ3 focuses on deployment reliability across environments.
+A recurrent issue is early binding of environment-specific values, which increases drift risk and weakens auditability.
+
+General CI/CD tools are powerful, but they are not inherently data-pattern aware.
+They rarely encode data-governance logic, schema-sensitive gates, or provenance-first deployment semantics by default.
+
+------------------------------------------------------------
+Slide 13 - RQ3 Solution: EADF (11:40-12:30)
+The artifact is EADF: Environment-Aware Deployment Framework.
+Its core principle is late binding with explicit configuration artifacts and promotion governance.
+
+By separating pipeline definition from environment binding, the same logical pipeline can be promoted consistently across environments.
+Additional artifact-level controls support quality gates and provenance capture.
+
+This reframes deployment from a script-centric activity to a pattern-governed process.
+
+------------------------------------------------------------
+Slide 14 - RQ3 Results (12:30-13:10)
+Observed outcomes include reduced configuration burden, fewer deployment failures, and better traceability.
+
+From an academic perspective, this result is relevant because it links software architecture concerns with governance and reliability concerns in data-intensive systems.
+
+------------------------------------------------------------
+Slide 15 - RQ4 Method: LLM Benchmark Design (13:10-14:10)
+RQ4 asks whether LLMs can generate reliable, production-oriented pipeline code.
+To answer this rigorously, I designed a controlled benchmark with seven models, three scenarios of increasing complexity, repeated runs, and multiple metrics including correctness and architectural quality.
+
+The benchmark context is intentionally practical: Databricks-oriented pipeline tasks rather than synthetic coding puzzles.
+
+------------------------------------------------------------
+Slide 16 - RQ4 Results: LLMs as Accelerators, Not Replacements (14:10-15:20)
+Results show differentiated capability across models and a clear complexity sensitivity.
+Several models perform well on simpler tasks, but reliability decreases on multi-source or semantically dense scenarios.
+
+A key finding is that failures are often architectural or semantic, not merely syntactic.
+Therefore, LLMs should be positioned as productivity accelerators within a pattern-governed workflow, not as autonomous architecture agents.
+
+This conclusion aligns with the broader thesis logic: formal patterns remain essential as control structures for AI-assisted engineering.
+
+------------------------------------------------------------
+Slide 17 - Cross-Pattern Expert Validation (15:20-16:10)
+Across artifacts, expert assessment indicates substantial utility and adoption intent.
+This is relevant because the thesis objective is translational: to make academically grounded artifacts useful in real engineering contexts.
+
+The evaluation confirms that practitioners recognize the addressed problems and find the proposed abstractions actionable.
+
+------------------------------------------------------------
+Slide 18 - Contributions (16:10-17:10)
+The contributions can be summarized in six points.
+
+First, a formal vocabulary for recurring cloud data engineering problems.
+Second, a methodological pathway combining DSR and pattern formalization.
+Third, three validated architectural artifacts.
+Fourth, evidence of academia-industry bridge through practitioner assessment.
+Fifth, a structured lens for evaluating LLM support in data engineering.
+Sixth, an open dissemination direction through a pattern catalog.
+
+Taken together, these elements define a coherent doctoral contribution rather than a set of disconnected prototypes.
+
+------------------------------------------------------------
+Slide 19 - Limitations and Future Work (17:10-18:00)
+I explicitly acknowledge limitations.
+Scope is focused on selected pattern families and cloud contexts.
+Expert sample size, while meaningful, is not exhaustive.
+LLM findings are time-sensitive due to rapid model evolution.
+Cost findings remain context-dependent.
+
+Future work follows directly: expand the catalog to additional domains, integrate pattern constraints into LLM-assisted workflows, and broaden validation across sectors.
+
+------------------------------------------------------------
+Slide 20 - Conclusions and Publications (18:00-19:10)
+The central conclusion is that formalization improves both scientific rigor and engineering transferability.
+
+This is supported by a publication trajectory from 2024 to 2026 that documents progressive maturation:
+ingestion foundations, efficiency extensions, transformation formalization, deployment formalization, and LLM empirical evaluation.
+
+Therefore, the thesis contributes not only new artifacts, but a reproducible way to produce future pattern knowledge in data engineering.
+
+------------------------------------------------------------
+Slide 21 - Thank You and Q&A (19:10-20:00)
+Thank you for your attention.
+
+I welcome questions on:
+- methodological choices and validity,
+- pattern boundaries and applicability conditions,
+- trade-offs among MIND, ETLT++/ELTL++, and EADF,
+- and implications for future standards or AI-assisted engineering processes.
+
+I am happy to discuss both the research perspective and concrete adoption pathways in production environments.

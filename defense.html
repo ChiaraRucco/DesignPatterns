@@ -19,27 +19,23 @@
       width: 100vw;
     }
 
-    /* --- Progress Bar --- */
     #progress-bar {
       position: fixed; top: 0; left: 0; width: 0%; height: 3px;
       background: linear-gradient(90deg, #ffd700, #ff9f43);
       z-index: 1000; transition: width 0.4s ease;
     }
 
-    /* --- Slide Counter --- */
     #slide-counter {
       position: fixed; top: 14px; right: 20px; z-index: 1000;
       font-size: 0.78rem; color: rgba(255,255,255,0.45); font-weight: 500; letter-spacing: 1px;
     }
 
-    /* --- Nav Hint --- */
     #nav-hint {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       z-index: 1000; font-size: 0.72rem; color: rgba(255,255,255,0.3);
       display: flex; gap: 20px; align-items: center; pointer-events: none;
     }
 
-    /* --- Slide Navigation Buttons --- */
     .slide-btn {
       position: fixed; top: 50%; transform: translateY(-50%);
       z-index: 1000; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
@@ -51,7 +47,6 @@
     #btn-prev { left: 14px; }
     #btn-next { right: 14px; }
 
-    /* --- Home Button --- */
     #home-btn {
       position: fixed; top: 12px; left: 16px; z-index: 1000;
       background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
@@ -61,7 +56,6 @@
     }
     #home-btn:hover { background: rgba(255,255,255,0.15); color: white; }
 
-    /* --- Slides Container --- */
     #slides-container {
       width: 100%; height: 100vh; position: relative; overflow: hidden;
     }
@@ -69,109 +63,95 @@
     .slide {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 40px 100px;
+      padding: 36px 72px;
       opacity: 0; pointer-events: none;
-      transform: translateX(60px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateX(0);
     }
-    .slide.active {
-      opacity: 1; pointer-events: all; transform: translateX(0);
-    }
-    .slide.prev {
-      opacity: 0; transform: translateX(-60px);
-    }
+    .slide.active { opacity: 1; pointer-events: all; }
+    .slide.from-right { transform: translateX(50px); }
+    .slide.from-left  { transform: translateX(-50px); }
+    .slide.to-left    { transform: translateX(-50px); }
+    .slide.to-right   { transform: translateX(50px); }
 
-    /* --- Common elements --- */
     .slide-label {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      opacity: 0.5; margin-bottom: 18px; align-self: flex-start;
+      opacity: 0.5; margin-bottom: 16px; align-self: flex-start;
     }
 
     .slide-title {
-      font-size: 2.5rem; font-weight: 800; line-height: 1.15; margin-bottom: 24px;
+      font-size: 2.5rem; font-weight: 800; line-height: 1.15; margin-bottom: 22px;
       align-self: flex-start;
     }
 
-    .slide-subtitle {
-      font-size: 1.15rem; color: rgba(255,255,255,0.65); line-height: 1.6;
-      align-self: flex-start; max-width: 80%;
-    }
-
-    .bullet-list {
-      list-style: none; align-self: flex-start; width: 100%; margin-top: 10px;
-    }
-    .bullet-list li {
-      display: flex; gap: 12px; align-items: flex-start;
-      font-size: 1.05rem; line-height: 1.55; margin-bottom: 14px; color: rgba(255,255,255,0.88);
-    }
-    .bullet-list li::before {
-      content: '▸'; color: #ffd700; font-size: 1rem; flex-shrink: 0; margin-top: 2px;
-    }
-    .bullet-list li strong { color: white; }
-    .bullet-list li .sub {
-      font-size: 0.88rem; color: rgba(255,255,255,0.55); display: block; margin-top: 2px;
-    }
-
-    /* stat card */
     .stat-card {
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; padding: 18px 22px; text-align: center;
+      border-radius: 12px; padding: 16px 20px; text-align: center;
       backdrop-filter: blur(4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
     }
-    .stat-num { font-size: 2.4rem; font-weight: 800; line-height: 1; }
-    .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 5px; line-height: 1.4; }
+    .stat-num { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+    .stat-label { font-size: 0.76rem; color: rgba(255,255,255,0.5); margin-top: 5px; line-height: 1.4; }
 
-    /* grid helpers */
-    .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
-    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; width: 100%; }
-    .cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; }
-
-    /* badge */
-    .badge {
-      display: inline-block; padding: 3px 10px; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
-    }
-
-    /* table */
-    .mini-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .mini-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     .mini-table th {
-      padding: 10px 14px; text-align: left; background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.6); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px;
+      padding: 9px 13px; text-align: left; background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55); font-weight: 600; font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .mini-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; }
+    .mini-table td { padding: 9px 13px; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: middle; }
     .mini-table tr:last-child td { border-bottom: none; }
 
-    /* gap box */
-    .gap-box {
-      background: rgba(255, 80, 80, 0.12); border: 1px solid rgba(255,80,80,0.25);
-      border-radius: 8px; padding: 14px 18px; font-size: 0.9rem; color: rgba(255,180,180,0.9);
-      line-height: 1.6;
+    .slide img {
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
     }
-    .sol-box {
-      background: rgba(80, 255, 150, 0.08); border: 1px solid rgba(80,255,150,0.2);
-      border-radius: 8px; padding: 14px 18px; font-size: 0.9rem; color: rgba(150,255,200,0.9);
-      line-height: 1.6;
+
+    .pattern-intro-title {
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.18);
+    }
+
+    .intro-quote {
+      max-width: 880px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.22);
     }
 
     /* ===== SLIDE BACKGROUNDS ===== */
-    #slide-1 { background: linear-gradient(135deg, #0d1117 0%, #0f2027 50%, #1a1a2e 100%); }
-    #slide-2 { background: linear-gradient(135deg, #1a0a0a 0%, #2d0f0f 100%); }
-    #slide-3 { background: linear-gradient(135deg, #0a0a1a 0%, #12103a 100%); }
-    #slide-4 { background: linear-gradient(135deg, #0a1224 0%, #0d2137 100%); }
-    #slide-5 { background: linear-gradient(135deg, #0a1224 0%, #0e2242 100%); border-left: 4px solid #2196f3; }
-    #slide-6 { background: linear-gradient(135deg, #0f0b22 0%, #1a1040 100%); border-left: 4px solid #9c27b0; }
-    #slide-7 { background: linear-gradient(135deg, #0f0b22 0%, #1a0d35 100%); border-left: 4px solid #673ab7; }
-    #slide-8 { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
-    #slide-9 { background: linear-gradient(135deg, #0d0d0d 0%, #1a1209 100%); }
-    #slide-10 { background: linear-gradient(135deg, #030303 0%, #0d1117 100%); }
-    #slide-11 { background: linear-gradient(135deg, #001a10 0%, #0a2415 100%); }
-    #slide-12 { background: linear-gradient(135deg, #0a0f1a 0%, #111827 100%); }
+    #slide-1  { background: linear-gradient(135deg, #0d1117 0%, #0f2027 50%, #1a1a2e 100%); }
+    #slide-2  { background: linear-gradient(135deg, #0a0a14 0%, #0f0f22 100%); }
+    #slide-3  { background: linear-gradient(135deg, #180808 0%, #2a0f0f 100%); }
+    #slide-4  { background: linear-gradient(135deg, #0a0a1a 0%, #12103a 100%); }
+    #slide-5  { background: linear-gradient(135deg, #071224 0%, #0a2240 100%); border-left: 4px solid #2196f3; }
+    #slide-6  { background: linear-gradient(135deg, #071224 0%, #0a2240 100%); border-left: 4px solid #2196f3; }
+    #slide-7  { background: linear-gradient(135deg, #071224 0%, #0a2240 100%); border-left: 4px solid #2196f3; }
+    #slide-8  { background: linear-gradient(135deg, #100820 0%, #1a0f35 100%); border-left: 4px solid #9c27b0; }
+    #slide-9  { background: linear-gradient(135deg, #100820 0%, #1a0f35 100%); border-left: 4px solid #9c27b0; }
+    #slide-10 { background: linear-gradient(135deg, #100820 0%, #1a0f35 100%); border-left: 4px solid #9c27b0; justify-content: flex-start; padding-top: 54px; }
+    #slide-11 { background: linear-gradient(135deg, #0d0820 0%, #180e38 100%); border-left: 4px solid #673ab7; }
+    #slide-12 { background: linear-gradient(135deg, #0d0820 0%, #180e38 100%); border-left: 4px solid #673ab7; }
+    #slide-13 { background: linear-gradient(135deg, #0d0820 0%, #180e38 100%); border-left: 4px solid #673ab7; }
+    #slide-14 { background: linear-gradient(135deg, #051514 0%, #082520 100%); border-left: 4px solid #34d399; }
+    #slide-15 { background: linear-gradient(135deg, #051514 0%, #082520 100%); border-left: 4px solid #34d399; }
+    #slide-16 { background: linear-gradient(135deg, #051a08 0%, #082510 100%); border-left: 4px solid #4ade80; }
+    #slide-17 { background: linear-gradient(135deg, #050510 0%, #0d0d1a 100%); }
+    #slide-18 { background: linear-gradient(135deg, #080812 0%, #111827 100%); }
+    #slide-19 { background: linear-gradient(135deg, #121212 0%, #1f2937 100%); border-left: 4px solid #f59e0b; }
+
+    @media (max-width: 1100px) {
+      .slide { padding: 28px 26px; }
+      .slide-title { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
 
   <div id="progress-bar"></div>
-  <div id="slide-counter">1 / 12</div>
+  <div id="slide-counter">1 / 18</div>
   <a href="index.html" id="home-btn">← Home</a>
   <button class="slide-btn" id="btn-prev" onclick="changeSlide(-1)">‹</button>
   <button class="slide-btn" id="btn-next" onclick="changeSlide(1)">›</button>
@@ -183,627 +163,719 @@
 
   <div id="slides-container">
 
-    <!-- SLIDE 1: TITLE -->
+    <!-- ═══ S1: TITLE ═══ -->
     <div class="slide active" id="slide-1">
-      <div style="text-align: center; max-width: 900px;">
-        <div style="display: inline-block; padding: 5px 16px; background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; color: #ffd700; margin-bottom: 30px; text-transform: uppercase;">
-          PhD Defense · XXXVII Cycle · University of Salento / DataLab
+      <div style="text-align:center; max-width:820px;">
+        <div style="display:inline-block; background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.25); border-radius:20px; padding:4px 14px; font-size:0.7rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#ffd700; margin-bottom:22px;">PhD Defense · XXXVII Cycle</div>
+        <h1 style="font-size:2.6rem; font-weight:900; line-height:1.15; margin-bottom:10px; background:linear-gradient(135deg,#fff 0%,#ffd700 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Pattern-Driven Data Engineering</h1>
+        <p style="font-size:1.02rem; color:rgba(255,255,255,0.5); margin-bottom:3px;">Formalizing Systematic Solutions for Cloud-based Data Lakehouses</p>
+        <div style="width:50px; height:2px; background:#ffd700; margin:18px auto;"></div>
+        <p style="font-size:1.02rem; color:rgba(255,255,255,0.72); font-weight:600;">PhD Candidate Chiara Rucco</p>
+        <p style="font-size:0.86rem; color:rgba(255,255,255,0.42); margin-top:4px;">Supervisors: Prof.ssa Antonella Longo &nbsp;·&nbsp; Dr. Motaz Saad</p>
+        <p style="font-size:0.72rem; color:rgba(255,255,255,0.2); margin-top:2px;">Engineering of Complex Systems · Dept. of Engineering for Innovation · University of Salento</p>
+        <div style="margin-top:14px; display:flex; justify-content:center;">
+          <img src="resources/img/image3.png" alt="Universita del Salento" style="width:300px; max-width:78%; opacity:0.95; border:none; box-shadow:none;">
         </div>
-        <h1 style="font-size: 2.8rem; font-weight: 900; line-height: 1.15; margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #ffd700 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-          Pattern-Driven Data Engineering
-        </h1>
-        <p style="font-size: 1.3rem; color: rgba(255,255,255,0.6); margin-bottom: 8px; font-weight: 400;">
-          Formalizing Systematic Solutions for Cloud-based Data Lakehouses
-        </p>
-        <div style="width: 80px; height: 2px; background: #ffd700; margin: 30px auto;"></div>
-        <p style="font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 6px;">Chiara Rucco</p>
-        <p style="font-size: 0.85rem; color: rgba(255,255,255,0.35);">Supervisor: Prof. Cesare Bartolini &nbsp;|&nbsp; Co-supervisor: Prof. Pierpaolo Basile</p>
-        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px;">
-          <div style="text-align: center;">
-            <div style="font-size: 1.8rem; font-weight: 800; color: #ffd700;">3</div>
-            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 3px;">Design Patterns</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 1.8rem; font-weight: 800; color: #ffd700;">7</div>
-            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 3px;">LLMs Benchmarked</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 1.8rem; font-weight: 800; color: #ffd700;">21</div>
-            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 3px;">Industry Experts</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 1.8rem; font-weight: 800; color: #ffd700;">165+</div>
-            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 3px;">Papers Reviewed</div>
-          </div>
+        <div style="display:flex; justify-content:center; gap:44px; margin-top:28px;">
+          <div style="text-align:center;"><div style="font-size:1.9rem; font-weight:800; color:#ffd700;">3</div><div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">Design Patterns</div></div>
+          <div style="text-align:center;"><div style="font-size:1.9rem; font-weight:800; color:#ffd700;">7</div><div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">LLMs Benchmarked</div></div>
+          <div style="text-align:center;"><div style="font-size:1.9rem; font-weight:800; color:#ffd700;">21</div><div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">Expert Practitioners</div></div>
+          <div style="text-align:center;"><div style="font-size:1.9rem; font-weight:800; color:#ffd700;">165+</div><div style="font-size:0.68rem; color:rgba(255,255,255,0.35); margin-top:2px;">Papers Reviewed</div></div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 2: THE PROBLEM -->
+    <!-- ═══ S2: AGENDA ═══ -->
     <div class="slide" id="slide-2">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #ff6b6b;">01 — Research Motivation</div>
-        <h2 class="slide-title">Four Persistent Challenges<br>in Modern Data Engineering</h2>
-        <div class="cols-2" style="margin-top: 8px;">
-          <div style="background: rgba(255,80,80,0.08); border: 1px solid rgba(255,80,80,0.2); border-radius: 12px; padding: 22px;">
-            <div style="font-size: 1.3rem; margin-bottom: 10px;">🌊</div>
-            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #ff8888;">Source Heterogeneity</h3>
-            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.55;">Enterprises ingest from <strong>100+ heterogeneous sources</strong>: REST APIs, RDBMS, streams, flat files. No reusable ingestion abstraction exists. Configuration costs consume <strong>10–40% of development time</strong>.</p>
+      <div style="max-width:940px; width:100%;">
+        <div class="slide-label">Agenda</div>
+        <h2 class="slide-title" style="font-size:1.8rem; margin-bottom:20px;">Defense Roadmap</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <div style="background:rgba(255,80,80,0.07); border:1px solid rgba(255,80,80,0.18); border-left:3px solid #ff6b6b; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(255,100,100,0.3); min-width:30px;">01</span>
+              <div><div style="font-weight:700; font-size:0.9rem;">Motivation</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">4 open challenges in cloud data engineering · 4 research questions</div></div>
+            </div>
+            <div style="background:rgba(129,140,248,0.07); border:1px solid rgba(129,140,248,0.18); border-left:3px solid #818cf8; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(129,140,248,0.3); min-width:30px;">02</span>
+              <div><div style="font-weight:700; font-size:0.9rem;">Research Approach</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">Design Science Research (Peffers 2007) + POSA pattern template</div></div>
+            </div>
+            <div style="background:rgba(33,150,243,0.07); border:1px solid rgba(33,150,243,0.2); border-left:3px solid #60a5fa; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(96,165,250,0.3); min-width:30px;">03</span>
+              <div><div style="font-weight:700; font-size:0.9rem; color:#60a5fa;">RQ1 — MIND Pattern</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">Metadata-driven ingestion · eliminates N-source pipeline explosion</div></div>
+            </div>
+            <div style="background:rgba(156,39,176,0.07); border:1px solid rgba(156,39,176,0.2); border-left:3px solid #c084fc; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(192,132,252,0.3); min-width:30px;">04</span>
+              <div><div style="font-weight:700; font-size:0.9rem; color:#c084fc;">RQ2 — ETLT++/ELTL++ Patterns</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">Transformation timing · formal decision framework</div></div>
+            </div>
           </div>
-          <div style="background: rgba(255,80,80,0.08); border: 1px solid rgba(255,80,80,0.2); border-radius: 12px; padding: 22px;">
-            <div style="font-size: 1.3rem; margin-bottom: 10px;">⏱️</div>
-            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #ff8888;">Transformation Timing</h3>
-            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.55;"><strong>78% of practitioners</strong> use ad-hoc hybrid ETL/ELT combinations without formal guidance. Trade-off between early cleaning and late schema flexibility remains unformalized.</p>
-          </div>
-          <div style="background: rgba(255,80,80,0.08); border: 1px solid rgba(255,80,80,0.2); border-radius: 12px; padding: 22px;">
-            <div style="font-size: 1.3rem; margin-bottom: 10px;">☁️</div>
-            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #ff8888;">Configuration Crisis</h3>
-            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.55;">No prior work defines a reusable pattern for multi-environment data pipeline CI/CD. Environment-specific hardcoding causes configuration drift and brittle deployments across dev/staging/prod.</p>
-          </div>
-          <div style="background: rgba(255,80,80,0.08); border: 1px solid rgba(255,80,80,0.2); border-radius: 12px; padding: 22px;">
-            <div style="font-size: 1.3rem; margin-bottom: 10px;">🤖</div>
-            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #ff8888;">LLM Reliability Unknown</h3>
-            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.55;">LLMs promise democratization of data engineering but lack <strong>systematic empirical evaluation</strong> for production pipeline generation. Capability boundaries and failure modes are uncharted.</p>
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <div style="background:rgba(103,58,183,0.07); border:1px solid rgba(103,58,183,0.2); border-left:3px solid #a78bfa; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(167,139,250,0.3); min-width:30px;">05</span>
+              <div><div style="font-weight:700; font-size:0.9rem; color:#a78bfa;">RQ3 — EADF Pattern</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">Environment-aware deployment · late binding · provenance tracking</div></div>
+            </div>
+            <div style="background:rgba(52,211,153,0.06); border:1px solid rgba(52,211,153,0.15); border-left:3px solid #34d399; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(52,211,153,0.3); min-width:30px;">06</span>
+              <div><div style="font-weight:700; font-size:0.9rem; color:#34d399;">RQ4 — LLM Benchmarking Study</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">7 models · 3 providers · Databricks Serverless · reliability ceiling</div></div>
+            </div>
+            <div style="background:rgba(34,197,94,0.05); border:1px solid rgba(34,197,94,0.14); border-left:3px solid #4ade80; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(74,222,128,0.3); min-width:30px;">07</span>
+              <div><div style="font-weight:700; font-size:0.9rem; color:#4ade80;">Expert Validation</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">N=21 industry practitioners · Likert survey · 4.6/5 utility</div></div>
+            </div>
+            <div style="background:rgba(255,215,0,0.05); border:1px solid rgba(255,215,0,0.15); border-left:3px solid #ffd700; border-radius:7px; padding:13px 16px; display:flex; gap:14px; align-items:center;">
+              <span style="font-size:1.5rem; font-weight:900; color:rgba(255,215,0,0.3); min-width:30px;">08</span>
+              <div><div style="font-weight:700; font-size:0.9rem; color:#ffd700;">Contributions & Conclusions</div><div style="font-size:0.73rem; color:rgba(255,255,255,0.4); margin-top:3px;">6 contributions · open pattern catalog · future agenda</div></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 3: METHODOLOGY -->
+    <!-- ═══ S3: MOTIVATION + 4 RQs ═══ -->
     <div class="slide" id="slide-3">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #818cf8;">02 — Research Approach</div>
-        <h2 class="slide-title">Design Science Research Methodology</h2>
-        <div class="cols-2" style="gap: 32px; align-items: start;">
-          <div>
-            <p style="font-size: 0.97rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 18px;">Rigorous <strong>DSR (Peffers et al.)</strong> 6-stage process: problem identification → objectives → design → demonstration → evaluation → communication.</p>
-            <div style="background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
-              <div style="background: rgba(129,140,248,0.15); padding: 10px 16px; border-left: 3px solid #818cf8; margin-bottom: 2px;">
-                <p style="font-size: 0.85rem; font-weight: 600; color: #a5b4fc;">Evidence Source 1</p>
-                <p style="font-size: 0.83rem; color: rgba(255,255,255,0.6);">Literature corpus — 165+ papers systematically reviewed</p>
-              </div>
-              <div style="background: rgba(129,140,248,0.15); padding: 10px 16px; border-left: 3px solid #818cf8; margin-bottom: 2px;">
-                <p style="font-size: 0.85rem; font-weight: 600; color: #a5b4fc;">Evidence Source 2</p>
-                <p style="font-size: 0.83rem; color: rgba(255,255,255,0.6);">Real deployments — 3 production environments (UNICC, Azure, GCP)</p>
-              </div>
-              <div style="background: rgba(129,140,248,0.15); padding: 10px 16px; border-left: 3px solid #818cf8; margin-bottom: 2px;">
-                <p style="font-size: 0.85rem; font-weight: 600; color: #a5b4fc;">Evidence Source 3</p>
-                <p style="font-size: 0.83rem; color: rgba(255,255,255,0.6);">Industry survey — N=21 practitioners (7+ years exp, 100+ source pipelines)</p>
-              </div>
-              <div style="background: rgba(129,140,248,0.15); padding: 10px 16px; border-left: 3px solid #818cf8;">
-                <p style="font-size: 0.85rem; font-weight: 600; color: #a5b4fc;">Evidence Source 4</p>
-                <p style="font-size: 0.83rem; color: rgba(255,255,255,0.6);">LLM benchmarking — 7 models, 3 pipelines, 5× repeated runs on Databricks</p>
-              </div>
+      <div style="max-width:1040px; width:100%;">
+        <div class="slide-label" style="color:#ff6b6b;">01 — Motivation</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:16px;">4 Open Challenges → 4 Research Questions</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:13px;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="font-size:0.64rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,100,100,0.65); margin-bottom:2px;">Challenges — SLR (165 sources)</div>
+            <div style="background:rgba(255,80,80,0.07); border:1px solid rgba(255,80,80,0.18); border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:rgba(255,140,140,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C1 · Source Heterogeneity</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.5;">100+ source types · REST, RDBMS, streams, blobs · <strong style="color:#f87171;">one bespoke pipeline per source, no reuse</strong></div>
+            </div>
+            <div style="background:rgba(255,80,80,0.07); border:1px solid rgba(255,80,80,0.18); border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:rgba(255,140,140,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C2 · Transformation Timing</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.5;"><strong style="color:#f87171;">78% use ad-hoc hybrid</strong> ETL/ELT · no formal decision criteria · data contracts undefined</div>
+            </div>
+            <div style="background:rgba(255,80,80,0.07); border:1px solid rgba(255,80,80,0.18); border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:rgba(255,140,140,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C3 · Deployment Drift</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.5;">Hardcoded configs · Jenkins/GHA lack data abstractions · <strong style="color:#f87171;">no provenance tracking across environments</strong></div>
+            </div>
+            <div style="background:rgba(255,80,80,0.07); border:1px solid rgba(255,80,80,0.18); border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:rgba(255,140,140,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C4 · LLM Potential, Unknown Limits</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.5;">LLMs generate pipelines ad-hoc · <strong style="color:#f87171;">no multi-model benchmark for data engineering</strong> existed</div>
             </div>
           </div>
-          <div>
-            <p style="font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Pattern Template (POSA/GoF)</p>
-            <ul class="bullet-list">
-              <li><strong>Name</strong> — globally recognizable identifier<span class="sub">Follows POSA naming conventions for DEDPs</span></li>
-              <li><strong>Context</strong> — conditions where the problem arises<span class="sub">Cloud lakehouse architectures with heterogeneous sources</span></li>
-              <li><strong>Problem</strong> — recurring engineering challenge<span class="sub">Explicitly defined as first-class concern</span></li>
-              <li><strong>Forces</strong> — conflicting constraints the pattern resolves<span class="sub">First formalization in data engineering literature</span></li>
-              <li><strong>Solution</strong> — reusable structural/behavioral approach<span class="sub">Implementable across cloud providers</span></li>
-              <li><strong>Consequences</strong> — benefits, liabilities, trade-offs<span class="sub">Empirically validated against quantitative metrics</span></li>
-            </ul>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="font-size:0.64rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,215,0,0.65); margin-bottom:2px;">Research Questions</div>
+            <div style="background:rgba(33,150,243,0.08); border:1px solid rgba(33,150,243,0.2); border-left:3px solid #60a5fa; border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:#60a5fa; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">RQ1 — MIND Pattern</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.55;">How can multi-source data ingestion be <em>systematized</em> through a reusable, cloud-agnostic design pattern?</div>
+            </div>
+            <div style="background:rgba(156,39,176,0.08); border:1px solid rgba(156,39,176,0.2); border-left:3px solid #c084fc; border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:#c084fc; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">RQ2 — ETLT++/ELTL++ Patterns</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.55;">What formal criteria guide the choice between ETL and ELT transformation strategies in a cloud lakehouse?</div>
+            </div>
+            <div style="background:rgba(103,58,183,0.08); border:1px solid rgba(103,58,183,0.2); border-left:3px solid #a78bfa; border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:#a78bfa; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">RQ3 — EADF Pattern</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.55;">How can data pipeline deployment be made <em>environment-aware, auditable, and drift-free</em> across cloud providers?</div>
+            </div>
+            <div style="background:rgba(52,211,153,0.06); border:1px solid rgba(52,211,153,0.15); border-left:3px solid #34d399; border-radius:8px; padding:12px 15px;">
+              <div style="font-size:0.67rem; font-weight:700; color:#34d399; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">RQ4 — LLM Study</div>
+              <div style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.55;">Can Large Language Models reliably generate <em>production-ready</em> data engineering pipeline code conformant with formal patterns?</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 4: THREE PATTERNS OVERVIEW -->
+    <!-- ═══ S4: RESEARCH APPROACH ═══ -->
     <div class="slide" id="slide-4">
-      <div style="max-width: 1100px; width: 100%;">
-        <div class="slide-label" style="color: #ffd700;">03 — Research Output</div>
-        <h2 class="slide-title">Three Formalized Design Patterns<br>+ One LLM Benchmark</h2>
-        <div class="cols-3" style="margin-top: 12px; align-items: stretch;">
-          <div style="background: rgba(33,150,243,0.1); border: 1px solid rgba(33,150,243,0.25); border-radius: 14px; padding: 24px; border-top: 3px solid #2196f3;">
-            <div style="font-size: 1.6rem; margin-bottom: 10px;">🧠</div>
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #60a5fa; margin-bottom: 8px;">MIND</h3>
-            <p style="font-size: 0.83rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin-bottom: 14px;">Metadata-driven INgestion Design. Decouples ingestion logic from source specifics via a Unified Metadata Table (UMT).</p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <span class="badge" style="background: rgba(33,150,243,0.15); color: #60a5fa;">4.3× faster</span>
-              <span class="badge" style="background: rgba(33,150,243,0.15); color: #60a5fa;">4.7/5 rating</span>
-            </div>
-          </div>
-          <div style="background: rgba(156,39,176,0.1); border: 1px solid rgba(156,39,176,0.25); border-radius: 14px; padding: 24px; border-top: 3px solid #9c27b0;">
-            <div style="font-size: 1.6rem; margin-bottom: 10px;">🔀</div>
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #c084fc; margin-bottom: 8px;">ETLT++ / ELTL++</h3>
-            <p style="font-size: 0.83rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin-bottom: 14px;">Enhanced hybrid transformation patterns with decision framework. Resolves the correctness-efficiency tension in lakehouse pipelines.</p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <span class="badge" style="background: rgba(156,39,176,0.15); color: #c084fc;">3.3× throughput</span>
-              <span class="badge" style="background: rgba(156,39,176,0.15); color: #c084fc;">69% TCO ↓</span>
-            </div>
-          </div>
-          <div style="background: rgba(103,58,183,0.1); border: 1px solid rgba(103,58,183,0.25); border-radius: 14px; padding: 24px; border-top: 3px solid #673ab7;">
-            <div style="font-size: 1.6rem; margin-bottom: 10px;">☁️</div>
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: #a78bfa; margin-bottom: 8px;">EADF</h3>
-            <p style="font-size: 0.83rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin-bottom: 14px;">Environment-Aware Deployment Framework. Late-binding YAML descriptors for deterministic multi-cloud CI/CD promotion.</p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <span class="badge" style="background: rgba(103,58,183,0.15); color: #a78bfa;">61% config ↓</span>
-              <span class="badge" style="background: rgba(103,58,183,0.15); color: #a78bfa;">0 drift events</span>
-            </div>
-          </div>
-        </div>
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px 20px; margin-top: 18px; display: flex; align-items: center; gap: 16px;">
-          <div style="font-size: 1.3rem;">🤖</div>
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#818cf8;">02 — Research Approach</div>
+        <h2 class="slide-title" style="font-size:1.58rem; line-height:1.15; margin-bottom:10px;">Design Science Research + POSA Pattern Template</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
           <div>
-            <p style="font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 3px;">LLM Benchmarking (Chapter 7)</p>
-            <p style="font-size: 0.83rem; color: rgba(255,255,255,0.5);">First controlled comparison of 7 LLMs on data pipeline generation: GPT-5/Mini/Nano, Claude 4 Opus/Sonnet, Claude 3.5 Haiku, Qwen3-235B. Primary finding: Claude Opus 4 most consistent (0–1 fixes); GPT-5 fastest once corrected.</p>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(129,140,248,0.75); margin-bottom:10px;">DSR 6-Stage Process — Peffers et al. 2007</p>
+            <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(129,140,248,0.26); border-radius:10px; padding:10px; margin-bottom:8px;">
+              <img src="resources/img/image11.png" alt="Research Methodology Steps" style="width:94%; display:block; margin:0 auto; border-radius:8px; opacity:1; filter:brightness(1.25) contrast(1.24) saturate(1.05);">
+            </div>
+            <p style="font-size:0.74rem; color:rgba(255,255,255,0.55); margin-bottom:8px;">Clear DSR flow used to design, evaluate, and validate each artifact.</p>
+            <div style="background:rgba(129,140,248,0.09); border:1px solid rgba(129,140,248,0.22); border-radius:8px; padding:10px 12px; margin-top:10px;">
+              <p style="font-size:0.8rem; color:rgba(255,255,255,0.82); line-height:1.45; margin:0;"><strong style="color:#a5b4fc;">Method backbone:</strong> identify problem, define objectives, design artifact, demonstrate, evaluate, communicate.</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,215,0,0.8); margin-bottom:10px;">POSA Components — reusable template</p>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.22); border-radius:10px; padding:10px 12px; margin-bottom:8px;">
+              <table class="mini-table" style="font-size:0.78rem; border-radius:8px; overflow:hidden;">
+                <thead>
+                  <tr>
+                    <th style="width:33%;">Component</th>
+                    <th>Descriptor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="color:#fde68a; font-weight:700;">Name + Context</td>
+                    <td>Defines scope, stakeholders, and deployment environment.</td>
+                  </tr>
+                  <tr>
+                    <td style="color:#fca5a5; font-weight:700;">Problem + Forces</td>
+                    <td>Captures constraints and competing quality attributes.</td>
+                  </tr>
+                  <tr>
+                    <td style="color:#86efac; font-weight:700;">Solution Structure</td>
+                    <td>Specifies architecture, flow, and implementation boundaries.</td>
+                  </tr>
+                  <tr>
+                    <td style="color:#c4b5fd; font-weight:700;">Consequences + Uses</td>
+                    <td>Documents trade-offs, benefits, and real-world validation.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:0.74rem; color:rgba(255,255,255,0.55); margin-bottom:8px;">Same descriptor schema is reused for MIND, ETLT/ELTL, and EADF to enable direct comparison.</p>
+            <div style="background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.2); border-radius:8px; padding:12px 15px;">
+              <p style="font-size:0.82rem; color:rgba(255,215,0,0.9); margin:0; line-height:1.5;">★ <strong>Novel:</strong> explicit <em>forces and consequences</em> are formalized, enabling reproducible comparison across patterns.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 5: MIND -->
+    <!-- ═══ S5: RQ1 — MIND INTRO ═══ -->
     <div class="slide" id="slide-5">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #60a5fa;">04 — Pattern 1</div>
-        <h2 class="slide-title" style="color: #60a5fa;">MIND Pattern</h2>
-        <div class="cols-2" style="gap: 28px; align-items: start;">
-          <div>
-            <div class="gap-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(255,160,160,0.9);">Problem:</strong> Ingesting 100+ sources requires bespoke connectors. When source schemas evolve, code breaks. Configuration duplication is rampant. No reusable abstraction exists.
-            </div>
-            <div class="sol-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(150,255,180,0.9);">Solution — UMT:</strong> A Unified Metadata Table centralizes all source definitions (endpoint, schema, schedule, credentials ref). The ingestion engine reads the UMT at runtime — adding a source requires only a new row, no code changes.
-            </div>
-            <ul class="bullet-list" style="margin-top: 4px;">
-              <li style="font-size: 0.9rem;"><strong>Forces resolved:</strong> reconfigurability vs. security, runtime flexibility vs. governance<span class="sub">Late-binding configuration avoids hardcoded secrets</span></li>
-              <li style="font-size: 0.9rem;"><strong>Known uses:</strong> UNICC data lakehouse (Azure), multi-cloud GCP pipeline<span class="sub">65 → 100+ sources managed without code change</span></li>
-            </ul>
+      <div style="max-width:1060px; width:100%;">
+        <div style="max-width:840px; margin:0 auto; text-align:center;">
+          <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <div style="background:rgba(33,150,243,0.18); border:1px solid rgba(33,150,243,0.35); border-radius:20px; padding:4px 14px; font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#60a5fa;">RQ1</div>
+            <span class="slide-label" style="color:#60a5fa; margin-bottom:0;">Pattern Introduction</span>
           </div>
-          <div>
-            <p style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.35); margin-bottom: 14px;">Validation Metrics</p>
-            <div class="cols-2" style="gap: 12px; margin-bottom: 18px;">
-              <div class="stat-card">
-                <div class="stat-num" style="color: #60a5fa;">4.3×</div>
-                <div class="stat-label">Faster new source onboarding vs. bespoke connectors</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #60a5fa;">4.7<span style="font-size: 1.3rem;">/5</span></div>
-                <div class="stat-label">Expert utility rating (N=21)</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #60a5fa;">61%</div>
-                <div class="stat-label">Recognize problem as painful in their organization</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #60a5fa;">Azure<br><span style="font-size: 0.9rem;">+ GCP</span></div>
-                <div class="stat-label">Validated deployments</div>
-              </div>
-            </div>
-            <div style="background: rgba(33,150,243,0.08); border-radius: 8px; padding: 14px 16px; border-left: 3px solid #2196f3;">
-              <p style="font-size: 0.83rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0;">
-                <strong style="color: #60a5fa;">State-of-Art Gap:</strong> Lambda/Kappa, Data Mesh, ADF, AWS Glue, NiFi — none provide a <em>reusable pattern</em> that formally decouples source heterogeneity from ingestion logic with runtime reconfiguration.
-              </p>
-            </div>
+          <h2 class="pattern-intro-title" style="font-size:3rem; font-weight:900; color:#60a5fa; margin-bottom:8px;">MIND</h2>
+          <p style="font-size:1.02rem; color:rgba(255,255,255,0.82); margin-bottom:12px;">Metadata-Driven Ingestion Design</p>
+          <div class="intro-quote" style="background:rgba(33,150,243,0.12); border-color:rgba(33,150,243,0.35);">
+            <p style="font-size:0.97rem; color:rgba(255,255,255,0.9); line-height:1.55; margin:0; font-style:italic;">"Ingestion should scale by metadata growth, not by pipeline code growth."</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 6: ETLT/ELTL -->
+    <!-- ═══ S6: MIND SOLUTION ═══ -->
     <div class="slide" id="slide-6">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #c084fc;">05 — Patterns 2 & 3</div>
-        <h2 class="slide-title" style="color: #c084fc;">ETLT++ / ELTL++ Patterns</h2>
-        <div class="cols-2" style="gap: 28px; align-items: start;">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#60a5fa;">MIND Pattern · Solution</div>
+        <h2 class="slide-title" style="color:#60a5fa; font-size:1.8rem; margin-bottom:16px;">1 Unified Metadata Table governs N sources — zero code duplication</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
           <div>
-            <div class="gap-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(255,160,160,0.9);">Problem:</strong> 78% of teams use hybrid ETL+ELT without formal guidance. The correctness-efficiency trade-off (clean early vs. transform late) has no systematic decision framework — each team reinvents the wheel.
+            <div style="background:rgba(255,80,80,0.08); border-left:3px solid rgba(255,120,120,0.6); border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:10px;">
+              <p style="font-size:0.66rem; font-weight:700; color:rgba(255,150,150,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Problem in brief</p>
+              <ul style="list-style:none; font-size:0.78rem; color:rgba(255,255,255,0.72); line-height:1.7;">
+                <li>▸ One hardcoded pipeline per source</li>
+                <li>▸ High maintenance after schema changes</li>
+                <li>▸ Low reuse across environments</li>
+              </ul>
             </div>
-            <div class="sol-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(150,255,180,0.9);">ETLT++:</strong> Pre-load normalization + post-load enrichment. Use when data quality is critical at landing time, sources are diverse in format, and downstream queries are latency-sensitive.
-            </div>
-            <div class="sol-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(150,255,180,0.9);">ELTL++:</strong> Load raw → transform on query (late binding). Use when schema evolves rapidly, storage is cheap, and analytical flexibility is the priority.
-            </div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(96,165,250,0.6); margin-bottom:10px;">MIND Orchestration Process</p>
+            <img src="resources/img/image14.png" alt="MIND Orchestration Process" style="width:100%; border-radius:10px; opacity:0.93;">
           </div>
-          <div>
-            <p style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.35); margin-bottom: 14px;">Validation Metrics</p>
-            <div class="cols-2" style="gap: 12px; margin-bottom: 18px;">
-              <div class="stat-card">
-                <div class="stat-num" style="color: #c084fc;">3.3×</div>
-                <div class="stat-label">Throughput improvement (ETLT++ vs. baseline)</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #c084fc;">69%</div>
-                <div class="stat-label">Total Cost of Ownership reduction</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #c084fc;">100%</div>
-                <div class="stat-label">Pattern adoption rate (all interviewed orgs)</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #c084fc;">4.4<span style="font-size: 1.3rem;">/5</span></div>
-                <div class="stat-label">Expert utility rating (N=21)</div>
-              </div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <div style="background:rgba(33,150,243,0.08); border-left:3px solid #60a5fa; border-radius:7px; padding:13px 16px;">
+              <div style="font-size:1rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">1 UMT governs N sources</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.6);">One SQL INSERT to add a new source. The generic engine reads metadata and executes — zero code change.</div>
             </div>
-            <div style="background: rgba(156,39,176,0.08); border-radius: 8px; padding: 14px 16px; border-left: 3px solid #9c27b0;">
-              <p style="font-size: 0.83rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0;">
-                <strong style="color: #c084fc;">State-of-Art Gap:</strong> dbt, Databricks DLT, Azure Mapping Data Flows implement variants but none provide a <em>formal pattern with explicit decision criteria</em> for choosing between strategies.
-              </p>
+            <div style="background:rgba(33,150,243,0.08); border-left:3px solid #60a5fa; border-radius:7px; padding:13px 16px;">
+              <div style="font-size:1rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">4 ingestion strategies, runtime-selected</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.6);">Full · Date-based incremental · Hash-based incremental · Hybrid — chosen per source row in UMT config.</div>
+            </div>
+            <div style="background:rgba(33,150,243,0.08); border-left:3px solid #60a5fa; border-radius:7px; padding:13px 16px;">
+              <div style="font-size:1rem; font-weight:700; color:#60a5fa; margin-bottom:4px;">Cloud-agnostic by design</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.6);">Validated on Azure (ADF + Databricks + ADLS Gen2) and GCP (CockroachDB + Colab) with the same pattern.</div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:4px;">
+              <div style="background:rgba(255,80,80,0.08); border-radius:7px; padding:12px; text-align:center;"><div style="font-size:1.7rem; font-weight:800; color:#f87171;">4.3×</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4); margin-top:2px;">speedup at 1B rows</div></div>
+              <div style="background:rgba(34,197,94,0.08); border-radius:7px; padding:12px; text-align:center;"><div style="font-size:1.7rem; font-weight:800; color:#4ade80;">61%</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4); margin-top:2px;">less config code</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 7: EADF -->
+    <!-- ═══ S7: MIND RESULTS ═══ -->
     <div class="slide" id="slide-7">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #a78bfa;">06 — Pattern 4</div>
-        <h2 class="slide-title" style="color: #a78bfa;">EADF Pattern</h2>
-        <div class="cols-2" style="gap: 28px; align-items: start;">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#60a5fa;">MIND Pattern · Validation Results</div>
+        <h2 class="slide-title" style="color:#60a5fa; font-size:1.8rem; margin-bottom:18px;">Validated across 3 platforms — experts confirm real-world utility</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
           <div>
-            <div class="gap-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(255,160,160,0.9);">Problem:</strong> CI/CD tools (Jenkins, GitHub Actions) lack data-specific abstractions. MLOps platforms ignore pipeline workflows. IaC handles resources, not artifact promotion. No prior pattern unifies these concerns.
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:14px;">
+              <div class="stat-card"><div class="stat-num" style="color:#60a5fa; font-size:2rem;">4.3×</div><div class="stat-label">ingestion speedup (1B rows, Azure)</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#60a5fa; font-size:2rem;">61%</div><div class="stat-label">config code reduction</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#60a5fa; font-size:2rem;">4.7/5</div><div class="stat-label">expert utility (N=21)</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#60a5fa; font-size:2rem;">76%</div><div class="stat-label">problem recognition rate</div></div>
             </div>
-            <div class="sol-box" style="margin-bottom: 16px;">
-              <strong style="color: rgba(150,255,180,0.9);">Solution — Late Binding YAML:</strong> 4-artifact pattern: <code style="font-size: 0.83rem; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px;">pipeline.yml</code> + <code style="font-size: 0.83rem; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px;">env-catalog.yml</code> + <code style="font-size: 0.83rem; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px;">promotion-gate.yml</code> + <code style="font-size: 0.83rem; background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 3px;">provenance.yml</code>. Runtime binding resolves environment values — same artifact promotes through dev → staging → prod.
+            <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:12px 15px;">
+              <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:7px;">Known Uses</p>
+              <ul style="list-style:none; font-size:0.81rem; color:rgba(255,255,255,0.62); line-height:1.75;">
+                <li>▸ <strong style="color:#60a5fa;">Azure:</strong> ADF + Databricks + ADLS Gen2 — hash-based incremental at 1B rows</li>
+                <li>▸ <strong style="color:#60a5fa;">GCP:</strong> CockroachDB + Colab — date-based watermark ingestion</li>
+                <li>▸ <strong style="color:#60a5fa;">Healthcare:</strong> 30+ IoT + EHR sources unified via single UMT</li>
+              </ul>
             </div>
-            <ul class="bullet-list" style="margin-top: 4px;">
-              <li style="font-size: 0.9rem;"><strong>7-stage promotion:</strong> Binding → Build → Validation → Deployment → Smoke Test → Gate → Provenance</li>
-              <li style="font-size: 0.9rem;"><strong>Complements, not replaces:</strong> integrates into existing CI systems</li>
-            </ul>
           </div>
           <div>
-            <p style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.35); margin-bottom: 14px;">Validation Metrics</p>
-            <div class="cols-2" style="gap: 12px; margin-bottom: 18px;">
-              <div class="stat-card">
-                <div class="stat-num" style="color: #a78bfa;">61%</div>
-                <div class="stat-label">Reduction in environment-specific configuration files</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #a78bfa;">0</div>
-                <div class="stat-label">Configuration drift events post-adoption</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #a78bfa;">67–78%</div>
-                <div class="stat-label">Deployment failure rate reduction</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" style="color: #a78bfa;">4.2<span style="font-size: 1.3rem;">/5</span></div>
-                <div class="stat-label">Expert utility rating (N=21)</div>
-              </div>
-            </div>
-            <div style="background: rgba(103,58,183,0.1); border-radius: 8px; padding: 14px 16px; border-left: 3px solid #673ab7;">
-              <p style="font-size: 0.83rem; color: rgba(255,255,255,0.65); line-height: 1.55; margin: 0;">
-                <strong style="color: #a78bfa;">State-of-Art Gap:</strong> Terraform, GitHub Actions/Jenkins, TFX/MLflow — none provide a reusable design pattern that <em>unifies late binding, provenance tracking, and data artifact promotion</em> under one abstraction.
-              </p>
-            </div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(96,165,250,0.55); margin-bottom:10px;">3-Phase Validation Protocol</p>
+            <img src="resources/img/image16.png" alt="MIND 3-Phase Validation" style="width:100%; border-radius:9px; opacity:0.93;">
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 8: LLM BENCHMARKING -->
+    <!-- ═══ S8: RQ2 — ETLT/ELTL INTRO ═══ -->
     <div class="slide" id="slide-8">
-      <div style="max-width: 1050px; width: 100%;">
-        <div class="slide-label" style="color: #34d399;">07 — LLM Benchmarking</div>
-        <h2 class="slide-title">7 LLMs × 3 Pipelines: Key Findings</h2>
-        <div class="cols-2" style="gap: 28px; align-items: start; margin-top: 8px;">
-          <div>
-            <table class="mini-table" style="border-radius: 10px; overflow: hidden;">
-              <thead>
-                <tr>
-                  <th>Model</th>
-                  <th style="text-align:center">P1 Fixes</th>
-                  <th style="text-align:center">P2 Fixes</th>
-                  <th style="text-align:center">P3 Fixes</th>
-                  <th style="text-align:center">C&S</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="background: rgba(80,255,150,0.05);">
-                  <td><strong style="color: #34d399;">Claude 4 Opus</strong></td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center;"><span style="color:#ffd700; font-weight:700;">★ Best</span></td>
-                </tr>
-                <tr>
-                  <td><strong>GPT-5 Mini</strong></td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center;">★★</td>
-                </tr>
-                <tr>
-                  <td><strong>Claude 4 Sonnet</strong></td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #fbbf24;">2</td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center;">Strong</td>
-                </tr>
-                <tr>
-                  <td><strong>GPT-5 Nano</strong></td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #fbbf24;">1</td>
-                  <td style="text-align:center; color: #fbbf24;">1</td>
-                  <td style="text-align:center;">C&S=5</td>
-                </tr>
-                <tr>
-                  <td><strong>GPT-5</strong></td>
-                  <td style="text-align:center; color: #ef4444;">4</td>
-                  <td style="text-align:center; color: #fbbf24;">2</td>
-                  <td style="text-align:center; color: #fbbf24;">1</td>
-                  <td style="text-align:center;">Fastest</td>
-                </tr>
-                <tr>
-                  <td><strong>Qwen3-235B</strong></td>
-                  <td style="text-align:center; color: #fbbf24;">1</td>
-                  <td style="text-align:center; color: #fbbf24;">1</td>
-                  <td style="text-align:center; color: #fbbf24;">2</td>
-                  <td style="text-align:center;">Moderate</td>
-                </tr>
-                <tr style="background: rgba(255,80,80,0.06);">
-                  <td><strong style="color: #f87171;">Claude 3.5 Haiku</strong></td>
-                  <td style="text-align:center; color: #34d399;">0</td>
-                  <td style="text-align:center; color: #fbbf24;">1</td>
-                  <td style="text-align:center; color: #ef4444; font-weight:700;">8</td>
-                  <td style="text-align:center; font-size:0.8rem;">Complexity cliff</td>
-                </tr>
-              </tbody>
-            </table>
+      <div style="max-width:1060px; width:100%;">
+        <div style="max-width:840px; margin:0 auto; text-align:center;">
+          <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <div style="background:rgba(156,39,176,0.18); border:1px solid rgba(156,39,176,0.35); border-radius:20px; padding:4px 14px; font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#c084fc;">RQ2</div>
+            <span class="slide-label" style="color:#c084fc; margin-bottom:0;">Pattern Introduction</span>
           </div>
-          <div>
-            <ul class="bullet-list">
-              <li><strong>Claude Opus 4: most consistent</strong> — 0 fixes across all 3 tasks. Best for correctness-critical pipelines.<span class="sub">Fully Correct expert rating on all 3 cases</span></li>
-              <li><strong>GPT-5: optimization leader</strong> — fastest execution (3–9s) once corrected. Prioritizes runtime efficiency.<span class="sub">Best choice with iteration budget</span></li>
-              <li><strong>Complexity cliff effect</strong> — Haiku: 0→1→8 fixes as complexity grows. Lightweight models hit clear capability boundaries.<span class="sub">Reliable for simple ETL; not for multi-source enterprise integration</span></li>
-              <li><strong>Failures concentrate in semantics</strong>, not routing: aggregation logic, type casting, null handling — not API endpoint selection.<span class="sub">Highlights need for expert action correctness review beyond fix-count metrics</span></li>
-              <li><strong>Human oversight still essential</strong> — LLMs accelerate boilerplate; architectural decisions remain human territory.</li>
-            </ul>
+          <h2 class="pattern-intro-title" style="font-size:3rem; font-weight:900; color:#c084fc; margin-bottom:8px;">ETLT / ELTL</h2>
+          <p style="font-size:1.02rem; color:rgba(255,255,255,0.82); margin-bottom:12px;">Enhanced Hybrid Transformation Patterns</p>
+          <div class="intro-quote" style="background:rgba(156,39,176,0.12); border-color:rgba(156,39,176,0.35);">
+            <p style="font-size:0.97rem; color:rgba(255,255,255,0.9); line-height:1.55; margin:0; font-style:italic;">"The core decision is not ETL versus ELT, but transformation timing under explicit forces."</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 9: INDUSTRY VALIDATION -->
+    <!-- ═══ S9: ETLT/ELTL SOLUTION ═══ -->
     <div class="slide" id="slide-9">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #fbbf24;">08 — Industry Validation</div>
-        <h2 class="slide-title">N=21 Expert Survey<br><span style="font-size: 1.8rem; color: rgba(255,255,255,0.5);">What practitioners say</span></h2>
-        <div class="cols-2" style="gap: 28px; align-items: start; margin-top: 12px;">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#c084fc;">ETLT++/ELTL++ · Solution</div>
+        <h2 class="slide-title" style="color:#c084fc; font-size:1.8rem; margin-bottom:16px;">Two complementary patterns + an explicit decision matrix</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
           <div>
-            <p style="font-size: 0.88rem; color: rgba(255,255,255,0.55); margin-bottom: 14px; line-height: 1.6;">Participants: senior data engineers / architects, 7+ years experience, managing 100+ source pipelines, global organizations including UNICC, major cloud providers, and enterprise analytics firms.</p>
-            <div class="cols-2" style="gap: 10px; margin-bottom: 16px;">
-              <div class="stat-card" style="border: 1px solid rgba(251,191,36,0.2);">
-                <div class="stat-num" style="color: #fbbf24;">4.6<span style="font-size: 1.2rem;">/5</span></div>
-                <div class="stat-label">Average utility score across all 3 patterns</div>
-              </div>
-              <div class="stat-card" style="border: 1px solid rgba(251,191,36,0.2);">
-                <div class="stat-num" style="color: #fbbf24;">60–80%</div>
-                <div class="stat-label">Problem recognition rate per pattern</div>
-              </div>
-              <div class="stat-card" style="border: 1px solid rgba(251,191,36,0.2);">
-                <div class="stat-num" style="color: #fbbf24;">10–40%</div>
-                <div class="stat-label">Development time lost to config management</div>
-              </div>
-              <div class="stat-card" style="border: 1px solid rgba(251,191,36,0.2);">
-                <div class="stat-num" style="color: #fbbf24;">60–70%</div>
-                <div class="stat-label">Adoption intent for all 3 patterns</div>
-              </div>
+            <div style="background:rgba(255,80,80,0.08); border-left:3px solid rgba(255,120,120,0.6); border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:10px;">
+              <p style="font-size:0.66rem; font-weight:700; color:rgba(255,150,150,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Problem in brief</p>
+              <ul style="list-style:none; font-size:0.78rem; color:rgba(255,255,255,0.72); line-height:1.7;">
+                <li>▸ Teams rely on undocumented hybrid flows</li>
+                <li>▸ Timing criteria are rarely explicit</li>
+                <li>▸ Trade-offs remain hard to audit</li>
+              </ul>
             </div>
-          </div>
-          <div>
-            <table class="mini-table" style="border-radius: 10px; overflow: hidden;">
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(192,132,252,0.6); margin-bottom:10px;">Decision Matrix — when to choose each pattern</p>
+            <table class="mini-table" style="font-size:0.8rem; border-radius:8px; overflow:hidden;">
               <thead>
                 <tr>
-                  <th>Pattern</th>
-                  <th style="text-align:center;">Recognition</th>
-                  <th style="text-align:center;">Utility</th>
-                  <th style="text-align:center;">Adoption Intent</th>
+                  <th>Decision Force</th>
+                  <th style="text-align:center; color:#60a5fa;">ETLT++</th>
+                  <th style="text-align:center; color:#c084fc;">ELTL++</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><strong style="color: #60a5fa;">MIND</strong></td>
-                  <td style="text-align:center;">76%</td>
-                  <td style="text-align:center; color: #fbbf24; font-weight:700;">4.7/5</td>
-                  <td style="text-align:center;">67%</td>
-                </tr>
-                <tr>
-                  <td><strong style="color: #c084fc;">ETLT++</strong></td>
-                  <td style="text-align:center;">80%</td>
-                  <td style="text-align:center; color: #fbbf24; font-weight:700;">4.4/5</td>
-                  <td style="text-align:center;">70%</td>
-                </tr>
-                <tr>
-                  <td><strong style="color: #a78bfa;">EADF</strong></td>
-                  <td style="text-align:center;">62%</td>
-                  <td style="text-align:center; color: #fbbf24; font-weight:700;">4.2/5</td>
-                  <td style="text-align:center;">60%</td>
-                </tr>
+                <tr><td>Strict quality gate before storage</td><td style="text-align:center; color:#4ade80; font-weight:700;">Primary fit</td><td style="text-align:center; color:rgba(255,255,255,0.45);">Secondary</td></tr>
+                <tr><td>Raw data replay and forensics</td><td style="text-align:center; color:rgba(255,255,255,0.45);">Limited</td><td style="text-align:center; color:#4ade80; font-weight:700;">Primary fit</td></tr>
+                <tr><td>Regulatory compliance + auditability</td><td style="text-align:center; color:#4ade80; font-weight:700;">High</td><td style="text-align:center; color:#4ade80; font-weight:700;">High</td></tr>
+                <tr><td>Storage efficiency priority</td><td style="text-align:center; color:#4ade80; font-weight:700;">Better</td><td style="text-align:center; color:rgba(255,255,255,0.45);">Higher cost</td></tr>
+                <tr><td>Multi-team raw dataset reuse</td><td style="text-align:center; color:rgba(255,255,255,0.45);">Moderate</td><td style="text-align:center; color:#4ade80; font-weight:700;">Strong</td></tr>
               </tbody>
             </table>
-            <div style="background: rgba(251,191,36,0.08); border-left: 3px solid #fbbf24; border-radius: 6px; padding: 14px 16px; margin-top: 14px;">
-              <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.55; margin: 0; font-style: italic;">
-                "Practitioners consistently reported spending 10–40% of their development time on configuration management across environments. The recognition that a formalized pattern can address this was immediate."
-              </p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <div style="background:rgba(33,150,243,0.08); border-top:2px solid #2196f3; border-radius:0 0 8px 8px; padding:13px 16px;">
+              <div style="font-size:0.92rem; font-weight:700; color:#60a5fa; margin-bottom:5px;">ETLT++ — Quality before Load</div>
+              <div style="font-size:0.81rem; color:rgba(255,255,255,0.6); line-height:1.55;">E → T₁(Quality) → L → T₂(Business) · Contracts at T₁ · Quarantine for rejects · Best for: strict SLAs, regulated sources, strict latency</div>
+            </div>
+            <div style="background:rgba(156,39,176,0.08); border-top:2px solid #9c27b0; border-radius:0 0 8px 8px; padding:13px 16px;">
+              <div style="font-size:0.92rem; font-weight:700; color:#c084fc; margin-bottom:5px;">ELTL++ — Raw fidelity first</div>
+              <div style="font-size:0.81rem; color:rgba(255,255,255,0.6); line-height:1.55;">E → L(Raw) → T → L(Curated) · Immutable raw for audit &amp; time travel · Multi-team raw reuse · Best for: IoT, finance, forensics</div>
+            </div>
+            <div style="background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.2); border-radius:7px; padding:11px 14px;">
+              <p style="font-size:0.82rem; color:rgba(255,215,0,0.9); margin:0; line-height:1.5;">★ <strong>Key insight:</strong> Both patterns coexist in the same lakehouse — ETLT++ for latency-sensitive streams, ELTL++ for compliance workloads.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 10: STATE OF ART -->
+    <!-- ═══ S10: ETLT/ELTL RESULTS ═══ -->
     <div class="slide" id="slide-10">
-      <div style="max-width: 1050px; width: 100%;">
-        <div class="slide-label" style="color: #f472b6;">09 — Research Positioning</div>
-        <h2 class="slide-title">What Was Missing in the Literature</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 14px;">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#c084fc;">ETLT++/ELTL++ · Validation Results</div>
+        <h2 class="slide-title" style="color:#c084fc; font-size:1.6rem; margin-bottom:12px;">Pattern profiles: architecture, strengths, and adoption contexts</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
           <div>
-            <p style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #60a5fa; margin-bottom: 12px;">Ingestion (MIND)</p>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">Lambda / Kappa</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">Focus on processing topology, not source abstraction</p>
-              </div>
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">Data Mesh</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">Organizational, not engineering pattern</p>
-              </div>
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">ADF / AWS Glue</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">Tool-specific, vendor-locked, no POSA formalization</p>
-              </div>
-              <div style="background: rgba(80,255,150,0.05); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(80,255,150,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(150,255,180,0.9);">MIND ✓</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">First cloud-agnostic, POSA-formalized ingestion pattern with runtime reconfiguration</p>
-              </div>
+            <div style="background:rgba(33,150,243,0.08); border-top:2px solid #2196f3; border-radius:0 0 8px 8px; padding:11px 14px; margin-bottom:8px;">
+              <div style="font-size:0.94rem; font-weight:700; color:#60a5fa; margin-bottom:6px;">ETLT++ profile — quality-first loading</div>
+              <ul style="list-style:none; font-size:0.78rem; color:rgba(255,255,255,0.65); line-height:1.6;">
+                <li>▸ Stage order: Extract → Transform(quality) → Load → Transform(business)</li>
+                <li>▸ Contract validation before persistence</li>
+                <li>▸ Best for regulated, latency-sensitive pipelines</li>
+              </ul>
+            </div>
+            <div style="background:rgba(156,39,176,0.08); border-top:2px solid #9c27b0; border-radius:0 0 8px 8px; padding:11px 14px; margin-bottom:8px;">
+              <div style="font-size:0.94rem; font-weight:700; color:#c084fc; margin-bottom:6px;">ELTL++ profile — raw-preserving loading</div>
+              <ul style="list-style:none; font-size:0.78rem; color:rgba(255,255,255,0.65); line-height:1.6;">
+                <li>▸ Stage order: Extract → Load(raw) → Transform → Load(curated)</li>
+                <li>▸ Immutable raw for replay and forensic analysis</li>
+                <li>▸ Best for audit-heavy and multi-team lakehouse contexts</li>
+              </ul>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:12px 15px;">
+              <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:7px;">Pattern usage examples</p>
+              <ul style="list-style:none; font-size:0.81rem; color:rgba(255,255,255,0.62); line-height:1.75;">
+                <li>▸ Databricks DLT: ELTL++ over Bronze/Silver/Gold zones</li>
+                <li>▸ Azure DEDP: ETLT++ for regulated healthcare pipelines</li>
+                <li>▸ Finance workloads: ELTL++ for replayability and compliance audits</li>
+              </ul>
             </div>
           </div>
           <div>
-            <p style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #c084fc; margin-bottom: 12px;">Transformation (ETLT++)</p>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">ETL / ELT (pure)</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">Binary choice — no hybrid formalization</p>
-              </div>
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">dbt / Databricks DLT</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">Implements variants but no decision criteria provided</p>
-              </div>
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">Industry practice</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">78% use hybrids without formal guidance</p>
-              </div>
-              <div style="background: rgba(80,255,150,0.05); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(80,255,150,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(150,255,180,0.9);">ETLT++ / ELTL++ ✓</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">First formal pattern pair with explicit context-driven selection criteria</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <p style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; margin-bottom: 12px;">Deployment (EADF)</p>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">Terraform / Pulumi</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">Resource provisioning, not artifact promotion</p>
-              </div>
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">Jenkins / GitHub Actions</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">No data-specific abstractions (schema drift, state)</p>
-              </div>
-              <div style="background: rgba(255,255,255,0.04); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(255,80,80,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,150,150,0.9);">MLflow / Kubeflow</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">ML-focused, ignores data engineering workflows</p>
-              </div>
-              <div style="background: rgba(80,255,150,0.05); border-radius: 8px; padding: 12px; border-left: 2px solid rgba(80,255,150,0.4);">
-                <p style="font-size: 0.82rem; font-weight: 600; color: rgba(150,255,180,0.9);">EADF ✓</p>
-                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5);">First data-engineering CI/CD pattern with late binding and provenance</p>
-              </div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(192,132,252,0.55); margin-bottom:10px;">Pattern architecture reference</p>
+            <img src="resources/img/image26.png" alt="ETLT and ELTL pattern architecture" style="width:100%; border-radius:9px; opacity:0.93;">
+            <div style="background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.2); border-radius:7px; padding:11px 14px; margin-top:10px;">
+              <p style="font-size:0.82rem; color:rgba(255,215,0,0.9); margin:0; line-height:1.5;">★ <strong>Interpretation:</strong> choose ETLT++ when pre-load quality control dominates; choose ELTL++ when raw fidelity and replay dominate.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 11: CONTRIBUTIONS -->
+    <!-- ═══ S11: RQ3 — EADF INTRO ═══ -->
     <div class="slide" id="slide-11">
-      <div style="max-width: 1000px; width: 100%;">
-        <div class="slide-label" style="color: #34d399;">10 — Research Contributions</div>
-        <h2 class="slide-title">What This Thesis Contributes</h2>
-        <div class="cols-2" style="gap: 24px; align-items: start; margin-top: 8px;">
-          <ul class="bullet-list">
-            <li style="font-size: 0.95rem;"><strong>First POSA-formalized DEDPs</strong> — MIND, ETLT++, ELTL++, EADF brought into the design pattern canon. Reusable, cloud-agnostic, technology-independent.<span class="sub">Fills a 10-year gap identified since "A Pattern Language for Data Pipelines" literature</span></li>
-            <li style="font-size: 0.95rem;"><strong>Formal forces & consequences</strong> — first explicit formalization of the trade-off space for data engineering design decisions.<span class="sub">Practitioners now have decision criteria, not just tool recommendations</span></li>
-            <li style="font-size: 0.95rem;"><strong>First controlled LLM benchmark</strong> for data pipeline generation — 7 models, standardized tasks, reproducible open-source dataset.<span class="sub">Informs adoption decisions: which model, for which complexity level</span></li>
-          </ul>
-          <ul class="bullet-list">
-            <li style="font-size: 0.95rem;"><strong>DSR methodology applied to DEDPs</strong> — rigorous 6-stage process connecting literature, deployment, and expert validation.<span class="sub">165+ paper corpus + 3 production deployments + N=21 industry survey</span></li>
-            <li style="font-size: 0.95rem;"><strong>Quantified value</strong> — patterns deliver measurable improvements: 4.3× speedup, 69% TCO reduction, 61% config reduction, 0 drift events.<span class="sub">Not just theoretical — all validated in production environments</span></li>
-            <li style="font-size: 0.95rem;"><strong>Novel C&S Score metric</strong> — composite correctness × scalability score for evaluating LLM-generated code in production data engineering contexts.<span class="sub">Goes beyond Pylint/PEP8 to measure architectural soundness</span></li>
-          </ul>
-        </div>
-        <div style="margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap;">
-          <div class="stat-card" style="flex: 1; min-width: 120px;">
-            <div class="stat-num" style="color: #34d399; font-size: 1.8rem;">3</div>
-            <div class="stat-label">Formalized design patterns (first POSA DEDPs)</div>
+      <div style="max-width:1060px; width:100%;">
+        <div style="max-width:840px; margin:0 auto; text-align:center;">
+          <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <div style="background:rgba(103,58,183,0.18); border:1px solid rgba(103,58,183,0.35); border-radius:20px; padding:4px 14px; font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#a78bfa;">RQ3</div>
+            <span class="slide-label" style="color:#a78bfa; margin-bottom:0;">Pattern Introduction</span>
           </div>
-          <div class="stat-card" style="flex: 1; min-width: 120px;">
-            <div class="stat-num" style="color: #34d399; font-size: 1.8rem;">4.3×</div>
-            <div class="stat-label">Max speedup (MIND, source onboarding)</div>
-          </div>
-          <div class="stat-card" style="flex: 1; min-width: 120px;">
-            <div class="stat-num" style="color: #34d399; font-size: 1.8rem;">69%</div>
-            <div class="stat-label">TCO reduction (ETLT++)</div>
-          </div>
-          <div class="stat-card" style="flex: 1; min-width: 120px;">
-            <div class="stat-num" style="color: #34d399; font-size: 1.8rem;">0</div>
-            <div class="stat-label">Drift events (EADF post-adoption)</div>
-          </div>
-          <div class="stat-card" style="flex: 1; min-width: 120px;">
-            <div class="stat-num" style="color: #34d399; font-size: 1.8rem;">4.6<span style="font-size: 1rem;">/5</span></div>
-            <div class="stat-label">Average expert utility (N=21)</div>
+          <h2 class="pattern-intro-title" style="font-size:3rem; font-weight:900; color:#a78bfa; margin-bottom:8px;">EADF</h2>
+          <p style="font-size:1.02rem; color:rgba(255,255,255,0.82); margin-bottom:12px;">Environment-Aware Deployment Framework</p>
+          <div class="intro-quote" style="background:rgba(103,58,183,0.12); border-color:rgba(103,58,183,0.35);">
+            <p style="font-size:0.97rem; color:rgba(255,255,255,0.9); line-height:1.55; margin:0; font-style:italic;">"Deployment reliability requires late binding, explicit gates, and immutable provenance."</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 12: CONCLUSIONS -->
+    <!-- ═══ S12: EADF SOLUTION ═══ -->
     <div class="slide" id="slide-12">
-      <div style="max-width: 1000px; width: 100%; text-align: center;">
-        <div class="slide-label" style="color: rgba(255,255,255,0.4); text-align: center;">11 — Conclusions & Future Work</div>
-        <h2 style="font-size: 2.3rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px;">
-          Pattern-driven engineering works.<br>
-          <span style="color: #ffd700; font-size: 1.9rem;">Formal abstractions reduce cognitive load,</span><br>
-          <span style="color: rgba(255,255,255,0.55); font-size: 1.6rem;">accelerate delivery, and survive technology churn.</span>
-        </h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 24px 0; text-align: left;">
-          <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 16px;">
-            <p style="font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Proven Impact</p>
-            <ul style="list-style: none; font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.7;">
-              <li>✓ 4.3× ingestion speedup (MIND)</li>
-              <li>✓ 3.3× throughput (ETLT++)</li>
-              <li>✓ 61% config reduction (EADF)</li>
-              <li>✓ 4.6/5 expert utility (N=21)</li>
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#a78bfa;">EADF Pattern · Solution</div>
+        <h2 class="slide-title" style="color:#a78bfa; font-size:1.8rem; margin-bottom:16px;">Late Binding YAML Descriptors + 7-Stage Deterministic Pipeline</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
+          <div>
+            <div style="background:rgba(255,80,80,0.08); border-left:3px solid rgba(255,120,120,0.6); border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:10px;">
+              <p style="font-size:0.66rem; font-weight:700; color:rgba(255,150,150,0.85); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Problem in brief</p>
+              <ul style="list-style:none; font-size:0.78rem; color:rgba(255,255,255,0.72); line-height:1.7;">
+                <li>▸ Hardcoded values lead to environment drift</li>
+                <li>▸ Promotion lacks deterministic audit trails</li>
+                <li>▸ Data-quality gates are often inconsistent</li>
+              </ul>
+            </div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(167,139,250,0.6); margin-bottom:10px;">EADF Workflow</p>
+            <img src="resources/img/image34.png" alt="EADF Workflow" style="width:100%; border-radius:10px; opacity:0.93;">
+          </div>
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:2px;">4 YAML Artifacts — the pattern structure</p>
+            <div style="background:rgba(103,58,183,0.1); border:1px solid rgba(103,58,183,0.22); border-radius:6px; padding:9px 13px;">
+              <span style="font-family:'JetBrains Mono',monospace; color:#c4b5fd; font-size:0.8rem; font-weight:600;">pipeline.yml</span>
+              <span style="font-size:0.76rem; color:rgba(255,255,255,0.45); margin-left:8px;">— zero hardcoded env values, authored once</span>
+            </div>
+            <div style="background:rgba(103,58,183,0.1); border:1px solid rgba(103,58,183,0.22); border-radius:6px; padding:9px 13px;">
+              <span style="font-family:'JetBrains Mono',monospace; color:#c4b5fd; font-size:0.8rem; font-weight:600;">env-catalog.yml</span>
+              <span style="font-size:0.76rem; color:rgba(255,255,255,0.45); margin-left:8px;">— endpoints/paths per env, bound at deploy time</span>
+            </div>
+            <div style="background:rgba(103,58,183,0.1); border:1px solid rgba(103,58,183,0.22); border-radius:6px; padding:9px 13px;">
+              <span style="font-family:'JetBrains Mono',monospace; color:#c4b5fd; font-size:0.8rem; font-weight:600;">promotion-gate.yml</span>
+              <span style="font-size:0.76rem; color:rgba(255,255,255,0.45); margin-left:8px;">— quality thresholds (freshness, error rate, schema)</span>
+            </div>
+            <div style="background:rgba(103,58,183,0.1); border:1px solid rgba(103,58,183,0.22); border-radius:6px; padding:9px 13px;">
+              <span style="font-family:'JetBrains Mono',monospace; color:#c4b5fd; font-size:0.8rem; font-weight:600;">provenance.yml</span>
+              <span style="font-size:0.76rem; color:rgba(255,255,255,0.45); margin-left:8px;">— immutable audit: who, what, from → to, when</span>
+            </div>
+            <div style="background:rgba(103,58,183,0.07); border:1px solid rgba(103,58,183,0.2); border-radius:7px; padding:11px 14px; margin-top:4px;">
+              <p style="font-size:0.8rem; color:rgba(255,255,255,0.72); line-height:1.5; margin:0;"><strong style="color:#a78bfa;">Key principle:</strong> Same <code style="font-size:0.75rem; color:#c4b5fd;">pipeline.yml</code> promotes dev → staging → prod unchanged. Only env-catalog bindings differ. Config drift eliminated by construction.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S13: EADF RESULTS ═══ -->
+    <div class="slide" id="slide-13">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#a78bfa;">EADF Pattern · Validation Results</div>
+        <h2 class="slide-title" style="color:#a78bfa; font-size:1.8rem; margin-bottom:18px;">61% config reduction, 0 drift events — deployment made auditable</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;">
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:14px;">
+              <div class="stat-card"><div class="stat-num" style="color:#a78bfa; font-size:2rem;">61%</div><div class="stat-label">CI/CD config volume reduced</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#a78bfa; font-size:2rem;">0</div><div class="stat-label">drift events post-adoption</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#a78bfa; font-size:1.6rem;">67–78%</div><div class="stat-label">fewer deployment failures</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#a78bfa; font-size:2rem;">4.2/5</div><div class="stat-label">expert utility (N=21)</div></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:12px 15px;">
+              <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:7px;">Known Uses</p>
+              <ul style="list-style:none; font-size:0.81rem; color:rgba(255,255,255,0.62); line-height:1.75;">
+                <li>▸ <strong style="color:#a78bfa;">Azure DEDP:</strong> multi-env pipeline promotion with full provenance logging</li>
+                <li>▸ <strong style="color:#a78bfa;">GCP + Databricks:</strong> cross-cloud artifact promotion with schema validation gates</li>
+                <li>▸ <strong style="color:#a78bfa;">Healthcare:</strong> regulated deployment with mandatory audit trails (HIPAA)</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(167,139,250,0.55); margin-bottom:10px;">7-Stage Pipeline + Environment Status</p>
+            <img src="resources/img/image36.png" alt="EADF 7-Stage Pipeline" style="width:100%; border-radius:9px; opacity:0.93;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S14: RQ4 — LLM STUDY ═══ -->
+    <div class="slide" id="slide-14">
+      <div style="max-width:1060px; width:100%;">
+        <div style="display:inline-flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <div style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.3); border-radius:20px; padding:4px 14px; font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#34d399;">RQ4</div>
+          <span class="slide-label" style="color:#34d399; margin-bottom:0;">LLM Benchmarking · Methodology</span>
+        </div>
+        <h2 class="slide-title" style="font-size:1.8rem; margin-bottom:16px;">Can LLMs generate reliable, production-ready data pipelines?</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:8px;">7 Models · 3 Providers · Databricks Serverless · 5 Repeated Runs</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:12px;">
+              <div style="background:rgba(16,163,127,0.08); border-top:2px solid #10a37f; border-radius:0 0 7px 7px; padding:9px 11px;">
+                <p style="font-size:0.65rem; font-weight:700; color:#10a37f; margin-bottom:5px;">OpenAI</p>
+                <div style="font-size:0.77rem; font-weight:600; color:rgba(255,255,255,0.8); line-height:1.7;">GPT-5<br>GPT-5 Mini<br>GPT-5 Nano</div>
+              </div>
+              <div style="background:rgba(212,160,23,0.08); border-top:2px solid #d4a017; border-radius:0 0 7px 7px; padding:9px 11px;">
+                <p style="font-size:0.65rem; font-weight:700; color:#d4a017; margin-bottom:5px;">Anthropic</p>
+                <div style="font-size:0.77rem; font-weight:600; color:rgba(255,255,255,0.8); line-height:1.7;">Claude 4 Opus<br>Claude 4 Sonnet<br>Claude 3.5 Haiku</div>
+              </div>
+              <div style="background:rgba(255,107,53,0.08); border-top:2px solid #ff6b35; border-radius:0 0 7px 7px; padding:9px 11px;">
+                <p style="font-size:0.65rem; font-weight:700; color:#ff6b35; margin-bottom:5px;">Alibaba</p>
+                <div style="font-size:0.77rem; font-weight:600; color:rgba(255,255,255,0.8); line-height:1.7;">Qwen3-235B</div>
+              </div>
+            </div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:7px;">3 Pipeline Scenarios — Progressive Complexity</p>
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <div style="display:flex; align-items:center; gap:10px; background:rgba(59,130,246,0.07); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:#3b82f6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:700; flex-shrink:0;">1</div><div><p style="font-size:0.79rem; font-weight:600; color:#93c5fd; margin:0;">Data Quality Check</p><p style="font-size:0.72rem; color:rgba(255,255,255,0.45); margin:0;">API ingest + null checks + Bronze/Silver Delta</p></div></div>
+              <div style="display:flex; align-items:center; gap:10px; background:rgba(139,92,246,0.07); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:#8b5cf6; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:700; flex-shrink:0;">2</div><div><p style="font-size:0.79rem; font-weight:600; color:#c4b5fd; margin:0;">Monthly Aggregation</p><p style="font-size:0.72rem; color:rgba(255,255,255,0.45); margin:0;">Historical groupBy + partitioned Delta output</p></div></div>
+              <div style="display:flex; align-items:center; gap:10px; background:rgba(239,68,68,0.07); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:#ef4444; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.72rem; font-weight:700; flex-shrink:0;">3</div><div><p style="font-size:0.79rem; font-weight:600; color:#fca5a5; margin:0;">Multi-Source Merge</p><p style="font-size:0.72rem; color:rgba(255,255,255,0.45); margin:0;">Air + weather join with schema alignment</p></div></div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:8px;">5 Evaluation Metrics</p>
+            <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px;">
+              <div style="background:rgba(255,255,255,0.04); border-radius:6px; padding:9px 12px;"><p style="font-size:0.8rem; font-weight:600; color:#34d399; margin:0 0 2px;">Fix Count</p><p style="font-size:0.74rem; color:rgba(255,255,255,0.5); margin:0;">Edits needed to reach a working pipeline (0 = first pass)</p></div>
+              <div style="background:rgba(255,255,255,0.04); border-radius:6px; padding:9px 12px;"><p style="font-size:0.8rem; font-weight:600; color:#34d399; margin:0 0 2px;">C&amp;S Score (1–5)</p><p style="font-size:0.74rem; color:rgba(255,255,255,0.5); margin:0;">Correctness × architectural quality (primary metric)</p></div>
+              <div style="background:rgba(255,255,255,0.04); border-radius:6px; padding:9px 12px;"><p style="font-size:0.8rem; font-weight:600; color:#34d399; margin:0 0 2px;">Execution Time (s)</p><p style="font-size:0.74rem; color:rgba(255,255,255,0.5); margin:0;">Mean of 5 runs on Databricks Serverless</p></div>
+              <div style="background:rgba(255,255,255,0.04); border-radius:6px; padding:9px 12px;"><p style="font-size:0.8rem; font-weight:600; color:#34d399; margin:0 0 2px;">Pylint / PEP8</p><p style="font-size:0.74rem; color:rgba(255,255,255,0.5); margin:0;">Static code quality 0–10</p></div>
+              <div style="background:rgba(255,255,255,0.04); border-radius:6px; padding:9px 12px;"><p style="font-size:0.8rem; font-weight:600; color:#34d399; margin:0 0 2px;">Action Correctness</p><p style="font-size:0.74rem; color:rgba(255,255,255,0.5); margin:0;">Expert rating: Fully / Partially / Incorrect</p></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:7px;">
+              <div class="stat-card"><div class="stat-num" style="color:#34d399; font-size:1.5rem;">7</div><div class="stat-label">LLMs · 3 providers</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#34d399; font-size:1.5rem;">105</div><div class="stat-label">total runs (3×5×7)</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S15: LLM RESULTS ═══ -->
+    <div class="slide" id="slide-15">
+      <div style="max-width:1100px; width:100%;">
+        <div class="slide-label" style="color:#34d399;">LLM Benchmarking · Results</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:14px;">LLMs accelerate pipelines — but hit a complexity ceiling</h2>
+        <div style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:22px; align-items:start;">
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:7px;">Fix Counts — all models × all 3 pipeline scenarios</p>
+            <table class="mini-table" style="border-radius:7px; overflow:hidden; font-size:0.79rem;">
+              <thead><tr><th>Model</th><th style="text-align:center; font-size:0.65rem; color:#3b82f6;">P1 · Basic</th><th style="text-align:center; font-size:0.65rem; color:#8b5cf6;">P2 · Medium</th><th style="text-align:center; font-size:0.65rem; color:#ef4444;">P3 · Multi-src</th><th style="text-align:center;">Verdict</th></tr></thead>
+              <tbody>
+                <tr><td>Claude 4 Opus</td><td style="text-align:center;">1</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center;"><span style="background:rgba(34,197,94,0.15); color:#4ade80; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Most Reliable</span></td></tr>
+                <tr><td>GPT-5 Mini</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center;"><span style="background:rgba(34,197,94,0.15); color:#4ade80; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Best All-Rounder</span></td></tr>
+                <tr><td>Claude 4 Sonnet</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center;">2</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center;"><span style="background:rgba(251,191,36,0.15); color:#fbbf24; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Inconsistent</span></td></tr>
+                <tr><td>GPT-5 Nano</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center;">1</td><td style="text-align:center;">1</td><td style="text-align:center;"><span style="background:rgba(251,191,36,0.15); color:#fbbf24; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Good Lightweight</span></td></tr>
+                <tr><td>Qwen3-235B</td><td style="text-align:center;">1</td><td style="text-align:center;">1</td><td style="text-align:center;">2</td><td style="text-align:center;"><span style="background:rgba(251,191,36,0.15); color:#fbbf24; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Moderate</span></td></tr>
+                <tr><td>GPT-5</td><td style="text-align:center; color:#f59e0b; font-weight:700;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td><td style="text-align:center;"><span style="background:rgba(34,197,94,0.12); color:#4ade80; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Fastest runtime</span></td></tr>
+                <tr style="background:rgba(239,68,68,0.06);"><td style="color:#f87171;">Claude 3.5 Haiku</td><td style="text-align:center; color:#22c55e; font-weight:700;">0</td><td style="text-align:center;">1</td><td style="text-align:center; color:#ef4444; font-weight:700; font-size:1.05rem;">8</td><td style="text-align:center;"><span style="background:rgba(239,68,68,0.2); color:#f87171; font-size:0.69rem; padding:1px 6px; border-radius:3px; font-weight:700;">Complexity cliff ⚠</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:8px;">Key Findings</p>
+            <div style="display:flex; flex-direction:column; gap:7px;">
+              <div style="background:rgba(52,211,153,0.07); border-left:2px solid #34d399; border-radius:5px; padding:10px 13px;"><strong style="font-size:0.84rem; color:#34d399;">Opus 4 + GPT-5 Mini are most reliable</strong><p style="font-size:0.77rem; color:rgba(255,255,255,0.55); margin:3px 0 0;">0-1 fixes across all scenarios</p></div>
+              <div style="background:rgba(52,211,153,0.07); border-left:2px solid #34d399; border-radius:5px; padding:10px 13px;"><strong style="font-size:0.84rem; color:#34d399;">GPT-5 is fastest after correction</strong><p style="font-size:0.77rem; color:rgba(255,255,255,0.55); margin:3px 0 0;">Best runtime: 3-9s</p></div>
+              <div style="background:rgba(239,68,68,0.07); border-left:2px solid #ef4444; border-radius:5px; padding:10px 13px;"><strong style="font-size:0.84rem; color:#f87171;">Clear complexity cliff appears</strong><p style="font-size:0.77rem; color:rgba(255,255,255,0.55); margin:3px 0 0;">Haiku 3.5 jumps from 0 to 8 fixes on P3</p></div>
+              <div style="background:rgba(239,68,68,0.07); border-left:2px solid #ef4444; border-radius:5px; padding:10px 13px;"><strong style="font-size:0.84rem; color:#f87171;">Main failures are semantic</strong><p style="font-size:0.77rem; color:rgba(255,255,255,0.55); margin:3px 0 0;">Casting, aggregation, null handling</p></div>
+              <div style="background:rgba(255,215,0,0.06); border-left:2px solid #ffd700; border-radius:5px; padding:10px 13px;"><strong style="font-size:0.84rem; color:#ffd700;">LLMs accelerate, but do not replace engineers</strong><p style="font-size:0.77rem; color:rgba(255,255,255,0.55); margin:3px 0 0;">Pattern conformance still needs human review</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S16: EXPERT VALIDATION ═══ -->
+    <div class="slide" id="slide-16">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#4ade80;">Expert Validation</div>
+        <h2 class="slide-title" style="font-size:1.85rem; margin-bottom:16px;">N=21 industry practitioners confirm real-world applicability</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start;">
+          <div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:12px 15px; margin-bottom:12px;">
+              <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#4ade80; margin-bottom:7px;">Participant Profile</p>
+              <ul style="list-style:none; font-size:0.81rem; color:rgba(255,255,255,0.65); line-height:1.75;">
+                <li>▸ Senior Data Engineers, Data Architects, Platform Engineers</li>
+                <li>▸ Average 7+ years in data engineering · 100+ pipeline environments</li>
+                <li>▸ Platforms: Azure, GCP, Databricks, AWS</li>
+                <li>▸ Orgs: cloud providers and enterprise analytics firms</li>
+              </ul>
+            </div>
+            <div style="background:rgba(251,191,36,0.07); border-left:3px solid #fbbf24; border-radius:6px; padding:11px 14px; margin-bottom:9px;">
+              <p style="font-size:0.8rem; color:rgba(255,255,255,0.72); line-height:1.6; margin:0; font-style:italic;">"Config management consumes 10–40% of my team's time. A formalized pattern for this would be immediately adopted."</p>
+              <p style="font-size:0.7rem; color:rgba(255,255,255,0.3); margin-top:4px;">— Senior Data Architect, survey respondent</p>
+            </div>
+            <div style="background:rgba(251,191,36,0.07); border-left:3px solid #fbbf24; border-radius:6px; padding:11px 14px;">
+              <p style="font-size:0.8rem; color:rgba(255,255,255,0.72); line-height:1.6; margin:0; font-style:italic;">"We've done ETLT-like flows for years without knowing it had a name. A formal decision framework changes how I onboard engineers."</p>
+              <p style="font-size:0.7rem; color:rgba(255,255,255,0.3); margin-top:4px;">— Principal Engineer, survey respondent</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); margin-bottom:10px;">Utility Score per Pattern (1–5 Likert)</p>
+            <div style="display:flex; flex-direction:column; gap:13px; margin-bottom:14px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="font-size:0.84rem; font-weight:600; color:#60a5fa;">MIND <span style="font-size:0.72rem; color:rgba(255,255,255,0.35);">76% recognition · 67% adoption intent</span></span><span style="font-size:0.95rem; font-weight:800; color:#fbbf24;">4.7/5</span></div>
+                <div style="background:rgba(255,255,255,0.07); border-radius:4px; height:16px;"><div style="width:94%; background:linear-gradient(90deg,#60a5fa,#2196f3); height:100%; border-radius:4px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="font-size:0.84rem; font-weight:600; color:#c084fc;">ETLT++/ELTL++ <span style="font-size:0.72rem; color:rgba(255,255,255,0.35);">80% recognition · 70% adoption intent</span></span><span style="font-size:0.95rem; font-weight:800; color:#fbbf24;">4.4/5</span></div>
+                <div style="background:rgba(255,255,255,0.07); border-radius:4px; height:16px;"><div style="width:88%; background:linear-gradient(90deg,#c084fc,#9c27b0); height:100%; border-radius:4px;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="font-size:0.84rem; font-weight:600; color:#a78bfa;">EADF <span style="font-size:0.72rem; color:rgba(255,255,255,0.35);">62% recognition · 60% adoption intent</span></span><span style="font-size:0.95rem; font-weight:800; color:#fbbf24;">4.2/5</span></div>
+                <div style="background:rgba(255,255,255,0.07); border-radius:4px; height:16px;"><div style="width:84%; background:linear-gradient(90deg,#a78bfa,#673ab7); height:100%; border-radius:4px;"></div></div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div class="stat-card"><div class="stat-num" style="color:#4ade80; font-size:1.8rem;">4.6/5</div><div class="stat-label">avg utility across all patterns</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:#4ade80; font-size:1.8rem;">60–80%</div><div class="stat-label">problem recognition per pattern</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S17: CONTRIBUTIONS ═══ -->
+    <div class="slide" id="slide-17">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:rgba(255,215,0,0.7);">6 Contributions</div>
+        <h2 class="slide-title" style="font-size:1.8rem; margin-bottom:16px;">Bridging theory and practice in data engineering</h2>
+        <div style="display:grid; grid-template-columns:1fr; gap:10px; align-items:start;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+            <div style="background:rgba(33,150,243,0.08); border:1px solid rgba(33,150,243,0.2); border-radius:8px; padding:12px 14px;">
+              <div style="font-size:0.65rem; font-weight:700; color:#60a5fa; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C1 · Theory</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.45;">Formal vocabulary for cloud data engineering problems</div>
+            </div>
+            <div style="background:rgba(156,39,176,0.08); border:1px solid rgba(156,39,176,0.2); border-radius:8px; padding:12px 14px;">
+              <div style="font-size:0.65rem; font-weight:700; color:#c084fc; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C2 · Method</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.45;">DSR + POSA validation playbook for data patterns</div>
+            </div>
+            <div style="background:rgba(103,58,183,0.08); border:1px solid rgba(103,58,183,0.2); border-radius:8px; padding:12px 14px;">
+              <div style="font-size:0.65rem; font-weight:700; color:#a78bfa; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C3 · Practice</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.45;">3 reusable patterns with full implementations</div>
+            </div>
+            <div style="background:rgba(52,211,153,0.06); border:1px solid rgba(52,211,153,0.15); border-radius:8px; padding:12px 14px;">
+              <div style="font-size:0.65rem; font-weight:700; color:#34d399; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C4 · Bridge</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.45;">Industry↔academia transfer via expert survey (N=21)</div>
+            </div>
+            <div style="background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.14); border-radius:8px; padding:12px 14px;">
+              <div style="font-size:0.65rem; font-weight:700; color:#4ade80; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C5 · Lens</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.45;">LLMs as data engineering accelerators — first situated benchmark</div>
+            </div>
+            <div style="background:rgba(255,215,0,0.06); border:1px solid rgba(255,215,0,0.18); border-left:2px solid #ffd700; border-radius:8px; padding:12px 14px;">
+              <div style="font-size:0.65rem; font-weight:700; color:#ffd700; text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">C6 · Direction</div>
+              <div style="font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.45;">Open pattern catalog &amp; practitioner blog at <a href="index.html" style="color:#ffd700; text-decoration:none;">chiararucco.github.io</a></div>
+            </div>
+          </div>
+          <div style="background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.2); border-radius:8px; padding:11px 14px;">
+            <p style="font-size:0.82rem; color:rgba(255,215,0,0.9); margin:0; line-height:1.5;">★ <strong>Takeaway:</strong> contributions span theory, method, implementation, transfer, and future direction with measurable impact.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ S18: CONCLUSIONS ═══ -->
+    <div class="slide" id="slide-18">
+      <div style="max-width:1000px; width:100%;">
+        <div class="slide-label" style="color:rgba(255,255,255,0.35);">Conclusions &amp; Future Work</div>
+        <h2 style="font-size:2rem; font-weight:900; line-height:1.2; margin-bottom:6px; text-align:center;">Patterns work. Formalism pays off.</h2>
+        <p style="font-size:0.88rem; color:rgba(255,255,255,0.35); margin-bottom:16px; text-align:center;">Reusable abstractions reduce cognitive load, accelerate delivery, and survive technology churn.</p>
+        <div style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:20px; align-items:start; margin-bottom:14px;">
+          <div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+              <div style="background:rgba(52,211,153,0.07); border-left:2px solid #34d399; border-radius:5px; padding:10px 12px;"><div style="font-size:1.25rem; font-weight:800; color:#34d399;">4.3×</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4);">ingestion speedup · MIND</div></div>
+              <div style="background:rgba(52,211,153,0.07); border-left:2px solid #34d399; border-radius:5px; padding:10px 12px;"><div style="font-size:1.25rem; font-weight:800; color:#34d399;">3.3× / 69%</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4);">throughput / cost efficiency · ETLT++</div></div>
+              <div style="background:rgba(52,211,153,0.07); border-left:2px solid #34d399; border-radius:5px; padding:10px 12px;"><div style="font-size:1.25rem; font-weight:800; color:#34d399;">61% / 0</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4);">config ↓ / drift events · EADF</div></div>
+              <div style="background:rgba(52,211,153,0.07); border-left:2px solid #34d399; border-radius:5px; padding:10px 12px;"><div style="font-size:1.25rem; font-weight:800; color:#34d399;">4.6/5</div><div style="font-size:0.72rem; color:rgba(255,255,255,0.4);">expert utility · N=21</div></div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:11px 14px;">
+              <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.3); margin-bottom:7px;">Future Work</p>
+              <ul style="list-style:none; font-size:0.82rem; color:rgba(255,255,255,0.6); line-height:1.8;">
+                <li>→ Pattern catalog expansion (streaming, quality, governance)</li>
+                <li>→ LLM + pattern-guided automated code generation</li>
+                <li>→ Regulated industry adaptations (HIPAA, GDPR, SOC2)</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:0.67rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,215,0,0.5); margin-bottom:8px;">Open Pattern Catalog</p>
+            <a href="index.html" style="text-decoration:none;"><img src="resources/img/image42.png" alt="Pattern Website" style="width:100%; border-radius:10px; border:1px solid rgba(255,215,0,0.15); opacity:0.88;"></a>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:center; gap:9px; flex-wrap:wrap; margin-bottom:10px;">
+          <a href="mind.html" style="text-decoration:none;"><div style="background:rgba(33,150,243,0.12); border:1px solid rgba(33,150,243,0.25); border-radius:7px; padding:6px 13px; font-size:0.79rem; color:#60a5fa; font-weight:600;">MIND →</div></a>
+          <a href="etlt.html" style="text-decoration:none;"><div style="background:rgba(156,39,176,0.12); border:1px solid rgba(156,39,176,0.25); border-radius:7px; padding:6px 13px; font-size:0.79rem; color:#c084fc; font-weight:600;">ETLT/ELTL →</div></a>
+          <a href="eadf.html" style="text-decoration:none;"><div style="background:rgba(103,58,183,0.12); border:1px solid rgba(103,58,183,0.25); border-radius:7px; padding:6px 13px; font-size:0.79rem; color:#a78bfa; font-weight:600;">EADF →</div></a>
+          <a href="llm.html" style="text-decoration:none;"><div style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); border-radius:7px; padding:6px 13px; font-size:0.79rem; color:#34d399; font-weight:600;">LLM Study →</div></a>
+          <a href="index.html" style="text-decoration:none;"><div style="background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.25); border-radius:7px; padding:6px 13px; font-size:0.79rem; color:#ffd700; font-weight:600;">Pattern Website →</div></a>
+        </div>
+        <p style="font-size:0.72rem; color:rgba(255,255,255,0.2); text-align:center;">Chiara Rucco · University of Salento / DataLab · XXXVII Cycle · 2025</p>
+      </div>
+    </div>
+
+    <!-- ═══ S19: PUBLICATIONS ═══ -->
+    <div class="slide" id="slide-19">
+      <div style="max-width:1060px; width:100%;">
+        <div class="slide-label" style="color:#f59e0b;">Publications Supporting the Thesis</div>
+        <h2 class="slide-title" style="font-size:1.8rem; margin-bottom:14px;">Thesis evidence base across pattern and validation streams</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; margin-bottom:12px;">
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(245,158,11,0.22); border-radius:9px; padding:12px 14px;">
+            <p style="font-size:0.69rem; font-weight:700; color:#fbbf24; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:6px;">Pattern formalization papers</p>
+            <ul style="list-style:none; font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.75;">
+              <li>▸ MIND: metadata-driven ingestion pattern formalization</li>
+              <li>▸ ETLT++/ELTL++: hybrid transformation timing patterns</li>
+              <li>▸ EADF: environment-aware deployment pattern for CI/CD</li>
             </ul>
           </div>
-          <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 16px;">
-            <p style="font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">LLM Findings</p>
-            <ul style="list-style: none; font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.7;">
-              <li>✓ Claude Opus 4: most reliable</li>
-              <li>✓ GPT-5: best runtime when corrected</li>
-              <li>✓ Complexity cliff at multi-source</li>
-              <li>✓ Human oversight remains essential</li>
-            </ul>
-          </div>
-          <div style="background: rgba(255,255,255,0.04); border-radius: 10px; padding: 16px;">
-            <p style="font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Future Work</p>
-            <ul style="list-style: none; font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.7;">
-              <li>→ Pattern catalog expansion</li>
-              <li>→ LLM + pattern-guided generation</li>
-              <li>→ Real-time / streaming variants</li>
-              <li>→ Regulated industry adaptations</li>
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(245,158,11,0.22); border-radius:9px; padding:12px 14px;">
+            <p style="font-size:0.69rem; font-weight:700; color:#fbbf24; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:6px;">Validation and empirical studies</p>
+            <ul style="list-style:none; font-size:0.82rem; color:rgba(255,255,255,0.72); line-height:1.75;">
+              <li>▸ Multi-cloud case-study validation of pattern instances</li>
+              <li>▸ Expert survey (N=21) on utility and adoption intent</li>
+              <li>▸ LLM benchmarking for pattern-conformant pipelines</li>
             </ul>
           </div>
         </div>
-        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
-          <a href="mind.html" style="text-decoration: none;">
-            <div style="background: rgba(33,150,243,0.15); border: 1px solid rgba(33,150,243,0.3); border-radius: 8px; padding: 10px 20px; font-size: 0.88rem; color: #60a5fa; font-weight: 600;">MIND Pattern →</div>
-          </a>
-          <a href="etlt.html" style="text-decoration: none;">
-            <div style="background: rgba(156,39,176,0.15); border: 1px solid rgba(156,39,176,0.3); border-radius: 8px; padding: 10px 20px; font-size: 0.88rem; color: #c084fc; font-weight: 600;">ETLT/ELTL Patterns →</div>
-          </a>
-          <a href="eadf.html" style="text-decoration: none;">
-            <div style="background: rgba(103,58,183,0.15); border: 1px solid rgba(103,58,183,0.3); border-radius: 8px; padding: 10px 20px; font-size: 0.88rem; color: #a78bfa; font-weight: 600;">EADF Pattern →</div>
-          </a>
-          <a href="llm.html" style="text-decoration: none;">
-            <div style="background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25); border-radius: 8px; padding: 10px 20px; font-size: 0.88rem; color: #34d399; font-weight: 600;">LLM Study →</div>
-          </a>
+        <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:12px 15px; margin-bottom:10px;">
+          <p style="font-size:0.69rem; font-weight:700; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1.1px; margin-bottom:7px;">Selected bibliography themes</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+            <div style="background:rgba(96,165,250,0.1); border:1px solid rgba(96,165,250,0.22); border-radius:7px; padding:8px 10px; font-size:0.78rem; color:rgba(255,255,255,0.75);">Ingestion architecture and metadata patterns</div>
+            <div style="background:rgba(192,132,252,0.1); border:1px solid rgba(192,132,252,0.22); border-radius:7px; padding:8px 10px; font-size:0.78rem; color:rgba(255,255,255,0.75);">Transformation strategy and quality governance</div>
+            <div style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.22); border-radius:7px; padding:8px 10px; font-size:0.78rem; color:rgba(255,255,255,0.75);">AI-assisted data engineering reliability studies</div>
+          </div>
         </div>
-        <p style="margin-top: 28px; font-size: 0.85rem; color: rgba(255,255,255,0.3);">Chiara Rucco · University of Salento / DataLab · XXXVII Cycle · 2025</p>
+        <div style="background:rgba(245,158,11,0.09); border:1px solid rgba(245,158,11,0.24); border-radius:8px; padding:11px 14px;">
+          <p style="font-size:0.81rem; color:rgba(255,255,255,0.82); margin:0; line-height:1.5;"><strong style="color:#fbbf24;">Note:</strong> full bibliographic references are provided in the dissertation manuscript and defense handout.</p>
+        </div>
       </div>
     </div>
 
   </div><!-- /slides-container -->
 
   <script>
-    const TOTAL = 12;
+    const TOTAL = 19;
     let current = 1;
     let isAnimating = false;
 
@@ -816,27 +888,24 @@
       isAnimating = true;
 
       const curr = getSlide(current);
-      const nxt = getSlide(next);
+      const nxt  = getSlide(next);
 
       curr.classList.remove('active');
-      curr.classList.add(dir > 0 ? 'prev' : '');
-      if (dir < 0) curr.style.transform = 'translateX(60px)';
+      curr.classList.add(dir > 0 ? 'to-left' : 'to-right');
 
-      nxt.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
-      nxt.style.opacity = '0';
-      nxt.style.pointerEvents = 'none';
-      // trigger reflow
-      void nxt.offsetWidth;
       nxt.style.transition = 'none';
+      nxt.classList.remove('from-right', 'from-left', 'to-left', 'to-right');
+      nxt.classList.add(dir > 0 ? 'from-right' : 'from-left');
       void nxt.offsetWidth;
+
       nxt.style.transition = '';
+      nxt.classList.remove('from-right', 'from-left');
       nxt.classList.add('active');
 
       setTimeout(() => {
-        curr.classList.remove('prev');
-        curr.style.transform = '';
+        curr.classList.remove('to-left', 'to-right');
         isAnimating = false;
-      }, 500);
+      }, 450);
 
       current = next;
       updateUI();
@@ -844,11 +913,6 @@
 
     function goToSlide(n) {
       if (n === current || isAnimating) return;
-      const dir = n > current ? 1 : -1;
-      // multi-step jumps
-      const steps = Math.abs(n - current);
-      if (steps === 1) { changeSlide(dir); return; }
-      // instant jump for multi-step
       getSlide(current).classList.remove('active');
       getSlide(n).classList.add('active');
       current = n;
@@ -867,7 +931,6 @@
       else if (e.key === 'End') goToSlide(TOTAL);
     });
 
-    // Touch support
     let touchStartX = 0;
     document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
     document.addEventListener('touchend', e => {
