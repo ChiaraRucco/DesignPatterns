@@ -257,7 +257,7 @@
 <body>
 
   <div id="progress-bar"></div>
-  <div id="slide-counter">1 / 18</div>
+  <div id="slide-counter">1 / 26</div>
   <a href="index.html" id="home-btn">&larr; Home</a>
   <button class="slide-btn" id="btn-prev" onclick="changeSlide(-1)">&lsaquo;</button>
   <button class="slide-btn" id="btn-next" onclick="changeSlide(1)">&rsaquo;</button>
@@ -291,62 +291,94 @@
       </div>
     </div>
 
-    <!-- S2: MERGED MOTIVATION + ROADMAP -->
+    <!-- S2: AGENDA -->
     <div class="slide" id="slide-2">
       <div style="max-width:960px; width:100%;">
-        <div class="slide-label" style="color:var(--purple);">Motivation + Roadmap</div>
-        <h2 class="slide-title" style="font-size:1.85rem; margin-bottom:6px;">One thesis question, four concrete gaps</h2>
-        <p style="font-size:0.85rem; color:var(--muted); align-self:flex-start; margin-bottom:14px;">We target the three data-pipeline stages where practitioners report the most acute, undocumented pain &mdash; <strong>ingestion, transformation, deployment</strong> &mdash; and then test how far LLMs can help implement them.</p>
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-bottom:14px;">
-          <div class="stat-card" style="border-top:3px solid var(--blue-l);"><div class="stat-num" style="color:var(--blue); font-size:1.65rem;">100+</div><div class="stat-label">source types create bespoke ingestion code</div></div>
-          <div class="stat-card" style="border-top:3px solid var(--purple-l);"><div class="stat-num" style="color:var(--purple); font-size:1.65rem;">78%</div><div class="stat-label">use informal hybrid ETL/ELT</div></div>
-          <div class="stat-card" style="border-top:3px solid var(--violet-l);"><div class="stat-num" style="color:var(--violet); font-size:1.65rem;">62%</div><div class="stat-label">keep separate config per environment</div></div>
-          <div class="stat-card" style="border-top:3px solid var(--green-l);"><div class="stat-num" style="color:var(--green-l); font-size:1.65rem;">7</div><div class="stat-label">LLMs benchmarked for pipeline generation</div></div>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:stretch;">
-          <div class="card" style="border-left:4px solid var(--red-l);">
-            <p style="font-size:0.63rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--red-l); margin-bottom:6px;">Why these three stages?</p>
-            <p style="font-size:0.83rem; color:var(--text2); line-height:1.55; margin:0;">They are where practitioners repeatedly report high-impact, undocumented architectural choices: <strong>how data enters</strong>, <strong>when it becomes trustworthy</strong>, and <strong>how it moves safely to production</strong>.</p>
+        <div class="slide-label" style="color:var(--purple);">Defense Roadmap</div>
+        <h2 class="slide-title" style="font-size:1.95rem; margin-bottom:6px;">Defense Agenda</h2>
+        <p style="font-size:0.85rem; color:var(--muted); align-self:flex-start; margin-bottom:18px;">Eight sections &mdash; from motivation, through three formalized patterns, to validation and impact.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:11px;">
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--red-l); border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:var(--red-bg); color:var(--red-l); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">1</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--text);">Motivation</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">4 challenges &middot; 4 research questions</div></div>
           </div>
-          <div class="card" style="border-left:4px solid #6366f1;">
-            <p style="font-size:0.63rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#6366f1; margin-bottom:6px;">15-minute path</p>
-            <p style="font-size:0.83rem; color:var(--text2); line-height:1.55; margin:0;">Positioning &rarr; method &rarr; three patterns &rarr; LLM benchmark &rarr; expert validation &rarr; contributions.</p>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid #818cf8; border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:rgba(129,140,248,0.12); color:#6366f1; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">2</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--text);">Research Positioning</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">Differentiation from related tools</div></div>
           </div>
-          <div style="grid-column:1 / -1; background:linear-gradient(100deg,var(--blue-bg),var(--purple-bg)); border:1px solid var(--purple-b); border-radius:9px; padding:12px 16px;">
-            <p style="font-size:0.87rem; color:var(--text); line-height:1.55; margin:0;"><strong>Core thesis:</strong> cloud data engineering has mature tools, but it lacks a reusable pattern language for comparing, teaching and governing recurring design decisions.</p>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid #6366f1; border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:rgba(99,102,241,0.12); color:#6366f1; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">3</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--text);">Research Approach</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">DSR (Peffers 2007) + POSA template</div></div>
+          </div>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--blue-l); border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:var(--blue-bg); color:var(--blue); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">4</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--blue);">RQ1 &mdash; MIND Pattern</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">Metadata-driven ingestion</div></div>
+          </div>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--purple-l); border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:var(--purple-bg); color:var(--purple); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">5</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--purple);">RQ2 &mdash; ETLT++ / ELTL++</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">Transformation timing patterns</div></div>
+          </div>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--violet-l); border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:var(--violet-bg); color:var(--violet); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">6</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--violet);">RQ3 &mdash; EADF Pattern</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">Late binding &middot; deployment drift</div></div>
+          </div>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--green-l); border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:var(--green-bg); color:var(--green-l); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">7</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--green);">RQ4 &mdash; LLM Benchmarking</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">7 models &middot; complexity ceiling</div></div>
+          </div>
+          <div class="lift" style="background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--gold-l); border-radius:9px; padding:12px 15px; display:flex; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+            <span style="width:34px; height:34px; border-radius:50%; background:var(--gold-bg); color:var(--gold-l); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.95rem; flex-shrink:0;">8</span>
+            <div><div style="font-weight:700; font-size:0.9rem; color:var(--gold);">Validation &middot; Contributions</div><div style="font-size:0.72rem; color:var(--muted); margin-top:1px;">N=21 survey &middot; 6 contributions</div></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- S3: PIPELINE LIFECYCLE SPINE -->
+    <!-- S3: MOTIVATION -->
     <div class="slide" id="slide-3">
       <div style="max-width:1060px; width:100%;">
-        <div class="slide-label" style="color:var(--red-l);">Pipeline Spine for Non-specialists</div>
-        <h2 class="slide-title" style="font-size:1.85rem; margin-bottom:8px;">A data pipeline in three recurring decisions</h2>
-        <p style="font-size:0.86rem; color:var(--muted); align-self:flex-start; margin-bottom:28px;">The thesis does not cover every possible data-engineering activity. It formalizes the three lifecycle stages where the evidence showed repeated, under-documented architectural pain.</p>
-        <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:18px; align-items:stretch; margin-bottom:24px;">
-          <div class="lift" style="background:var(--surface); border:1px solid var(--blue-b); border-top:5px solid var(--blue-l); border-radius:12px; padding:22px 20px; text-align:center; box-shadow:0 4px 18px rgba(29,78,216,0.08);">
-            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:1.4px; color:var(--blue); margin-bottom:8px;">Stage 1 &middot; RQ1</div>
-            <div style="font-size:2rem; font-weight:900; color:var(--blue); margin-bottom:6px;">Ingest</div>
-            <p style="font-size:0.82rem; color:var(--text2); line-height:1.5; margin:0;">How do many heterogeneous sources enter one lakehouse without one pipeline per source?</p>
+        <div class="slide-label" style="color:var(--red-l);">01 &mdash; Motivation</div>
+        <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:6px;">From open challenges to <span style="color:var(--blue);">research questions</span></h2>
+        <p style="font-size:0.84rem; color:var(--muted); align-self:flex-start; margin-bottom:14px;">A <strong>Multivocal Literature Review (MLR)</strong> &mdash; combining 165 academic <em>and</em> practitioner (grey-literature) sources &mdash; surfaced four recurring gaps. Each maps one-to-one to a focused research question, shown by the <span style="color:var(--blue); font-weight:800;">&rarr;</span> arrows.</p>
+        <div style="display:grid; grid-template-columns:0.82fr 1.18fr; gap:16px; align-items:stretch;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; color:var(--red-l); margin-bottom:1px;">Open challenges &mdash; from the MLR</div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:9px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:3px;"><span style="font-size:0.63rem; font-weight:800; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">C1 &middot; Source Heterogeneity</span><span style="font-size:0.6rem; font-weight:800; color:var(--blue); background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:20px; padding:1px 8px; white-space:nowrap;">&rarr; RQ1</span></div>
+              <div style="font-size:0.77rem; color:var(--text2); line-height:1.4;">100+ source types &middot; <strong>one bespoke pipeline per source</strong></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:9px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:3px;"><span style="font-size:0.63rem; font-weight:800; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">C2 &middot; Transformation Timing</span><span style="font-size:0.6rem; font-weight:800; color:var(--purple); background:var(--purple-bg); border:1px solid var(--purple-b); border-radius:20px; padding:1px 8px; white-space:nowrap;">&rarr; RQ2</span></div>
+              <div style="font-size:0.77rem; color:var(--text2); line-height:1.4;"><strong>78% use informal hybrid</strong> ETL/ELT &middot; no criteria</div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:9px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:3px;"><span style="font-size:0.63rem; font-weight:800; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">C3 &middot; Deployment Drift</span><span style="font-size:0.6rem; font-weight:800; color:var(--violet); background:var(--violet-bg); border:1px solid var(--violet-b); border-radius:20px; padding:1px 8px; white-space:nowrap;">&rarr; RQ3</span></div>
+              <div style="font-size:0.77rem; color:var(--text2); line-height:1.4;">62% keep separate config per env &middot; <strong>14% no standard</strong></div>
+            </div>
+            <div style="background:var(--surface); border:1px solid var(--red-b); border-radius:8px; padding:9px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:3px;"><span style="font-size:0.63rem; font-weight:800; color:var(--red-l); text-transform:uppercase; letter-spacing:0.5px;">C4 &middot; LLM Potential, Unknown Limits</span><span style="font-size:0.6rem; font-weight:800; color:var(--green-l); background:var(--green-bg); border:1px solid var(--green-b); border-radius:20px; padding:1px 8px; white-space:nowrap;">&rarr; RQ4</span></div>
+              <div style="font-size:0.77rem; color:var(--text2); line-height:1.4;"><strong>No multi-model benchmark</strong> for data engineering</div>
+            </div>
           </div>
-          <div style="display:flex; align-items:center; color:var(--muted2); font-size:2rem; font-weight:800;">&rarr;</div>
-          <div class="lift" style="background:var(--surface); border:1px solid var(--purple-b); border-top:5px solid var(--purple-l); border-radius:12px; padding:22px 20px; text-align:center; box-shadow:0 4px 18px rgba(124,58,237,0.08);">
-            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:1.4px; color:var(--purple); margin-bottom:8px;">Stage 2 &middot; RQ2</div>
-            <div style="font-size:2rem; font-weight:900; color:var(--purple); margin-bottom:6px;">Transform</div>
-            <p style="font-size:0.82rem; color:var(--text2); line-height:1.5; margin:0;">When should quality and business logic happen: before load, after load, or both?</p>
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <div style="font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; color:var(--text); margin-bottom:1px;">Research questions &mdash; the core of this thesis</div>
+            <div class="lift" style="background:linear-gradient(100deg,var(--blue-bg),var(--surface)); border:1.5px solid var(--blue-b); border-left:5px solid var(--blue); border-radius:10px; padding:11px 15px; box-shadow:0 2px 8px rgba(29,78,216,0.08);">
+              <div style="display:flex; align-items:center; gap:9px; margin-bottom:3px;"><span style="background:var(--blue); color:#fff; font-size:0.66rem; font-weight:800; padding:2px 9px; border-radius:20px;">RQ1 &middot; MIND</span></div>
+              <div style="font-size:0.85rem; color:var(--text); line-height:1.45;">How can multi-source ingestion be <strong>systematized</strong> through a reusable, cloud-agnostic design pattern?</div>
+            </div>
+            <div class="lift" style="background:linear-gradient(100deg,var(--purple-bg),var(--surface)); border:1.5px solid var(--purple-b); border-left:5px solid var(--purple); border-radius:10px; padding:11px 15px; box-shadow:0 2px 8px rgba(124,58,237,0.08);">
+              <div style="display:flex; align-items:center; gap:9px; margin-bottom:3px;"><span style="background:var(--purple); color:#fff; font-size:0.66rem; font-weight:800; padding:2px 9px; border-radius:20px;">RQ2 &middot; ETLT++ / ELTL++</span></div>
+              <div style="font-size:0.85rem; color:var(--text); line-height:1.45;">What <strong>formal criteria</strong> guide the choice between transformation strategies in a cloud lakehouse?</div>
+            </div>
+            <div class="lift" style="background:linear-gradient(100deg,var(--violet-bg),var(--surface)); border:1.5px solid var(--violet-b); border-left:5px solid var(--violet); border-radius:10px; padding:11px 15px; box-shadow:0 2px 8px rgba(91,33,182,0.08);">
+              <div style="display:flex; align-items:center; gap:9px; margin-bottom:3px;"><span style="background:var(--violet); color:#fff; font-size:0.66rem; font-weight:800; padding:2px 9px; border-radius:20px;">RQ3 &middot; EADF</span></div>
+              <div style="font-size:0.85rem; color:var(--text); line-height:1.45;">How can deployment be made <strong>environment-aware, auditable and drift-free</strong> across clouds?</div>
+            </div>
+            <div class="lift" style="background:linear-gradient(100deg,var(--green-bg),var(--surface)); border:1.5px solid var(--green-b); border-left:5px solid var(--green-l); border-radius:10px; padding:11px 15px; box-shadow:0 2px 8px rgba(5,150,105,0.08);">
+              <div style="display:flex; align-items:center; gap:9px; margin-bottom:3px;"><span style="background:var(--green-l); color:#fff; font-size:0.66rem; font-weight:800; padding:2px 9px; border-radius:20px;">RQ4 &middot; LLM Study</span></div>
+              <div style="font-size:0.85rem; color:var(--text); line-height:1.45;">Can LLMs reliably generate <strong>production-ready</strong> pipeline code conformant with formal patterns?</div>
+            </div>
           </div>
-          <div style="display:flex; align-items:center; color:var(--muted2); font-size:2rem; font-weight:800;">&rarr;</div>
-          <div class="lift" style="background:var(--surface); border:1px solid var(--violet-b); border-top:5px solid var(--violet-l); border-radius:12px; padding:22px 20px; text-align:center; box-shadow:0 4px 18px rgba(91,33,182,0.08);">
-            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:1.4px; color:var(--violet); margin-bottom:8px;">Stage 3 &middot; RQ3</div>
-            <div style="font-size:2rem; font-weight:900; color:var(--violet); margin-bottom:6px;">Deploy</div>
-            <p style="font-size:0.82rem; color:var(--text2); line-height:1.5; margin:0;">How does the same pipeline move across dev, test and prod without drift?</p>
-          </div>
-        </div>
-        <div style="background:var(--green-bg); border:1px solid var(--green-b); border-radius:10px; padding:14px 18px; display:flex; align-items:center; gap:14px;">
-          <span class="pill" style="background:var(--green-l); color:#fff; flex-shrink:0;">RQ4</span>
-          <p style="font-size:0.88rem; color:var(--text); line-height:1.55; margin:0;"><strong>AI-assisted implementation:</strong> once patterns exist, can LLMs generate production-grade pipeline code that respects them? The answer is useful, but bounded.</p>
         </div>
       </div>
     </div>
@@ -563,18 +595,21 @@
             </div>
           </div>
           <div>
-            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">Live takeaway &mdash; solution + validation</p>
-            <div style="background:var(--blue-bg); border:1px solid var(--blue-b); border-radius:9px; padding:11px 14px; margin-bottom:10px;">
-              <p style="font-size:0.82rem; color:var(--text); line-height:1.5; margin:0;">Unlike a metadata catalog, MIND uses metadata as a <strong>control layer</strong>: the table does not only describe sources, it drives runtime ingestion strategy selection.</p>
+            <p style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">How it overcomes the state of the art</p>
+            <div style="background:var(--surface); border:1px solid var(--border2); border-radius:9px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06); margin-bottom:12px;">
+              <table class="mini-table" style="font-size:0.76rem;">
+                <thead><tr><th>Capability</th><th style="text-align:center;">SOTA</th><th style="text-align:center; color:var(--blue);">MIND</th></tr></thead>
+                <tbody>
+                  <tr><td>Multi-source, one mechanism</td><td style="text-align:center; color:var(--muted2);">&#9675;</td><td style="text-align:center; color:var(--green-l); font-weight:700;">&#10003;</td></tr>
+                  <tr><td>Cloud-agnostic</td><td style="text-align:center; color:var(--muted2);">&#9675;</td><td style="text-align:center; color:var(--green-l); font-weight:700;">&#10003;</td></tr>
+                  <tr><td>Runtime strategy selection</td><td style="text-align:center; color:var(--muted2);">&#9675;</td><td style="text-align:center; color:var(--green-l); font-weight:700;">&#10003;</td></tr>
+                  <tr><td>Empirically validated</td><td style="text-align:center; color:var(--muted2);">&#9675;</td><td style="text-align:center; color:var(--green-l); font-weight:700;">&#10003;</td></tr>
+                </tbody>
+              </table>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:10px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:9px;">
               <div class="stat-card" style="padding:11px;"><div class="stat-num" style="color:var(--blue); font-size:1.6rem;">4.3&times;</div><div class="stat-label">speedup @1B rows</div></div>
               <div class="stat-card" style="padding:11px;"><div class="stat-num" style="color:var(--green-l); font-size:1.6rem;">61%</div><div class="stat-label">less config code</div></div>
-              <div class="stat-card" style="padding:11px;"><div class="stat-num" style="color:var(--blue); font-size:1.45rem;">4.7/5</div><div class="stat-label">expert utility (N=21)</div></div>
-              <div class="stat-card" style="padding:11px;"><div class="stat-num" style="color:var(--green-l); font-size:1.45rem;">2</div><div class="stat-label">clouds validated</div></div>
-            </div>
-            <div style="background:var(--surface); border:1px solid var(--blue-b); border-radius:8px; padding:10px 13px;">
-              <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;"><strong style="color:var(--blue);">What changes:</strong> new source = one metadata row, not a new pipeline. The engine stays stable while the source landscape grows.</p>
             </div>
           </div>
         </div>
@@ -772,9 +807,9 @@
           <span class="stage-step active"><span class="n">3</span>Solution &amp; Usage</span>
           <span class="stage-step"><span class="n">4</span>Results</span>
         </div>
-        <h2 class="slide-title" style="color:var(--purple); font-size:1.5rem; margin-bottom:12px;">ETLT++ &amp; ELTL++ &mdash; quality first vs. raw fidelity first</h2>
-        <div style="display:grid; grid-template-columns:0.86fr 1.14fr; gap:20px; align-items:start;">
-          <div style="display:flex; flex-direction:column; gap:10px;">
+        <h2 class="slide-title" style="color:var(--purple); font-size:1.5rem; margin-bottom:12px;">ETLT++ &amp; ELTL++ &mdash; stage by stage</h2>
+        <div style="display:grid; grid-template-columns:1.05fr 0.95fr; gap:20px; align-items:start;">
+          <div style="display:flex; flex-direction:column; gap:8px;">
             <div style="background:var(--surface); border:1px solid var(--blue-b); border-left:4px solid var(--blue-l); border-radius:0 8px 8px 0; padding:10px 13px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
               <div style="font-size:0.86rem; font-weight:800; color:var(--blue); margin-bottom:6px;">ETLT++ &mdash; quality before load</div>
               <ol style="list-style:none; margin:0; display:flex; flex-direction:column; gap:4px;">
@@ -793,12 +828,31 @@
                 <li style="font-size:0.77rem; color:var(--text2); line-height:1.4;"><strong style="color:var(--purple);">4 &middot; Load curated (L2)</strong> &mdash; serving-ready, versioned</li>
               </ol>
             </div>
+            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin:2px 0 4px;">Pattern architecture &mdash; ETLT++ &amp; ELTL++ flows</p>
+            <img src="assets/img/image26.png" alt="ETLT and ELTL pattern architecture" style="width:100%; max-height:320px; object-fit:contain; border-radius:9px; border:1px solid var(--border2); background:#fff; padding:8px;">
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
-            <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:2px;">Pattern architecture &mdash; let the diagram carry the details</p>
-            <img src="assets/img/image26.png" alt="ETLT and ELTL pattern architecture" style="width:100%; max-height:410px; object-fit:contain; border-radius:9px; border:1px solid var(--border2); background:#fff; padding:8px;">
+            <div>
+              <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:5px;">Sample &mdash; data contract (the T&#8321; gate)</p>
+              <div style="background:#1e1e2e; border-radius:8px; padding:11px 14px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; line-height:1.6; color:#cdd6f4;">
+                <span style="color:#89b4fa;">columns</span>:<br>
+                &nbsp;&nbsp;- <span style="color:#a6e3a1;">order_id</span>: {type: int, <span style="color:#f9e2af;">not_null</span>: true}<br>
+                &nbsp;&nbsp;- <span style="color:#a6e3a1;">amount</span>:&nbsp;&nbsp; {type: decimal, <span style="color:#f9e2af;">min</span>: 0}<br>
+                <span style="color:#89b4fa;">on_violation</span>: <span style="color:#fab387;">quarantine</span>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:0.61rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:5px;">Sample &mdash; immutable raw layer (L1)</p>
+              <div style="background:#1e1e2e; border-radius:8px; padding:11px 14px; font-family:'JetBrains Mono',monospace; font-size:0.71rem; line-height:1.55; color:#cdd6f4;">
+                <span style="color:#6c7086;"># raw is WRITE-ONCE &mdash; never updated in place</span><br>
+                raw/orders/<span style="color:#a6e3a1;">ingest_date=2025-06-09</span>/&nbsp;<span style="color:#fab387;">&#8592; snapshot v1</span><br>
+                raw/orders/<span style="color:#a6e3a1;">ingest_date=2025-06-10</span>/&nbsp;<span style="color:#fab387;">&#8592; v2 (appended)</span><br>
+                <span style="color:#6c7086;"># corrections add a NEW snapshot, old stays</span><br>
+                <span style="color:#89b4fa;">SELECT</span> * <span style="color:#89b4fa;">FROM</span> raw.orders <span style="color:#f9e2af;">TIMESTAMP AS OF</span> <span style="color:#a6e3a1;">&#39;2025-06-09&#39;</span>
+              </div>
+            </div>
             <div style="background:var(--gold-bg); border:1px solid var(--gold-b); border-radius:7px; padding:9px 13px;">
-              <p style="font-size:0.79rem; color:var(--text); margin:0; line-height:1.45;"><strong style="color:var(--blue);">Say it plainly:</strong> ETLT++ means <em>quality before load</em>. ELTL++ means <em>raw fidelity first</em>. The acronym comes second; the design trade-off comes first.</p>
+              <p style="font-size:0.77rem; color:var(--text); margin:0; line-height:1.45;"><strong style="color:var(--green-l);">Overcomes SOTA:</strong> contracts + semantic versioning are tool-independent (portable across dbt, Spark, SQL). <strong style="color:var(--gold);">&#9733;</strong> Both coexist &mdash; ETLT++ for latency-sensitive streams, ELTL++ for compliance &amp; replay.</p>
             </div>
           </div>
         </div>
@@ -1072,31 +1126,44 @@
           <span class="slide-label" style="color:var(--green-l); margin-bottom:0;">LLM Benchmarking &middot; Methodology</span>
         </div>
         <h2 class="slide-title" style="font-size:1.75rem; margin-bottom:14px;">Can LLMs generate reliable, production-ready data pipelines?</h2>
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px;">
-          <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">7</div><div class="stat-label">models across OpenAI, Anthropic, Alibaba</div></div>
-          <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">3</div><div class="stat-label">pipeline scenarios of increasing complexity</div></div>
-          <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">105</div><div class="stat-label">runs on Databricks Serverless</div></div>
-          <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">5</div><div class="stat-label">metrics, with C&amp;S as primary quality score</div></div>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; align-items:stretch;">
-          <div style="background:var(--surface); border:1px solid var(--blue-b); border-top:4px solid var(--blue-l); border-radius:10px; padding:14px 16px;">
-            <p style="font-size:0.68rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Scenario 1</p>
-            <h3 style="font-size:0.95rem; color:var(--text); margin-bottom:5px;">Data quality check</h3>
-            <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;">API ingest, null checks, Bronze/Silver Delta tables.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px;">7 Models &middot; 3 Providers &middot; Databricks Serverless &middot; 5 Repeated Runs</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:12px;">
+              <div style="background:var(--surface); border:1px solid var(--border); border-top:2px solid #10a37f; border-radius:0 0 7px 7px; padding:9px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <p style="font-size:0.63rem; font-weight:700; color:#10a37f; margin-bottom:5px;">OpenAI</p>
+                <div style="font-size:0.76rem; font-weight:600; color:var(--text2); line-height:1.7;">GPT-5<br>GPT-5 Mini<br>GPT-5 Nano</div>
+              </div>
+              <div style="background:var(--surface); border:1px solid var(--border); border-top:2px solid #d4a017; border-radius:0 0 7px 7px; padding:9px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <p style="font-size:0.63rem; font-weight:700; color:#b45309; margin-bottom:5px;">Anthropic</p>
+                <div style="font-size:0.76rem; font-weight:600; color:var(--text2); line-height:1.7;">Claude 4 Opus<br>Claude 4 Sonnet<br>Claude 3.5 Haiku</div>
+              </div>
+              <div style="background:var(--surface); border:1px solid var(--border); border-top:2px solid #9333ea; border-radius:0 0 7px 7px; padding:9px 10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                <p style="font-size:0.63rem; font-weight:700; color:#7c3aed; margin-bottom:5px;">Alibaba</p>
+                <div style="font-size:0.76rem; font-weight:600; color:var(--text2); line-height:1.7;">Qwen3-235B</div>
+              </div>
+            </div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:7px;">3 Pipeline Scenarios &mdash; Progressive Complexity</p>
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--blue-b); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:var(--blue-l); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; flex-shrink:0;">1</div><div><p style="font-size:0.79rem; font-weight:600; color:var(--blue); margin:0;">Data Quality Check</p><p style="font-size:0.71rem; color:var(--muted); margin:0;">API ingest + null checks + Bronze/Silver Delta</p></div></div>
+              <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--purple-b); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:var(--purple-l); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; flex-shrink:0;">2</div><div><p style="font-size:0.79rem; font-weight:600; color:var(--purple); margin:0;">Monthly Aggregation</p><p style="font-size:0.71rem; color:var(--muted); margin:0;">Historical groupBy + partitioned Delta output</p></div></div>
+              <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--red-b); border-radius:6px; padding:8px 12px;"><div style="width:22px; height:22px; background:var(--red-l); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:white; flex-shrink:0;">3</div><div><p style="font-size:0.79rem; font-weight:600; color:var(--red-l); margin:0;">Multi-Source Merge</p><p style="font-size:0.71rem; color:var(--muted); margin:0;">Air + weather join &middot; schema alignment &middot; join logic</p></div></div>
+            </div>
           </div>
-          <div style="background:var(--surface); border:1px solid var(--purple-b); border-top:4px solid var(--purple-l); border-radius:10px; padding:14px 16px;">
-            <p style="font-size:0.68rem; font-weight:800; color:var(--purple); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Scenario 2</p>
-            <h3 style="font-size:0.95rem; color:var(--text); margin-bottom:5px;">Monthly aggregation</h3>
-            <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;">Historical grouping, partitioned Delta output, repeatability.</p>
+          <div>
+            <p style="font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:8px;">5 Evaluation Metrics</p>
+            <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px;">
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Fix Count</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Edits needed to reach a working pipeline (0 = first pass)</p></div>
+              <div class="card" style="border-left:3px solid var(--green-l);"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">C&amp;S Score (1&ndash;5) <span style="font-size:0.68rem; color:var(--muted); font-weight:400;">primary metric</span></p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Correctness &times; architectural quality</p></div>
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Execution Time (s)</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Mean of 5 runs on Databricks Serverless</p></div>
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Pylint / PEP8</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Static code quality 0&ndash;10</p></div>
+              <div class="card"><p style="font-size:0.8rem; font-weight:700; color:var(--green-l); margin:0 0 2px;">Action Correctness</p><p style="font-size:0.73rem; color:var(--muted); margin:0;">Expert panel: Fully / Partially / Incorrect</p></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">7</div><div class="stat-label">LLMs &middot; 3 providers</div></div>
+              <div class="stat-card"><div class="stat-num" style="color:var(--green-l);">105</div><div class="stat-label">total runs (3&times;5&times;7)</div></div>
+            </div>
           </div>
-          <div style="background:var(--surface); border:1px solid var(--red-b); border-top:4px solid var(--red-l); border-radius:10px; padding:14px 16px;">
-            <p style="font-size:0.68rem; font-weight:800; color:var(--red-l); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Scenario 3</p>
-            <h3 style="font-size:0.95rem; color:var(--text); margin-bottom:5px;">Multi-source merge</h3>
-            <p style="font-size:0.78rem; color:var(--text2); line-height:1.45; margin:0;">Air + weather join, schema alignment, semantic join logic.</p>
-          </div>
-        </div>
-        <div style="background:var(--green-bg); border:1px solid var(--green-b); border-radius:9px; padding:12px 16px; margin-top:16px;">
-          <p style="font-size:0.84rem; color:var(--text); margin:0; line-height:1.5;"><strong style="color:var(--green);">Displayed lightly, evaluated rigorously:</strong> fix count, correctness/structure score, execution time, Pylint/PEP8 and expert action correctness.</p>
         </div>
       </div>
     </div>
@@ -1298,8 +1365,8 @@
   </div><!-- /slides-container -->
 
   <script>
-    // Live 15-minute order. Other slides remain in the HTML as backup/Q&A material.
-    const ORDER = [1, 2, 3, 4, 5, 6, 9, 11, 14, 15, 16, 20, 21, 22, 23, 24, 25, 26];
+    // Sequential order: slides 1..26 in DOM order
+    const ORDER = Array.from({ length: 26 }, (_, i) => i + 1);
     const TOTAL = ORDER.length;
     let pos = 0; // index into ORDER
     let isAnimating = false;
