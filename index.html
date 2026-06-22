@@ -470,11 +470,155 @@
 
   </main>
 
-  <footer style="background: #1a1a1a; border-top: 1px solid #333; padding: 30px 20px; color: #999;">
+  <footer style="background: #1a1a1a; border-top: 1px solid #333; padding: 30px 20px; color: #999; position: relative;">
     <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
       <p style="margin: 0; font-size: 0.9rem;">&copy; 2025 DataLab - University of Salento. All rights reserved.</p>
     </div>
+    <!-- Defense notes trigger — subtle but visible -->
+    <button id="defense-notes-btn" onclick="document.getElementById('defense-notes-modal').style.display='flex'" title="Defense Speaker Notes" style="position: absolute; bottom: 12px; right: 18px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #888; font-size: 0.72rem; cursor: pointer; opacity: 0.6; padding: 5px 10px; border-radius: 4px; font-family: inherit; transition: all 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.opacity='1';this.style.background='rgba(255,255,255,0.12)';this.style.color='#ccc'" onmouseout="this.style.opacity='0.6';this.style.background='rgba(255,255,255,0.07)';this.style.color='#888'">&#128196; Defense Notes</button>
   </footer>
+
+  <!-- Defense Notes Modal -->
+  <div id="defense-notes-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#1e1e2e; color:#cdd6f4; border-radius:10px; max-width:800px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.5); font-family:'JetBrains Mono','Courier New',monospace;">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid #313244; flex-shrink:0;">
+        <span style="font-size:0.85rem; font-weight:600; color:#89b4fa; letter-spacing:0.05em;">&#128196; DEFENSE SPEAKER NOTES — 20 min</span>
+        <button onclick="document.getElementById('defense-notes-modal').style.display='none'" style="background:none; border:none; color:#6c7086; font-size:1.3rem; cursor:pointer; line-height:1; padding:2px 8px; border-radius:4px;" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#6c7086'">&times;</button>
+      </div>
+      <div style="overflow-y:auto; padding:20px 24px; font-size:0.8rem; line-height:1.8; white-space:pre-wrap; color:#cdd6f4;">
+<span style="color:#6c7086; font-style:italic;">Candidate: Chiara Rucco — Pattern-Driven Data Engineering</span>
+
+<b style="color:#f38ba8;">Slide 1 — Title (0:00–0:50)</b>
+Good morning, and thank you for the opportunity to present my doctoral work.
+My thesis is titled <i>"Pattern-Driven Data Engineering: Formalizing Systematic Solutions for Cloud-based Data Lakehouses"</i>.
+
+The central claim of this work is simple but ambitious: data engineering has reached high technological maturity, but it still lacks the same degree of formalized design knowledge that software engineering achieved through design pattern traditions.
+
+Over the past three years, I developed and validated three pattern artifacts addressing ingestion, transformation timing, and deployment, and I assessed the role of LLMs in implementing such patterns under realistic constraints.
+
+<b style="color:#f38ba8;">Slide 2 — Research Context and Problem Framing (0:50–2:10)</b>
+I begin by framing the problem at a methodological level.
+In software engineering, patterns provided a shared vocabulary and a way to reason about recurring solutions, trade-offs, and context-specific applicability.
+
+In data engineering, by contrast, most core architectural decisions are still handled in a local and experience-driven way.
+Teams often solve the same classes of problems repeatedly, with limited formal transfer of knowledge between organizations, projects, or even teams in the same organization.
+
+The research question is not only technical, but epistemological: how can we move from tacit operational knowledge to explicit, reusable, and evaluable pattern knowledge in cloud data engineering?
+
+<b style="color:#f38ba8;">Slide 3 — Agenda (2:10–2:40)</b>
+This presentation follows a strict research logic.
+First, motivation and methodological approach.
+Then each research question and the corresponding artifact.
+After that, cross-artifact validation, contributions, limitations and future work, and the publication trajectory.
+
+<b style="color:#f38ba8;">Slide 4 — Motivation: Challenges and Research Questions (2:40–4:00)</b>
+The motivation is derived from a systematic literature review and from recurring industrial observations.
+I identified four persistent challenge areas.
+
+1. Source heterogeneity: ingestion architectures are frequently source-specific and difficult to scale sustainably.
+2. Transformation timing: the ETL versus ELT choice is often made heuristically rather than through explicit criteria.
+3. Deployment drift: environment-specific configuration handling is a frequent source of fragility and audit issues.
+4. The rise of LLMs: strong practical interest, but unclear reliability for production-grade data engineering tasks.
+
+<b style="color:#f38ba8;">Slide 5 — Research Approach (4:00–4:50)</b>
+Methodologically, I adopted Design Science Research — essential because the thesis aims to produce and validate artifacts, not only describe phenomena.
+
+For artifact specification, I used a POSA-inspired structure: context, problem, forces, solution, and consequences.
+Validation combines quantitative benchmarking and qualitative expert assessment.
+
+<b style="color:#f38ba8;">Slide 6 — RQ1 Problem: Ingestion (4:50–5:40)</b>
+RQ1 investigates how ingestion can be systematized under high source heterogeneity.
+The practical issue is that many organizations still encode source-specific logic directly in pipeline code.
+
+As source count and variability increase, this leads to significant maintenance overhead, brittle evolution under schema changes, and reduced reuse.
+
+<b style="color:#f38ba8;">Slide 7 — RQ1 Solution: MIND (5:40–6:50)</b>
+The artifact for RQ1 is MIND: Metadata-Driven Ingestion Design.
+Its architectural principle is to move variability from code to metadata.
+
+The Unified Metadata Table acts as a declarative control layer that parameterizes ingestion behavior.
+The key contribution is the separation of concerns between ingestion logic and source-specific characteristics, in a way that remains cloud-agnostic and pattern-formalized.
+
+<b style="color:#f38ba8;">Slide 8 — RQ1 Results (6:50–7:30)</b>
+Empirical and expert results indicate practical relevance.
+We observed measurable performance and configuration-effort improvements, and high perceived utility in practitioner evaluation.
+
+<b style="color:#f38ba8;">Slide 9 — RQ2 Problem: Transformation Timing (7:30–8:20)</b>
+RQ2 addresses the transformation timing dilemma.
+In practice, teams combine early and late transformations, but often without explicit design criteria.
+This leads to inconsistent architecture decisions, quality-management ambiguity, and difficulty justifying strategy selection.
+
+<b style="color:#f38ba8;">Slide 10 — RQ2 Solution: ETLT/ELTL &amp; ++ Variants (8:20–9:50)</b>
+First, ETLT and ELTL are formalized as patterns with explicit context, forces, and consequences.
+Second, they are extended to ETLT++ and ELTL++ with quality gates, contracts, and reject-handling mechanisms.
+
+Architects can now reason from constraints: latency requirements, data quality tolerance, compliance requirements, and storage/compute trade-offs.
+
+<b style="color:#f38ba8;">Slide 11 — RQ2 Results (9:50–10:50)</b>
+Validation shows improvements in throughput and cost dimensions, together with strong expert acceptance.
+
+The three-phase validation: technical benchmarking, practitioner evaluation, and known-use evidence — reduces the risk of over-interpreting a single evidence source.
+
+<b style="color:#f38ba8;">Slide 12 — RQ3 Problem: Deployment Drift (10:50–11:40)</b>
+RQ3 focuses on deployment reliability across environments.
+A recurrent issue is early binding of environment-specific values, which increases drift risk and weakens auditability.
+
+<b style="color:#f38ba8;">Slide 13 — RQ3 Solution: EADF (11:40–12:30)</b>
+The artifact is EADF: Environment-Aware Deployment Framework.
+Its core principle is late binding with explicit configuration artifacts and promotion governance.
+
+By separating pipeline definition from environment binding, the same logical pipeline can be promoted consistently across environments.
+
+<b style="color:#f38ba8;">Slide 14 — RQ3 Results (12:30–13:10)</b>
+Observed outcomes: reduced configuration burden, fewer deployment failures, better traceability.
+
+<b style="color:#f38ba8;">Slide 15 — RQ4 Method: LLM Benchmark Design (13:10–14:10)</b>
+RQ4 asks whether LLMs can generate reliable, production-oriented pipeline code.
+I designed a controlled benchmark with seven models, three scenarios of increasing complexity, and multiple metrics including correctness and architectural quality.
+
+<b style="color:#f38ba8;">Slide 16 — RQ4 Results: LLMs as Accelerators, Not Replacements (14:10–15:20)</b>
+Results show differentiated capability across models and a clear complexity sensitivity.
+Failures are often architectural or semantic, not merely syntactic.
+
+LLMs should be positioned as productivity accelerators within a pattern-governed workflow, not as autonomous architecture agents.
+
+<b style="color:#f38ba8;">Slide 17 — Cross-Pattern Expert Validation (15:20–16:10)</b>
+Across artifacts, expert assessment indicates substantial utility and adoption intent.
+Practitioners recognize the addressed problems and find the proposed abstractions actionable.
+
+<b style="color:#f38ba8;">Slide 18 — Contributions (16:10–17:10)</b>
+1. A formal vocabulary for recurring cloud data engineering problems.
+2. A methodological pathway combining DSR and pattern formalization.
+3. Three validated architectural artifacts.
+4. Evidence of academia-industry bridge through practitioner assessment.
+5. A structured lens for evaluating LLM support in data engineering.
+6. An open dissemination direction through a pattern catalog.
+
+<b style="color:#f38ba8;">Slide 19 — Limitations and Future Work (17:10–18:00)</b>
+Scope is focused on selected pattern families and cloud contexts.
+Expert sample size, while meaningful, is not exhaustive.
+LLM findings are time-sensitive due to rapid model evolution.
+
+Future work: expand the catalog to additional domains, integrate pattern constraints into LLM-assisted workflows, and broaden validation across sectors.
+
+<b style="color:#f38ba8;">Slide 20 — Conclusions and Publications (18:00–19:10)</b>
+The central conclusion is that formalization improves both scientific rigor and engineering transferability.
+
+This is supported by a publication trajectory from 2024 to 2026: ingestion foundations, efficiency extensions, transformation formalization, deployment formalization, and LLM empirical evaluation.
+
+The thesis contributes not only new artifacts, but a reproducible way to produce future pattern knowledge in data engineering.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('defense-notes-modal').addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') document.getElementById('defense-notes-modal').style.display = 'none';
+    });
+  </script>
 
   <style>
     * {
