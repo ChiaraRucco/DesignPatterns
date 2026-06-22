@@ -474,18 +474,12 @@
     <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
       <p style="margin: 0; font-size: 0.9rem;">&copy; 2025 DataLab - University of Salento. All rights reserved.</p>
     </div>
-    <!-- Defense notes trigger — subtle but visible -->
-    <button id="defense-notes-btn" onclick="document.getElementById('defense-notes-modal').style.display='flex'" title="Defense Speaker Notes" style="position: absolute; bottom: 12px; right: 18px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #888; font-size: 0.72rem; cursor: pointer; opacity: 0.6; padding: 5px 10px; border-radius: 4px; font-family: inherit; transition: all 0.2s; display: flex; align-items: center; gap: 5px;" onmouseover="this.style.opacity='1';this.style.background='rgba(255,255,255,0.12)';this.style.color='#ccc'" onmouseout="this.style.opacity='0.6';this.style.background='rgba(255,255,255,0.07)';this.style.color='#888'">&#128196; Defense Notes</button>
+    <!-- Defense slides link -->
+    <a href="defense.html" title="Defense Slides" style="position: absolute; bottom: 12px; right: 18px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #888; font-size: 0.72rem; cursor: pointer; opacity: 0.6; padding: 5px 10px; border-radius: 4px; font-family: inherit; transition: all 0.2s; display: flex; align-items: center; gap: 5px; text-decoration: none;" onmouseover="this.style.opacity='1';this.style.background='rgba(255,255,255,0.12)';this.style.color='#ccc'" onmouseout="this.style.opacity='0.6';this.style.background='rgba(255,255,255,0.07)';this.style.color='#888'">&#127941; Defense Slides</a>
   </footer>
 
-  <!-- Defense Notes Modal -->
-  <div id="defense-notes-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center; padding:20px;">
-    <div style="background:#1e1e2e; color:#cdd6f4; border-radius:10px; max-width:800px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.5); font-family:'JetBrains Mono','Courier New',monospace;">
-      <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid #313244; flex-shrink:0;">
-        <span style="font-size:0.85rem; font-weight:600; color:#89b4fa; letter-spacing:0.05em;">&#128196; DEFENSE SPEAKER NOTES — 20 min</span>
-        <button onclick="document.getElementById('defense-notes-modal').style.display='none'" style="background:none; border:none; color:#6c7086; font-size:1.3rem; cursor:pointer; line-height:1; padding:2px 8px; border-radius:4px;" onmouseover="this.style.color='#cdd6f4'" onmouseout="this.style.color='#6c7086'">&times;</button>
-      </div>
-      <div style="overflow-y:auto; padding:20px 24px; font-size:0.8rem; line-height:1.8; white-space:pre-wrap; color:#cdd6f4;">
+  <div id="defense-notes-modal-placeholder" style="display:none;"><!-- removed --></div>
+      <div style="overflow-y:auto; padding:20px 24px; font-size:0.8rem; line-height:1.8; white-space:pre-wrap; color:#cdd6f4; display:none;">
 <span style="color:#6c7086; font-style:italic;">Candidate: Chiara Rucco — Pattern-Driven Data Engineering</span>
 
 <b style="color:#f38ba8;">Slide 1 — Title (0:00–0:50)</b>
@@ -610,15 +604,6 @@ The thesis contributes not only new artifacts, but a reproducible way to produce
       </div>
     </div>
   </div>
-
-  <script>
-    document.getElementById('defense-notes-modal').addEventListener('click', function(e) {
-      if (e.target === this) this.style.display = 'none';
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') document.getElementById('defense-notes-modal').style.display = 'none';
-    });
-  </script>
 
   <style>
     * {
